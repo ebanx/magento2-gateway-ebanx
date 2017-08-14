@@ -107,7 +107,7 @@
                     <field id="max_instalments" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Maximum n° of Instalments</label>
                         <comment>Establish the maximum number of instalments in which your customer can pay, as consented on your contract.</comment>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\Instalments</source_model>
                     </field>
                     <field id="min_instalment_value" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Minimum Instalment (USD)</label>
