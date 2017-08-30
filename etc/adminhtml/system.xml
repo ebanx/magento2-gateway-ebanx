@@ -51,7 +51,7 @@
                     <field id="brazil_taxes" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Checkout for</label>
                         <comment>In order to process with the EBANX Plugin in Brazil there a few mandatory fields such as CPF identification for individuals and CNPJ for companies.</comment>
-                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\PersonType</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\Config\Source\PersonType</source_model>
                     </field>
                 </group>
 
@@ -62,23 +62,23 @@
 
                     <field id="payment_methods_brazil" translate="label" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Brazil</label>
-                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\MethodsBrazil</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\Config\Source\MethodsBrazil</source_model>
                     </field>
                     <field id="payment_methods_mexico" translate="label" type="multiselect" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Mexico</label>
-                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\MethodsMexico</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\Config\Source\MethodsMexico</source_model>
                     </field>
                     <field id="payment_methods_chile" translate="label" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Chile</label>
-                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\MethodsChile</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\Config\Source\MethodsChile</source_model>
                     </field>
                     <field id="payment_methods_colombia" translate="label" type="multiselect" sortOrder="75" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Colombia</label>
-                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\MethodsColombia</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\Config\Source\MethodsColombia</source_model>
                     </field>
                     <field id="payment_methods_peru" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Peru</label>
-                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\MethodsPeru</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\Config\Source\MethodsPeru</source_model>
                     </field>
                 </group>
 
@@ -107,7 +107,7 @@
                     <field id="max_instalments" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Maximum n° of Instalments</label>
                         <comment>Establish the maximum number of instalments in which your customer can pay, as consented on your contract.</comment>
-                        <source_model>Ebanx\PaymentGateway\Model\System\Config\Source\Instalments</source_model>
+                        <source_model>Ebanx\PaymentGateway\Model\Config\Source\Instalments</source_model>
                     </field>
                     <field id="min_instalment_value" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Minimum Instalment (USD)</label>

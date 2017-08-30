@@ -1,19 +1,19 @@
 <?php
 
-namespace Ebanx\PaymentGateway\Model\System\Config\Source;
+namespace Ebanx\PaymentGateway\Model\Config\Source;
 
 use Magento\Framework\Option\ArrayInterface;
 
-class PersonType implements ArrayInterface
+class MethodsColombia implements ArrayInterface
 {
-    const CPF = "cpf";
-    const CNPJ = "cnpj";
+    const EFT = 'ebanx_pse';
+    const BALOTO = 'ebanx_baloto';
 
     public function toArray()
     {
         return [
-            self::CPF => __('CPF - Individuals'),
-            self::CNPJ => __('CNPJ - Companies')
+            self::EFT => __('PSE - Pago Seguros en Líne (EFT)'),
+            self::BALOTO => __('Baloto')
         ];
     }
 

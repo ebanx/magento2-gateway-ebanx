@@ -1,19 +1,19 @@
 <?php
 
-namespace Ebanx\PaymentGateway\Model\System\Config\Source;
+namespace Ebanx\PaymentGateway\Model\Config\Source;
 
 use Magento\Framework\Option\ArrayInterface;
 
-class MethodsPeru implements ArrayInterface
+class MethodsChile implements ArrayInterface
 {
-    const SAFETYPAY = 'ebanx_safetypay';
-    const PAGOEFECTIVO = 'ebanx_pagoefectivo';
+    const SENCILLITO = 'ebanx_sencillito';
+    const SERVIPAG = 'ebanx_servipag';
 
     public function toArray()
     {
         return [
-            self::SAFETYPAY => __('SafetyPay'),
-            self::PAGOEFECTIVO => __('PagoEfectivo')
+            self::SENCILLITO => __('Sencillito'),
+            self::SERVIPAG => __('Servipag')
         ];
     }
 
