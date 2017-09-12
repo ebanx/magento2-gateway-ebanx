@@ -41,7 +41,7 @@
                     <attribute type="expanded">1</attribute>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
 
-                    <field id="debug_log" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <field id="debug" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                         <label>Enable Debug Log</label>
                         <tooltip>Record all errors that occur when executing a transaction.</tooltip>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
