@@ -1,3 +1,5 @@
+/*browser:true*/
+/*global define*/
 define(
     [
         'uiComponent',
@@ -14,6 +16,7 @@ define(
                 component: 'Ebanx_PaymentGateway/js/view/payment/method-renderer/brazil-boleto'
             }
         );
+        /** Add view logic here if needed */
         return Component.extend({});
     }
 );
