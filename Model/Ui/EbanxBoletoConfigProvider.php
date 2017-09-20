@@ -1,7 +1,11 @@
 <?php
 namespace Ebanx\Payments\Model\Ui;
 
+use Ebanx\Payments\Helper\Data as EbanxData;
 use Magento\Checkout\Model\ConfigProviderInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\UrlInterface;
+use Magento\Payment\Helper\Data;
 
 class EbanxBoletoConfigProvider implements ConfigProviderInterface
 {
@@ -14,35 +18,35 @@ class EbanxBoletoConfigProvider implements ConfigProviderInterface
     protected $_paymentHelper;
 
     /**
-     * @var \Ebanx\Payments\Helper\Data
+     * @var EbanxData
      */
     protected $_ebanxHelper;
 
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
     protected $_urlBuilder;
 
     /**
      * Request object
      *
-     * @var \Magento\Framework\App\RequestInterface
+     * @var RequestInterface
      */
     protected $_request;
 
     /**
      * EbanxBoletoConfigProvider constructor.
      *
-     * @param \Magento\Payment\Helper\Data $paymentHelper
-     * @param \Ebanx\Payments\Helper\Data $ebanxHelper
-     * @param \Magento\Framework\UrlInterface $urlBuilder
-     * @param \Magento\Framework\App\RequestInterface $request
+     * @param Data             $paymentHelper
+     * @param EbanxData        $ebanxHelper
+     * @param UrlInterface     $urlBuilder
+     * @param RequestInterface $request
      */
     public function __construct(
-        \Magento\Payment\Helper\Data $paymentHelper,
-        \Ebanx\Payments\Helper\Data $ebanxHelper,
-        \Magento\Framework\UrlInterface $urlBuilder,
-        \Magento\Framework\App\RequestInterface $request
+        Data $paymentHelper,
+        EbanxData $ebanxHelper,
+        UrlInterface $urlBuilder,
+        RequestInterface $request
     ) {
         $this->_paymentHelper = $paymentHelper;
         $this->_ebanxHelper = $ebanxHelper;
@@ -64,7 +68,7 @@ class EbanxBoletoConfigProvider implements ConfigProviderInterface
                         'checkout/onepage/success/', ['_secure' => $this->_getRequest()->isSecure()])
                 ],
                 'ebanxBoleto' => [
-                    'boletoTypes' => $this->_ebanxHelper->getBoletoTypes()
+                    'boletoTypes' => 'boleto' //$this->_ebanxHelper->getBoletoTypes()
                 ]
             ]
         ];
@@ -73,7 +77,7 @@ class EbanxBoletoConfigProvider implements ConfigProviderInterface
     /**
      * Retrieve request object
      *
-     * @return \Magento\Framework\App\RequestInterface
+     * @return RequestInterface
      */
     protected function _getRequest()
     {
