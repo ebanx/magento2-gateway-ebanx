@@ -143,6 +143,7 @@
                     <field id="due_date_days" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Days to Expiration</label>
                         <comment>Define the maximum number of days on which your customer can complete the payment of: Boleto, OXXO, Sencillito, PagoEfectivo and SafetyPay.</comment>
+                        <config_path>payment/ebanx_abstract/due_date_days</config_path>
                     </field>
                 </group>
 
