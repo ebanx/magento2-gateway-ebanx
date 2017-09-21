@@ -4,7 +4,10 @@ namespace Ebanx\Payments\Gateway\Request;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Ebanx\Payments\Helper\Data as EbanxData;
 
-class MerchantAccountDataBuilder implements BuilderInterface
+/**
+ * Class EbanxAccountDataBuilder
+ */
+class EbanxAccountDataBuilder implements BuilderInterface
 {
     /**
      * @var \Ebanx\Payments\Helper\Data
