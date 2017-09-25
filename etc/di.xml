@@ -134,4 +134,12 @@
             </argument>
         </arguments>
     </virtualType>
+    <virtualType name="EbanxPaymentsCaptureResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="capture" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCaptureDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
 </config>
