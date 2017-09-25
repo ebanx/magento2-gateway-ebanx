@@ -5,7 +5,7 @@ use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Ebanx\Payments\Helper\Data as EbanxData;
-use Monolog\Logger;
+use Ebanx\Payments\Logger\EbanxLogger;
 
 /**
  * Class TransactionSale
@@ -24,14 +24,14 @@ class TransactionAuthorization implements ClientInterface
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
      * @param \Ebanx\Payments\Helper\Data $ebanxHelper
-     * @param \Monolog\Logger $ebanxLogger
+     * @param \Ebanx\Payments\Logger\EbanxLogger $ebanxLogger
      * @param array $data
      */
     public function __construct(
         Context $context,
         EncryptorInterface $encryptor,
         EbanxData $ebanxHelper,
-        Logger $ebanxLogger,
+        EbanxLogger $ebanxLogger,
         array $data = []
     ) {
         $this->_encryptor = $encryptor;
