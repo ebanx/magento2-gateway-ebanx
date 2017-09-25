@@ -114,6 +114,17 @@
     </virtualType>
 
 
+    <!-- Capture Request -->
+    <virtualType name="EbanxPaymentsCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="ebanxaccount" xsi:type="string">Ebanx\Payments\Gateway\Request\EbanxAccountDataBuilder</item>
+                <item name="capture" xsi:type="string">Ebanx\Payments\Gateway\Request\CaptureDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+
     <!-- Response handlers -->
     <virtualType name="EbanxPaymentsBoletoResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
