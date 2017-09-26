@@ -143,8 +143,6 @@
             </argument>
         </arguments>
     </virtualType>
-
-
     <!-- Capture Request -->
     <virtualType name="EbanxPaymentsCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
@@ -154,8 +152,15 @@
             </argument>
         </arguments>
     </virtualType>
-
-
+    <!-- Refund Request -->
+    <virtualType name="EbanxPaymentsRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="ebanxaccount" xsi:type="string">Ebanx\Payments\Gateway\Request\EbanxAccountDataBuilder</item>
+                <item name="refund" xsi:type="string">Ebanx\Payments\Gateway\Request\RefundDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
     <!-- Cancel Request -->
     <virtualType name="EbanxPaymentsCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
