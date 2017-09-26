@@ -5,9 +5,10 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Model\AbstractModel;
 use Ebanx\Payments\Api\Data\OrderPaymentInterface;
 
-class Payment extends \Magento\Framework\Model\AbstractModel implements OrderPaymentInterface
+class Payment extends AbstractModel implements OrderPaymentInterface
 {
 
     /**
