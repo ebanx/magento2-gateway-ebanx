@@ -31,4 +31,14 @@ class Data extends AbstractHelper
     {
         return $this->getConfigData($field, 'ebanx_abstract', $storeId);
     }
+
+    /**
+     * Return the formatted currency. Adyen accepts the currency in multiple formats.
+     * @param $amount
+     * @return string
+     */
+    public function formatAmount($amount)
+    {
+        return (int)number_format($amount, 2, '', '');
+    }
 }
