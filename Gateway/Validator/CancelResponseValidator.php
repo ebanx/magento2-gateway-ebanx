@@ -3,10 +3,10 @@ namespace Ebanx\Payments\Gateway\Validator;
 
 use Magento\Payment\Gateway\Validator\AbstractValidator;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
-use Ebanx\Payments\Logger\EbanxLogger;
 use Magento\Payment\Gateway\Helper\SubjectReader;
+use Ebanx\Payments\Logger\EbanxLogger;
 
-class CaptureResponseValidator extends AbstractValidator
+class CancelResponseValidator extends AbstractValidator
 {
 
     /**
@@ -30,7 +30,7 @@ class CaptureResponseValidator extends AbstractValidator
 
     /**
      * @param array $validationSubject
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return \Magento\Payment\Gateway\Validator\ResultInterface
      */
     public function validate(array $validationSubject)
     {
@@ -39,9 +39,9 @@ class CaptureResponseValidator extends AbstractValidator
         $isValid = true;
         $errorMessages = [];
 
-//        TODO: Validate response: Capture
-//        if ($response['response'] != '[capture-received]') {
-//            $errorMsg = __('Error with capture');
+//        TODO: Validate response: Cancel
+//        if ($response['response'] != '[cancelOrRefund-received]') {
+//            $errorMsg = __('Error with cancellation');
 //            $this->ebanxLogger->error($errorMsg);
 //            $errorMessages[] = $errorMsg;
 //        }
