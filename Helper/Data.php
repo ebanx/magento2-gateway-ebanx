@@ -33,7 +33,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Return the formatted currency. Adyen accepts the currency in multiple formats.
+     * Return the formatted currency.
      * @param $amount
      * @return string
      */
