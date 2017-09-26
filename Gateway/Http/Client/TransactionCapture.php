@@ -4,6 +4,7 @@ namespace Ebanx\Payments\Gateway\Http\Client;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Payment\Gateway\Http\TransferInterface;
 use Ebanx\Payments\Helper\Data as EbanxData;
 use Ebanx\Payments\Logger\EbanxLogger;
 
@@ -37,7 +38,7 @@ class TransactionCapture implements ClientInterface
         // TODO: Connect Benjamin
 //        $benjamin = new \Ebanx\Benjamin();
 
-//        $this->_client = $benjamin;
+//        $this->_benjamin = $benjamin;
 
     }
 
@@ -45,7 +46,7 @@ class TransactionCapture implements ClientInterface
      * @param \Magento\Payment\Gateway\Http\TransferInterface $transferObject
      * @return null
      */
-    public function placeRequest(\Magento\Payment\Gateway\Http\TransferInterface $transferObject)
+    public function placeRequest(TransferInterface $transferObject)
     {
         $request = $transferObject->getBody();
 

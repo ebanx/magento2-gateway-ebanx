@@ -42,7 +42,7 @@ class TransactionAuthorization implements ClientInterface
         // TODO: Connect Benjamin
 //        $benjamin = new \Ebanx\Benjamin();
 
-//        $this->_client = $benjamin;
+//        $this->_benjamin = $benjamin;
     }
 
     /**
