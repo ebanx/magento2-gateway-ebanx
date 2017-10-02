@@ -10,7 +10,7 @@
                 <group>ebanx</group>
             </ebanx_abstract>
             <ebanx_boleto>
-                <active>0</active>
+                <active>1</active>
                 <model>EbanxPaymentsBoletoFacade</model>
                 <title>Boleto</title>
                 <allowspecific>0</allowspecific>
