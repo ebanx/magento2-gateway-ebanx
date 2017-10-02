@@ -8,20 +8,6 @@ use Magento\Store\Model\ScopeInterface;
 class Data extends AbstractHelper
 {
     /**
-     * @desc Retrieve payment values from admin configuration
-     * @param $field
-     * @param $paymentMethodCode
-     * @param $storeId
-     * @return mixed
-     */
-    public function getConfigData($field, $paymentMethodCode, $storeId)
-    {
-        $path = 'payment/' . $paymentMethodCode . '/' . $field;
-
-        return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);
-    }
-
-    /**
      * @desc Returns EBANX configuration values
      * @param $field
      * @param null $storeId
@@ -40,5 +26,19 @@ class Data extends AbstractHelper
     public function formatAmount($amount)
     {
         return (int)number_format($amount, 2, '', '');
+    }
+
+    /**
+     * @desc Retrieve payment values from admin configuration
+     * @param $field
+     * @param $paymentMethodCode
+     * @param $storeId
+     * @return mixed
+     */
+    private function getConfigData($field, $paymentMethodCode, $storeId)
+    {
+        $path = 'payment/' . $paymentMethodCode . '/' . $field;
+
+        return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);
     }
 }
