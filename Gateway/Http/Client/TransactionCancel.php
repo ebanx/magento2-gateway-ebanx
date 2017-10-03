@@ -13,6 +13,10 @@ use Ebanx\Payments\Logger\EbanxLogger;
  */
 class TransactionCancel implements ClientInterface
 {
+    /**
+     * @var \Ebanx\Benjamin\Facade
+     */
+    protected $_benjamin;
 
     /**
      * PaymentRequest constructor.
@@ -35,10 +39,8 @@ class TransactionCancel implements ClientInterface
         $this->_ebanxLogger = $ebanxLogger;
         $this->_appState = $context->getAppState();
 
-        // TODO: Connect Benjamin
-//        $benjamin = new \Ebanx\Benjamin();
-
-//        $this->_benjamin = $benjamin;
+        $api = new Api($this->_ebanxHelper);
+        $this->_benjamin = $api->benjamin();
     }
 
     /**
