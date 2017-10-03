@@ -6,15 +6,15 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Ebanx\Payments\Helper\Data as EbanxData;
 use Ebanx\Payments\Logger\EbanxLogger;
+use Magento\Payment\Gateway\Http\TransferInterface;
 
 /**
  * Class TransactionSale
  */
 class TransactionAuthorization implements ClientInterface
 {
-
     /**
-     * @var \Ebanx\Benajmin
+     * @var \Ebanx\Benjamin\Facade
      */
     protected $_benjamin;
 
@@ -39,18 +39,16 @@ class TransactionAuthorization implements ClientInterface
         $this->_ebanxLogger = $ebanxLogger;
         $this->_appState = $context->getAppState();
 
-        // TODO: Connect Benjamin
-//        $benjamin = new \Ebanx\Benjamin();
-
-//        $this->_benjamin = $benjamin;
+        $api = new Api($this->_ebanxHelper);
+        $this->_benjamin = $api->benjamin();
     }
 
     /**
-     * @param \Magento\Payment\Gateway\Http\TransferInterface $transferObject
+     * @param TransferInterface $transferObject
      * @return mixed
-     * @throws ClientException
+     * @throws \Magento\Payment\Gateway\Http\ClientException
      */
-    public function placeRequest(\Magento\Payment\Gateway\Http\TransferInterface $transferObject)
+    public function placeRequest(TransferInterface $transferObject)
     {
         $request = $transferObject->getBody();
 
