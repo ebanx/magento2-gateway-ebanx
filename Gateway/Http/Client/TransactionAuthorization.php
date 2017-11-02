@@ -1,6 +1,7 @@
 <?php
 namespace Ebanx\Payments\Gateway\Http\Client;
 
+use Ebanx\Benjamin\Models\Payment;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
@@ -48,8 +49,13 @@ class TransactionAuthorization implements ClientInterface
      */
     public function placeRequest(TransferInterface $transferObject)
     {
-        $request = $transferObject->getBody();
-        var_dump($request);
+        $payment = new Payment($transferObject->getBody());
+        var_dump($payment);
+        echo 'antes';
+        $response = $this->_benjamin->boleto()->create($payment);
+        //WIP: não está chegando aqui
+        echo 'depois';
+        var_dump($response);
 
         // TODO: benjamin request authorization
         return ['error' => 'test'];
