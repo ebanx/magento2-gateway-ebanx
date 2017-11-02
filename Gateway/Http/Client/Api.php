@@ -24,8 +24,8 @@ class Api
      */
     public function __construct(Helper $helper)
     {
-        $this->benjamin = EBANX($this->getConfig());
         $this->helper = $helper;
+        $this->benjamin = EBANX($this->getConfig());
     }
 
     /**

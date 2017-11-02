@@ -3,10 +3,16 @@
 namespace Ebanx\Payments\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
 
 class Data extends AbstractHelper
 {
+    public function __construct(Context $context)
+    {
+        parent::__construct($context);
+    }
+
     /**
      * @desc Returns EBANX configuration values
      * @param $field

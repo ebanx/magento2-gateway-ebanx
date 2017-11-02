@@ -4,7 +4,7 @@ namespace Ebanx\Payments\Gateway\Http\Client;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
-use Ebanx\Payments\Helper\Data as EbanxData;
+use Ebanx\Payments\Helper\Data as EbanxHelper;
 use Ebanx\Payments\Logger\EbanxLogger;
 use Magento\Payment\Gateway\Http\TransferInterface;
 
@@ -25,14 +25,12 @@ class TransactionAuthorization implements ClientInterface
      * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
      * @param \Ebanx\Payments\Helper\Data $ebanxHelper
      * @param \Ebanx\Payments\Logger\EbanxLogger $ebanxLogger
-     * @param array $data
      */
     public function __construct(
         Context $context,
         EncryptorInterface $encryptor,
-        EbanxData $ebanxHelper,
-        EbanxLogger $ebanxLogger,
-        array $data = []
+        EbanxHelper $ebanxHelper,
+        EbanxLogger $ebanxLogger
     ) {
         $this->_encryptor = $encryptor;
         $this->_ebanxHelper = $ebanxHelper;
@@ -53,6 +51,6 @@ class TransactionAuthorization implements ClientInterface
         $request = $transferObject->getBody();
 
         // TODO: benjamin request authorization
-//        return $response;
+        return [];
     }
 }

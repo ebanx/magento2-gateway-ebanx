@@ -5,7 +5,7 @@ use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
-use Ebanx\Payments\Helper\Data as EbanxData;
+use Ebanx\Payments\Helper\Data as EbanxHelper;
 use Ebanx\Payments\Logger\EbanxLogger;
 
 /**
@@ -30,7 +30,7 @@ class TransactionCapture implements ClientInterface
     public function __construct(
         Context $context,
         EncryptorInterface $encryptor,
-        EbanxData $ebanxHelper,
+        EbanxHelper $ebanxHelper,
         EbanxLogger $ebanxLogger,
         array $data = []
     ) {
