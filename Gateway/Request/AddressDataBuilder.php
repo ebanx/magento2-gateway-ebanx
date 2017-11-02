@@ -1,6 +1,7 @@
 <?php
 namespace Ebanx\Payments\Gateway\Request;
 
+use Ebanx\Benjamin\Models\Address;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Ebanx\Payments\Helper\Data as EbanxData;
 use Magento\Payment\Gateway\Helper\SubjectReader;
@@ -36,22 +37,18 @@ class AddressDataBuilder implements BuilderInterface
         /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
         $order = $paymentDataObject->getOrder();
-
-        $result = [];
-
         $billingAddress = $order->getBillingAddress();
-        if ($billingAddress) {
 
-            $requestAddress = ["street" => $billingAddress->getStreetLine1(),
-                "postalCode" => $billingAddress->getPostcode(),
-                "city" => $billingAddress->getCity(),
-                "state" => $billingAddress->getRegionCode(),
-                "country" => $billingAddress->getCountryId()
-            ];
-
-            $result['address'] = $requestAddress;
-        }
-
-        return $result;
+        return [
+            'address' => new Address([
+                'address' => $billingAddress->getStreetLine1(),
+                'streetNumber' => 'N/A', // TODO: get street number
+                'city' => $billingAddress->getCity(),
+                'country' => $billingAddress->getCountryId(), //TODO: adapt country
+                'state' => $billingAddress->getRegionCode(), //TODO: adapt state
+                'streetComplement' => $billingAddress->getStreetLine2(),
+                'zipcode' => $billingAddress->getPostcode(),
+            ])
+        ];
     }
 }
