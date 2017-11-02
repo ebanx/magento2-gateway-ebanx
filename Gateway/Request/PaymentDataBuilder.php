@@ -39,14 +39,13 @@ class PaymentDataBuilder implements BuilderInterface
         $payment = $paymentDataObject->getPayment();
         $fullOrder = $payment->getOrder();
 
-        $currencyCode = $fullOrder->getOrderCurrencyCode();
         $amount = $fullOrder->getGrandTotal();
-
+        $orderId = $order->getOrderIncrementId();
 
         return [
-            "amount" => $amount,
-            "currencyCode" => $currencyCode,
-            "orderIncrementId" => $order->getOrderIncrementId()
+            'amountTotal' => $amount,
+            'merchantPaymentCode' => $orderId . '-' . time(),
+            'orderNumber' => $orderId,
         ];
     }
 }

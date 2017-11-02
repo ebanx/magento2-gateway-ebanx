@@ -49,8 +49,9 @@ class TransactionAuthorization implements ClientInterface
     public function placeRequest(TransferInterface $transferObject)
     {
         $request = $transferObject->getBody();
+        var_dump($request);
 
         // TODO: benjamin request authorization
-        return [];
+        return ['error' => 'test'];
     }
 }
