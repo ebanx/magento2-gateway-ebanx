@@ -1,6 +1,7 @@
 <?php
 namespace Ebanx\Payments\Gateway\Request;
 
+use Ebanx\Benjamin\Models\Person;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
@@ -26,14 +27,19 @@ class CustomerDataBuilder implements BuilderInterface
         $order = $paymentDataObject->getOrder();
         $billingAddress = $order->getBillingAddress();
         $customerEmail = $billingAddress->getEmail();
-        $customerId = $order->getCustomerId();
 
-        if ($customerId > 0) {
-            $result['customerId'] = $customerId;
-        }
+        $person = new Person([
+            'type' => Person::TYPE_PERSONAL,
+            'document' => '00000000000',
+            'email' => $customerEmail,
+//            'ip' => $data->getRemoteIp(),
+//            'name' => $person->getCustomerFirstname() . ' ' . $person->getCustomerLastname(),
+//            'phoneNumber' => $data->getBillingAddress()->getTelephone(),
+        ]);
 
-        $result ['customerEmail'] = $customerEmail;
-
-        return $result;
+        return [
+            'person' => $person,
+            'responsible' => $person,
+        ];
     }
 }
