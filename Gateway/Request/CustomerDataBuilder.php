@@ -19,21 +19,18 @@ class CustomerDataBuilder implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
-        $result = [];
-
         /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
 
         $order = $paymentDataObject->getOrder();
         $billingAddress = $order->getBillingAddress();
-
 	    $person = new Person([
             'type' => Person::TYPE_PERSONAL,
-            'document' => '85351346893', //TODO: Get document number
+            'document' => '85351346893',
             'email' => $billingAddress->getEmail(),
-            'name' => 'Name', //TODO: Get name
-            'phoneNumber' => '123456789', //TODO: Get phone number
-//            'ip' => $data->getRemoteIp(),
+            'name' => $billingAddress->getFirstname() . ' ' . $billingAddress->getLastname(),
+            'phoneNumber' => $billingAddress->getTelephone(),
+            'ip' => $order->getRemoteIp(),
         ]);
 
         return [
