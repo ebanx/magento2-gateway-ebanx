@@ -26,15 +26,14 @@ class CustomerDataBuilder implements BuilderInterface
 
         $order = $paymentDataObject->getOrder();
         $billingAddress = $order->getBillingAddress();
-        $customerEmail = $billingAddress->getEmail();
 
-        $person = new Person([
+	    $person = new Person([
             'type' => Person::TYPE_PERSONAL,
-            'document' => '00000000000',
-            'email' => $customerEmail,
+            'document' => '85351346893', //TODO: Get document number
+            'email' => $billingAddress->getEmail(),
+            'name' => 'Name', //TODO: Get name
+            'phoneNumber' => '123456789', //TODO: Get phone number
 //            'ip' => $data->getRemoteIp(),
-//            'name' => $person->getCustomerFirstname() . ' ' . $person->getCustomerLastname(),
-//            'phoneNumber' => $data->getBillingAddress()->getTelephone(),
         ]);
 
         return [
