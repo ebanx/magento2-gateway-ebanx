@@ -53,7 +53,7 @@ class TransactionAuthorization implements ClientInterface
 
         $response = $this->_benjamin->boleto()->create($payment);
 
-        // TODO: benjamin request authorization
-        return ['error' => 'test'];
+        //TODO: check response status
+        return $response['payment'];
     }
 }
