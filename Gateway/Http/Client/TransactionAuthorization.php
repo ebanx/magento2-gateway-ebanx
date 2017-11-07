@@ -2,6 +2,7 @@
 namespace Ebanx\Payments\Gateway\Http\Client;
 
 use Ebanx\Benjamin\Models\Payment;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
@@ -18,14 +19,30 @@ class TransactionAuthorization implements ClientInterface
      * @var \Ebanx\Benjamin\Facade
      */
     protected $_benjamin;
+    /**
+     * @var EncryptorInterface $_encryptor
+     */
+    protected $_encryptor;
+    /**
+     * @var EbanxHelper $_ebanxHelper
+     */
+    protected $_ebanxHelper;
+    /**
+     * @var EbanxLogger $_ebanxLogger
+     */
+    protected $_ebanxLogger;
+    /**
+     * @var \Magento\Framework\App\State $_appState
+     */
+    protected $_appState;
 
     /**
      * PaymentRequest constructor.
      *
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
-     * @param \Ebanx\Payments\Helper\Data $ebanxHelper
-     * @param \Ebanx\Payments\Logger\EbanxLogger $ebanxLogger
+     * @param Context $context
+     * @param EncryptorInterface $encryptor
+     * @param EbanxHelper $ebanxHelper
+     * @param EbanxLogger $ebanxLogger
      */
     public function __construct(
         Context $context,
@@ -44,8 +61,9 @@ class TransactionAuthorization implements ClientInterface
 
     /**
      * @param TransferInterface $transferObject
+     *
      * @return mixed
-     * @throws \Magento\Payment\Gateway\Http\ClientException
+     * @throws CouldNotSaveException
      */
     public function placeRequest(TransferInterface $transferObject)
     {
@@ -53,7 +71,10 @@ class TransactionAuthorization implements ClientInterface
 
         $response = $this->_benjamin->boleto()->create($payment);
 
-        //TODO: check response status
+        if ($response['status'] !== 'SUCCESS') {
+            throw new CouldNotSaveException(__($response['status_code'] . ': ' . $response['status_message']));
+        }
+
         return $response['payment'];
     }
 }
