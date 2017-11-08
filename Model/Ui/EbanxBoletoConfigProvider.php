@@ -66,9 +66,6 @@ class EbanxBoletoConfigProvider implements ConfigProviderInterface
                     'isActive' => true,
                     'redirectUrl' => $this->_urlBuilder->getUrl(
                         'checkout/onepage/success/', ['_secure' => $this->_getRequest()->isSecure()])
-                ],
-                'ebanxBoleto' => [
-                    'boletoTypes' => 'boleto' //$this->_ebanxHelper->getBoletoTypes()
                 ]
             ]
         ];
