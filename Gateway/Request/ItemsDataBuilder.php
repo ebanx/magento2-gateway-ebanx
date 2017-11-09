@@ -35,11 +35,26 @@ class ItemsDataBuilder implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
+        /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
+        $paymentDataObject = SubjectReader::readPayment($buildSubject);
+
+        $items = $paymentDataObject->getOrder()->getItems();
+
+        $itemsArray = [];
+
+        /** @var \Magento\Sales\Model\Order\Item $item */
+        foreach ($items as $item) {
+            $itemsArray[] = new Item([
+                'sku' => $item->getSku(),
+                'name' => $item->getName(),
+                'description' => $item->getDescription(),
+                'unitPrice' => $item->getPrice(),
+                'quantity' => $item->getQtyOrdered(),
+            ]);
+        }
+
         return [
-            'items' => [
-//                new Item(),
-            //TODO: Add items
-            ]
+            'items' => $itemsArray,
         ];
     }
 }
