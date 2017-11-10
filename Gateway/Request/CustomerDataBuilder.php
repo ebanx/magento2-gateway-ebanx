@@ -32,11 +32,12 @@ class CustomerDataBuilder implements BuilderInterface
                                  ->setWebsiteId($order->getStoreId())
                                  ->load($order->getCustomerId());
 
-        $taxVatNumber = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
+        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
+        preg_replace('/[^0-9]/', '', $document);
 
 	    $person = new Person([
-            'type' => Person::TYPE_PERSONAL,
-            'document' => preg_replace('/[^0-9]/', '', $taxVatNumber),
+            'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
+            'document' => $document,
             'email' => $billingAddress->getEmail(),
             'name' => $billingAddress->getFirstname() . ' ' . $billingAddress->getLastname(),
             'phoneNumber' => $billingAddress->getTelephone(),
@@ -47,5 +48,14 @@ class CustomerDataBuilder implements BuilderInterface
             'person' => $person,
             'responsible' => $person,
         ];
+    }
+
+    public function getPersonType($document, $countryAbbr)
+    {
+        if ($countryAbbr !== 'BR' || strlen($document) < 14) {
+            return Person::TYPE_PERSONAL;
+        }
+
+        return Person::TYPE_BUSINESS;
     }
 }
