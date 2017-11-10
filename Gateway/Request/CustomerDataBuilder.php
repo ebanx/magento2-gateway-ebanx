@@ -11,7 +11,6 @@ use Magento\Payment\Gateway\Helper\SubjectReader;
  */
 class CustomerDataBuilder implements BuilderInterface
 {
-
     /**
      * Add shopper data into request
      *
@@ -25,17 +24,21 @@ class CustomerDataBuilder implements BuilderInterface
 
         $order = $paymentDataObject->getOrder();
         $billingAddress = $order->getBillingAddress();
+        $objectManager = ObjectManager::getInstance();
+        /** @var \Magento\Sales\Model\Order $fullOrder*/
+        $fullOrder = $paymentDataObject->getPayment()->getOrder();
         /** @var \Magento\Customer\Model\Data\Customer $customer */
-        $customer = ObjectManager::getInstance()
-                                 ->create('Magento\Customer\Model\Customer')
+        $customer = $objectManager->create('Magento\Customer\Model\Customer')
                                  ->setWebsiteId($order->getStoreId())
-                                 ->loadByEmail($billingAddress->getEmail());
+                                 ->load($order->getCustomerId());
+
+        $taxVatNumber = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
 
 	    $person = new Person([
             'type' => Person::TYPE_PERSONAL,
-            'document' => $customer->getTaxvat(),
+            'document' => preg_replace('/[^0-9]/', '', $taxVatNumber),
             'email' => $billingAddress->getEmail(),
-            'name' => $customer->getFirstname() . ' ' . $customer->getLastname(),
+            'name' => $billingAddress->getFirstname() . ' ' . $billingAddress->getLastname(),
             'phoneNumber' => $billingAddress->getTelephone(),
             'ip' => $order->getRemoteIp(),
         ]);
