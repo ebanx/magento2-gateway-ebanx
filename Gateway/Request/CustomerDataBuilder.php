@@ -2,7 +2,7 @@
 namespace Ebanx\Payments\Gateway\Request;
 
 use Ebanx\Benjamin\Models\Person;
-use Magento\Framework\App\ObjectManager;
+use Magento\Customer\Model\Customer;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
@@ -11,6 +11,13 @@ use Magento\Payment\Gateway\Helper\SubjectReader;
  */
 class CustomerDataBuilder implements BuilderInterface
 {
+    private $customer;
+
+    public function __construct(Customer $customer)
+    {
+        $this->customer = $customer;
+    }
+
     /**
      * Add shopper data into request
      *
@@ -24,13 +31,11 @@ class CustomerDataBuilder implements BuilderInterface
 
         $order = $paymentDataObject->getOrder();
         $billingAddress = $order->getBillingAddress();
-        $objectManager = ObjectManager::getInstance();
         /** @var \Magento\Sales\Model\Order $fullOrder*/
         $fullOrder = $paymentDataObject->getPayment()->getOrder();
         /** @var \Magento\Customer\Model\Data\Customer $customer */
-        $customer = $objectManager->create('Magento\Customer\Model\Customer')
-                                 ->setWebsiteId($order->getStoreId())
-                                 ->load($order->getCustomerId());
+        $customer = $this->customer->setWebsiteId($order->getStoreId())
+                                   ->loadByEmail($billingAddress->getEmail());
 
         $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
         preg_replace('/[^0-9]/', '', $document);
