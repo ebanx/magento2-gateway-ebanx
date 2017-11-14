@@ -2,7 +2,10 @@
 namespace Ebanx\Payments\Gateway\Http\Client;
 
 use Ebanx\Benjamin\Models\Payment;
+use Ebanx\Payments\Model\Order\Payment as PaymentModel;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Encryption\EncryptorInterface;
@@ -43,6 +46,10 @@ class TransactionAuthorization implements ClientInterface
      * @param EncryptorInterface $encryptor
      * @param EbanxHelper $ebanxHelper
      * @param EbanxLogger $ebanxLogger
+     *
+     * @internal param PaymentModel $ebanxPaymentModel
+     *
+     * @internal param PaymentModel $paymentModel
      */
     public function __construct(
         Context $context,
@@ -75,6 +82,23 @@ class TransactionAuthorization implements ClientInterface
             throw new CouldNotSaveException(__($response['status_code'] . ': ' . $response['status_message']));
         }
 
+        $this->persistPayment($response['payment'], $transferObject->getBody());
+
         return $response['payment'];
+    }
+
+
+
+    private function persistPayment($paymentResponse, $orderId) {
+        $_ebanxPaymentModel = ObjectManager::getInstance()->create('Ebanx\Payments\Model\Order\Payment');
+        $_ebanxPaymentModel->setPaymentHash($paymentResponse['hash'])
+                          ->setSalesOrderEntityId(37)
+                          ->setDueDate((new \Zend_Date($paymentResponse['due_date']))->get('YYYY-MM-dd HH:mm:ss'))
+                          ->setBarCode($paymentResponse['boleto_barcode'])
+                          ->setInstalments($paymentResponse['instalments'])
+                          ->setEnvironment('sandbox')
+                          ->setCustomerDocument($paymentResponse['customer']['document'])
+                          ->setLocalAmount($paymentResponse['amount_br']);
+        $_ebanxPaymentModel->save();
     }
 }
