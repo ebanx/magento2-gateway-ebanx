@@ -46,7 +46,7 @@ class AddressDataBuilder implements BuilderInterface
                 'streetNumber' => 'N/A', // TODO: get street number
                 'city' => $billingAddress->getCity(),
                 'country' => $this->adaptCountry($billingAddress->getCountryId()),
-                'state' => $billingAddress->getRegionCode(), //TODO: adapt state
+                'state' => $billingAddress->getRegionCode(),
                 'streetComplement' => $billingAddress->getStreetLine2(),
                 'zipcode' => $billingAddress->getPostcode(),
             ])
