@@ -23,7 +23,6 @@ class CustomerDataBuilder implements BuilderInterface
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
 
         $order = $paymentDataObject->getOrder();
-        var_dump($paymentDataObject->getPayment()->getOrder()->getId());
         $billingAddress = $order->getBillingAddress();
 	    $person = new Person([
             'type' => Person::TYPE_PERSONAL,

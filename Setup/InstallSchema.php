@@ -21,7 +21,7 @@ class InstallSchema implements InstallSchemaInterface {
             return;
         }
 
-        $table      = $connection
+        $table = $connection
             ->newTable($setup->getTable('ebanx_payments'))
             ->addColumn(
                 'payment_id',
@@ -36,10 +36,10 @@ class InstallSchema implements InstallSchemaInterface {
                 ['nullable' => false]
             )
             ->addColumn(
-                'sales_order_entity_id',
-                Table::TYPE_INTEGER,
-                10,
-                ['nullable' => false, 'unsigned' => true]
+                'order_id',
+                Table::TYPE_TEXT,
+                50,
+                ['nullable' => false]
             )
             ->addColumn(
                 'due_date',
@@ -78,15 +78,6 @@ class InstallSchema implements InstallSchemaInterface {
                 ['nullable' => false]
             );
         $connection->createTable($table);
-        $connection
-              ->addForeignKey(
-                  $setup->getFkName('ebanx_payments', 'sales_order_entity_id', 'sales_order', 'entity_id'),
-                  'ebanx_payments',
-                  'sales_order_entity_id',
-                  'sales_order',
-                  'entity_id',
-                  Table::ACTION_CASCADE
-              );
         $setup->endSetup();
     }
 }
