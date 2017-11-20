@@ -3,6 +3,7 @@ namespace Ebanx\Payments\Gateway\Response;
 
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
+use Magento\Sales\Api\Data\OrderPaymentInterface;
 
 class PaymentAuthorisationDetailsHandler implements HandlerInterface
 {
@@ -17,10 +18,8 @@ class PaymentAuthorisationDetailsHandler implements HandlerInterface
         /** @var OrderPaymentInterface $payment */
         $payment = $payment->getPayment();
 
-        // set transaction not to processing by default wait for notification
         $payment->setIsTransactionPending(true);
 
-        // no not send order confirmation mail
         $payment->getOrder()->setCanSendNewEmailFlag(false);
 
         $payment->setCcTransId($response['hash']);
@@ -28,9 +27,7 @@ class PaymentAuthorisationDetailsHandler implements HandlerInterface
 
         $payment->setTransactionId($response['hash']);
 
-        // do not close transaction so you can do a cancel() and void
         $payment->setIsTransactionClosed(false);
         $payment->setShouldCloseParentTransaction(false);
-
     }
 }

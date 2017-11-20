@@ -1,9 +1,9 @@
 <?php
 namespace Ebanx\Payments\Gateway\Http\Client;
 
-use Ebanx\Benjamin\Models\Currency;
 use Ebanx\Payments\Helper\Data as Helper;
 use Ebanx\Benjamin\Models\Configs\Config;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Api
 {
@@ -18,13 +18,23 @@ class Api
     private $helper;
 
     /**
+     * @var StoreManagerInterface
+     */
+    private $_storeManager;
+
+    /**
      * Api constructor.
      *
      * @param Helper $helper
+     * @param StoreManagerInterface $storeManager
      */
-    public function __construct(Helper $helper)
+    public function __construct(
+        Helper $helper,
+        StoreManagerInterface $storeManager
+    )
     {
         $this->helper = $helper;
+        $this->_storeManager = $storeManager;
         $this->benjamin = EBANX($this->getConfig());
     }
 
@@ -45,7 +55,7 @@ class Api
             'integrationKey' => $this->helper->getEbanxAbstractConfigData('integration_key_live'),
             'sandboxIntegrationKey' => $this->helper->getEbanxAbstractConfigData('integration_key_sandbox'),
             'isSandbox' => $this->helper->getEbanxAbstractConfigData('mode'),
-            'baseCurrency' => Currency::USD, // TODO: get store currency
+            'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
             'notificationUrl' => '', // TODO: create notification controller
             'redirectUrl' => '', // TODO: create notification controller
             'userValues' => array(

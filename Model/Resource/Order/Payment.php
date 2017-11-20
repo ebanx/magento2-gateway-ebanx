@@ -10,6 +10,6 @@ class Payment extends AbstractDb
      */
     public function _construct()
     {
-        $this->_init('ebanx_order_payment', 'entity_id');
+        $this->_init('ebanx_payments', 'payment_id');
     }
 }
