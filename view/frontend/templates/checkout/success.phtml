@@ -2,7 +2,10 @@
 /**
  * @var \Ebanx\Payments\Block\Checkout\Success $this
  */
+
+    $order = $this->getOrder();
 ?>
 <p>
     Test EBANX Thank You Page
+    <?= $this->getDueDate() ?>
 </p>

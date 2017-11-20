@@ -1,7 +1,11 @@
 <?php
 namespace Ebanx\Payments\Block\Checkout;
 
+use Ebanx\Payments\Helper\Data as Helper;
+use Magento\Checkout\Model\Session;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Sales\Model\OrderFactory;
 
 class Success extends Template
 {
@@ -12,32 +16,43 @@ class Success extends Template
     protected $_order;
 
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var Session
      */
     protected $_checkoutSession;
 
     /**
-     * @var \Magento\Sales\Model\OrderFactory
+     * @var OrderFactory
      */
     protected $_orderFactory;
+    /**
+     * @var Helper
+     */
+    protected $_helper;
 
     /**
      * Success constructor.
      *
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Checkout\Model\Session $checkoutSession
-     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param Context $context
+     * @param Session $checkoutSession
+     * @param OrderFactory $orderFactory
+     * @param Helper $helper
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Sales\Model\OrderFactory $orderFactory,
+        Context $context,
+        Session $checkoutSession,
+        OrderFactory $orderFactory,
+        Helper $helper,
         array $data = []
     ) {
         $this->_checkoutSession = $checkoutSession;
         $this->_orderFactory = $orderFactory;
+        $this->_helper = $helper;
         parent::__construct($context, $data);
+    }
+
+    public function getDueDate() {
+        return $this->_helper->getDueDate($this->_checkoutSession->getLastRealOrderId(), 'dd/MM');
     }
 
     /**
@@ -46,7 +61,7 @@ class Success extends Template
     public function getOrder()
     {
         if ($this->_order == null) {
-            $this->_order = $this->_orderFactory->create()->load($this->_checkoutSession->getLastOrderId());
+            $this->_order = $this->_orderFactory->create()->loadByIncrementId($this->_checkoutSession->getLastRealOrderId());
         }
         return $this->_order;
     }
