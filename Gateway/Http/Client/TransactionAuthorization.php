@@ -3,8 +3,8 @@ namespace Ebanx\Payments\Gateway\Http\Client;
 
 use Ebanx\Benjamin\Models\Payment;
 use Ebanx\Payments\Model\Order\Payment as EbanxPaymentModel;
+use Ebanx\Payments\Model\Resource\Order\Payment as EbanxResourceModel;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Framework\Model\Context;
@@ -46,6 +46,10 @@ class TransactionAuthorization implements ClientInterface
      * @var ScopeConfigInterface
      */
     protected $_scopeConfig;
+    /**
+     * @var EbanxResourceModel
+     */
+    protected $_ebanxResourceModel;
 
     /**
      * PaymentRequest constructor.
@@ -54,23 +58,26 @@ class TransactionAuthorization implements ClientInterface
      * @param EncryptorInterface $encryptor
      * @param EbanxHelper $ebanxHelper
      * @param EbanxLogger $ebanxLogger
-     * @param EbanxPaymentModel $_ebanxPaymentModel
+     * @param EbanxPaymentModel $ebanxPaymentModel
      * @param ScopeConfigInterface $scopeConfig
+     * @param EbanxResourceModel $ebanxResourceModel
      */
     public function __construct(
         Context $context,
         EncryptorInterface $encryptor,
         EbanxHelper $ebanxHelper,
         EbanxLogger $ebanxLogger,
-        EbanxPaymentModel $_ebanxPaymentModel,
-        ScopeConfigInterface $scopeConfig
+        EbanxPaymentModel $ebanxPaymentModel,
+        ScopeConfigInterface $scopeConfig,
+        EbanxResourceModel $ebanxResourceModel
     ) {
         $this->_encryptor = $encryptor;
         $this->_ebanxHelper = $ebanxHelper;
         $this->_ebanxLogger = $ebanxLogger;
         $this->_appState = $context->getAppState();
-        $this->_ebanxPaymentModel = $_ebanxPaymentModel;
+        $this->_ebanxPaymentModel = $ebanxPaymentModel;
         $this->_scopeConfig = $scopeConfig;
+        $this->_ebanxResourceModel = $ebanxResourceModel;
 
         $api = new Api($this->_ebanxHelper);
         $this->_benjamin = $api->benjamin();
@@ -100,14 +107,15 @@ class TransactionAuthorization implements ClientInterface
 
 
     private function persistPayment($paymentResponse) {
+        $mode = $this->_ebanxHelper->getEbanxAbstractConfigData('mode') ? 'sandbox' : 'live';
         $this->_ebanxPaymentModel->setPaymentHash($paymentResponse['hash'])
                           ->setOrderId($paymentResponse['order_number'])
                           ->setDueDate($paymentResponse['due_date'])
                           ->setBarCode($paymentResponse['boleto_barcode'])
                           ->setInstalments($paymentResponse['instalments'])
-                          ->setEnvironment($this->_ebanxHelper->getEbanxAbstractConfigData('mode'))
+                          ->setEnvironment($mode)
                           ->setCustomerDocument($paymentResponse['customer']['document'])
                           ->setLocalAmount($paymentResponse['amount_br']);
-        $this->_ebanxPaymentModel->save();
+        $this->_ebanxResourceModel->save($this->_ebanxPaymentModel);
     }
 }
