@@ -61,6 +61,7 @@ class TransactionAuthorization implements ClientInterface
      * @param EbanxPaymentModel $ebanxPaymentModel
      * @param ScopeConfigInterface $scopeConfig
      * @param EbanxResourceModel $ebanxResourceModel
+     * @param Api $api
      */
     public function __construct(
         Context $context,
@@ -69,7 +70,8 @@ class TransactionAuthorization implements ClientInterface
         EbanxLogger $ebanxLogger,
         EbanxPaymentModel $ebanxPaymentModel,
         ScopeConfigInterface $scopeConfig,
-        EbanxResourceModel $ebanxResourceModel
+        EbanxResourceModel $ebanxResourceModel,
+        Api $api
     ) {
         $this->_encryptor = $encryptor;
         $this->_ebanxHelper = $ebanxHelper;
@@ -79,7 +81,6 @@ class TransactionAuthorization implements ClientInterface
         $this->_scopeConfig = $scopeConfig;
         $this->_ebanxResourceModel = $ebanxResourceModel;
 
-        $api = new Api($this->_ebanxHelper);
         $this->_benjamin = $api->benjamin();
     }
 
