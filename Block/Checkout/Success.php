@@ -1,7 +1,6 @@
 <?php
 namespace Ebanx\Payments\Block\Checkout;
 
-use Ebanx\Payments\Gateway\Http\Client\Api;
 use Ebanx\Payments\Helper\Data as Helper;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\UrlInterface;
@@ -34,10 +33,6 @@ class Success extends Template
      * @var UrlInterface
      */
     protected $_urlBuilder;
-    /**
-     * @var \Ebanx\Benjamin\Services\Gateways\Boleto
-     */
-    protected $_gateway;
 
     /**
      * Success constructor.
@@ -47,7 +42,6 @@ class Success extends Template
      * @param OrderFactory $orderFactory
      * @param Helper $helper
      * @param UrlInterface $urlBuilder
-     * @param Api $api
      * @param array $data
      */
     public function __construct(
@@ -56,14 +50,12 @@ class Success extends Template
         OrderFactory $orderFactory,
         Helper $helper,
         UrlInterface $urlBuilder,
-        Api $api,
         array $data = []
     ) {
         $this->_checkoutSession = $checkoutSession;
         $this->_orderFactory = $orderFactory;
         $this->_helper = $helper;
         $this->_urlBuilder = $urlBuilder;
-        $this->_gateway = $api->benjamin()->boleto();
         parent::__construct($context, $data);
     }
 
