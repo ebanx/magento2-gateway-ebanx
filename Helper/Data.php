@@ -123,14 +123,4 @@ class Data extends AbstractHelper
 
         return $this->scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);
     }
-
-    /**
-     * @param $hash
-     *
-     * @return array
-     */
-    public function getPaymentByHash($hash)
-    {
-        return (new Api($this, $this->_storeManager))->benjamin()->paymentInfo()->findByHash($hash);
-    }
 }
