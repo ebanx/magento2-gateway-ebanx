@@ -17,18 +17,20 @@ class Success extends Template
     protected $_order;
 
     /**
-     * @var Session
+     * @var int
      */
-    protected $_checkoutSession;
+    protected $_orderId;
 
     /**
      * @var OrderFactory
      */
     protected $_orderFactory;
+
     /**
      * @var Helper
      */
     protected $_helper;
+
     /**
      * @var UrlInterface
      */
@@ -52,7 +54,7 @@ class Success extends Template
         UrlInterface $urlBuilder,
         array $data = []
     ) {
-        $this->_checkoutSession = $checkoutSession;
+        $this->_orderId = $checkoutSession->getLastRealOrderId();
         $this->_orderFactory = $orderFactory;
         $this->_helper = $helper;
         $this->_urlBuilder = $urlBuilder;
@@ -63,7 +65,7 @@ class Success extends Template
      * @return string
      */
     public function getDueDate() {
-        return $this->_helper->getDueDate($this->_checkoutSession->getLastRealOrderId(), 'dd/MM');
+        return $this->_helper->getDueDate($this->_orderId, 'dd/MM');
     }
 
     /**
@@ -71,8 +73,8 @@ class Success extends Template
      */
     public function getVoucherUrl()
     {
-        $hash = $this->_helper->getPaymentHash($this->_checkoutSession->getLastRealOrderId());
-        $isSandbox = $this->_helper->getPaymentMode($this->_checkoutSession->getLastRealOrderId()) === 'sandbox' ? true : false;
+        $hash = $this->_helper->getPaymentHash($this->_orderId);
+        $isSandbox = $this->_helper->getPaymentMode($this->_orderId) === 'sandbox' ? true : false;
         return $this->_urlBuilder->getUrl('ebanx/voucher/show', array(
             'hash' => $hash,
             'is_sandbox' => $isSandbox
@@ -85,7 +87,7 @@ class Success extends Template
     public function getOrder()
     {
         if ($this->_order == null) {
-            $this->_order = $this->_orderFactory->create()->loadByIncrementId($this->_checkoutSession->getLastRealOrderId());
+            $this->_order = $this->_orderFactory->create()->loadByIncrementId($this->_orderId);
         }
         return $this->_order;
     }
