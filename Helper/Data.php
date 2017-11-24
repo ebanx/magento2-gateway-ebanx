@@ -26,7 +26,7 @@ class Data extends AbstractHelper
     /**
      * @var Payment
      */
-    protected $_ebanxData;
+    protected $_ebanxPaymentCollection;
     /**
      * @var StoreManagerInterface
      */
@@ -36,17 +36,17 @@ class Data extends AbstractHelper
      * Data constructor.
      *
      * @param Context $context
-     * @param CollectionFactory $ebanxData
+     * @param CollectionFactory $collectionFactory
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
-        CollectionFactory $ebanxData,
+        CollectionFactory $collectionFactory,
         StoreManagerInterface $storeManager
     )
     {
-        $this->_storeManager = $storeManager;
-        $this->_ebanxData = $ebanxData;
+        $this->_storeManager           = $storeManager;
+        $this->_ebanxPaymentCollection = $collectionFactory->create();
         parent::__construct($context);
     }
 
@@ -68,7 +68,7 @@ class Data extends AbstractHelper
      * @return string
      */
     public function getDueDate($orderId, $format = 'YYYY-MM-dd HH:mm:ss') {
-        $date = $this->_ebanxData->create()->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('due_date');
+        $date = $this->_ebanxPaymentCollection->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('due_date');
         $dueDate = new Zend_Date($date);
         return $dueDate->get($format);
     }
@@ -79,7 +79,7 @@ class Data extends AbstractHelper
      * @return mixed
      */
     public function getBarCode($orderId) {
-        return $this->_ebanxData->create()->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('bar_code');
+        return $this->_ebanxPaymentCollection->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('bar_code');
     }
 
     /**
@@ -88,7 +88,7 @@ class Data extends AbstractHelper
      * @return mixed
      */
     public function getPaymentHash($orderId) {
-        return $this->_ebanxData->create()->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('payment_hash');
+        return $this->_ebanxPaymentCollection->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('payment_hash');
     }
 
     /**
@@ -97,7 +97,7 @@ class Data extends AbstractHelper
      * @return mixed
      */
     public function getPaymentMode($orderId) {
-        return $this->_ebanxData->create()->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('environment');
+        return $this->_ebanxPaymentCollection->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('environment');
     }
 
     /**
