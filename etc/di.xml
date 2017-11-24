@@ -177,7 +177,6 @@
         <arguments>
             <argument name="handlers" xsi:type="array">
                 <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
-                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
             </argument>
         </arguments>
     </virtualType>
@@ -185,7 +184,6 @@
         <arguments>
             <argument name="handlers" xsi:type="array">
                 <item name="capture" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCaptureDetailsHandler</item>
-                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
             </argument>
         </arguments>
     </virtualType>
@@ -193,7 +191,6 @@
         <arguments>
             <argument name="handlers" xsi:type="array">
                 <item name="cancel" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCancelDetailsHandler</item>
-                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
             </argument>
         </arguments>
     </virtualType>
