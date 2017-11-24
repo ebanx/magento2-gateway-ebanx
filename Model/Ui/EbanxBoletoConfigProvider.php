@@ -13,7 +13,7 @@ class EbanxBoletoConfigProvider implements ConfigProviderInterface
     const CODE = 'ebanx_boleto';
 
     /**
-     * @var PaymentHelper
+     * @var Data
      */
     protected $_paymentHelper;
 
