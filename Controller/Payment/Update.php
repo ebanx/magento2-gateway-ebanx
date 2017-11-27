@@ -1,10 +1,6 @@
 <?php
-
-
 namespace Ebanx\Payments\Controller\Payment;
 
-
-use Ebanx\Payments\Helper\Data;
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -17,11 +13,6 @@ class Update extends Action
      * @var Collection
      */
     protected $ebanxCollection;
-
-    /**
-     * @var Data
-     */
-    protected $ebanxHelper;
 
     /**
      * @var OrderFactory
@@ -38,20 +29,17 @@ class Update extends Action
      *
      * @param Context      $context
      * @param Collection   $ebanxCollection
-     * @param Data         $ebanxHelper
      * @param OrderFactory $orderFactory
      * @param JsonFactory  $jsonFactory
      */
     public function __construct(
         Context $context,
         Collection $ebanxCollection,
-        Data $ebanxHelper,
         OrderFactory $orderFactory,
         JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
         $this->ebanxCollection   = $ebanxCollection;
-        $this->ebanxHelper       = $ebanxHelper;
         $this->orderFactory      = $orderFactory;
         $this->jsonResultFactory = $jsonFactory;
     }
