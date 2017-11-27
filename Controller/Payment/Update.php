@@ -29,11 +29,6 @@ class Update extends Action
     protected $orderFactory;
 
     /**
-     * @var \Magento\Framework\Controller\ResultFactory
-     */
-    protected $resultFactory;
-
-    /**
      * @var JsonFactory
      */
     protected $jsonResultFactory;
@@ -55,7 +50,6 @@ class Update extends Action
         JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
-        $this->resultFactory     = $context->getResultFactory();
         $this->ebanxCollection   = $ebanxCollection;
         $this->ebanxHelper       = $ebanxHelper;
         $this->orderFactory      = $orderFactory;
