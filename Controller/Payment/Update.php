@@ -130,5 +130,7 @@ class Update extends Action
         if (empty($request->getParam('hash_codes'))) {
             return 'Invalid hash codes.';
         }
+
+        return '';
     }
 }
