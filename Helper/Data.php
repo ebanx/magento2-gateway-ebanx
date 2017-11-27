@@ -5,11 +5,27 @@ namespace Ebanx\Payments\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Data extends AbstractHelper
 {
-    public function __construct(Context $context)
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $_storeManager;
+
+    /**
+     * Data constructor.
+     *
+     * @param Context $context
+     * @param StoreManagerInterface $storeManager
+     */
+    public function __construct(
+        Context $context,
+        StoreManagerInterface $storeManager
+    )
     {
+        $this->_storeManager           = $storeManager;
         parent::__construct($context);
     }
 

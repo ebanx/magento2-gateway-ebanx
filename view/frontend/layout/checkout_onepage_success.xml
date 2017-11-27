@@ -2,9 +2,13 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="order.success.additional.info">
+        <referenceContainer name="content">
             <block class="Ebanx\Payments\Block\Checkout\Success" name="onepage.success.ebanx_payments"
-                   template="checkout/success.phtml"/>
+                   template="checkout/success.phtml">
+                <!-- Brazil -->
+                <block class="Ebanx\Payments\Block\Checkout\Success" name="ebanx.success.payment.boleto"
+                   as="ebanx_boleto" template="checkout/success/boleto.phtml"/>
+            </block>
         </referenceContainer>
     </body>
 </page>

@@ -1,7 +1,12 @@
 <?php
 namespace Ebanx\Payments\Block\Checkout;
 
+use Ebanx\Payments\Model\Resource\Order\Payment\CollectionFactory;
+use Magento\Checkout\Model\Session;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Sales\Model\OrderFactory;
 
 class Success extends Template
 {
@@ -12,32 +17,72 @@ class Success extends Template
     protected $_order;
 
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var int
      */
-    protected $_checkoutSession;
+    protected $_orderId;
 
     /**
-     * @var \Magento\Sales\Model\OrderFactory
+     * @var OrderFactory
      */
     protected $_orderFactory;
 
     /**
+     * @var UrlInterface
+     */
+    protected $_urlBuilder;
+    /**
+     * @var \Ebanx\Payments\Model\Resource\Order\Payment\Collection
+     */
+    protected $_ebanxPaymentCollection;
+
+    /**
      * Success constructor.
      *
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Checkout\Model\Session $checkoutSession
-     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param Context $context
+     * @param Session $checkoutSession
+     * @param OrderFactory $orderFactory
+     * @param CollectionFactory $collectionFactory
+     * @param UrlInterface $urlBuilder
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Sales\Model\OrderFactory $orderFactory,
+        Context $context,
+        Session $checkoutSession,
+        OrderFactory $orderFactory,
+        CollectionFactory $collectionFactory,
+        UrlInterface $urlBuilder,
         array $data = []
     ) {
-        $this->_checkoutSession = $checkoutSession;
+        $this->_orderId = $checkoutSession->getLastRealOrderId();
         $this->_orderFactory = $orderFactory;
+        $this->_ebanxPaymentCollection = $collectionFactory->create();
+        $this->_urlBuilder = $urlBuilder;
         parent::__construct($context, $data);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDueDate() {
+        return $this->_ebanxPaymentCollection->getDueDateByOrderId($this->_orderId, 'dd/MM');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVoucherUrl()
+    {
+        $hash = $this->_ebanxPaymentCollection->getPaymentHashByOrderId($this->_orderId);
+        $isSandbox = $this->_ebanxPaymentCollection->getPaymentModeByOrderId($this->_orderId) === 'sandbox' ? true : false;
+        return $this->_urlBuilder->getUrl('ebanx/voucher/show', array(
+            'hash' => $hash,
+            'is_sandbox' => $isSandbox
+        ));
+    }
+
+    public function getSuccessPaymentBlock()
+    {
+        return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
     }
 
     /**
@@ -46,7 +91,7 @@ class Success extends Template
     public function getOrder()
     {
         if ($this->_order == null) {
-            $this->_order = $this->_orderFactory->create()->load($this->_checkoutSession->getLastOrderId());
+            $this->_order = $this->_orderFactory->create()->loadByIncrementId($this->_orderId);
         }
         return $this->_order;
     }
