@@ -4,17 +4,29 @@
 namespace Ebanx\Payments\Controller\Payment;
 
 
-use Ebanx\Payments\Model\Resource\Order\Payment\CollectionFactory;
+use Ebanx\Payments\Helper\Data;
+use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Sales\Model\OrderFactory;
 
 class Update extends Action
 {
     /**
-     * @var CollectionFactory
+     * @var Collection
      */
-    protected $ebanxCollectionFactory;
+    protected $ebanxCollection;
+
+    /**
+     * @var Data
+     */
+    protected $ebanxHelper;
+
+    /**
+     * @var OrderFactory
+     */
+    protected $orderFactory;
 
     /**
      * @var \Magento\Framework\Controller\ResultFactory
@@ -29,19 +41,25 @@ class Update extends Action
     /**
      * Constructor
      *
-     * @param Context           $context
-     * @param CollectionFactory $ebanxCollectionFactory
-     * @param JsonFactory       $jsonFactory
+     * @param Context      $context
+     * @param Collection   $ebanxCollection
+     * @param Data         $ebanxHelper
+     * @param OrderFactory $orderFactory
+     * @param JsonFactory  $jsonFactory
      */
     public function __construct(
         Context $context,
-        CollectionFactory $ebanxCollectionFactory,
+        Collection $ebanxCollection,
+        Data $ebanxHelper,
+        OrderFactory $orderFactory,
         JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
-        $this->resultFactory          = $context->getResultFactory();
-        $this->ebanxCollectionFactory = $ebanxCollectionFactory;
-        $this->jsonResultFactory      = $jsonFactory;
+        $this->resultFactory     = $context->getResultFactory();
+        $this->ebanxCollection   = $ebanxCollection;
+        $this->ebanxHelper       = $ebanxHelper;
+        $this->orderFactory      = $orderFactory;
+        $this->jsonResultFactory = $jsonFactory;
     }
 
     /**
@@ -67,7 +85,32 @@ class Update extends Action
 
         $hashCodes = explode(',', $request->getParam('hash_codes'));
 
+        foreach ($hashCodes as $hashCode) {
+            $orderId = $this->ebanxCollection->getOrderIdByPaymentHash($hashCode);
+            if (!$orderId) {
+                $result->setHttpResponseCode(400);
+                $result->setData([
+                    'status'  => 'ERROR',
+                    'message' => 'Payment not found.',
+                ]);
 
+                return $result;
+            }
+            $data['order_id'] = $orderId;
+
+            $order     = $this->orderFactory->create()->loadByIncrementId($orderId);
+            $orderData = $order->getData();
+            if (empty($orderData)) {
+                $result->setHttpResponseCode(400);
+                $result->setData([
+                    'status'  => 'ERROR',
+                    'message' => 'Order not found.',
+                ]);
+
+                return $result;
+            }
+            $data['order_data'] = $orderData;
+        }
         $result->setData($data);
 
         return $result;
