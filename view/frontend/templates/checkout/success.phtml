@@ -3,24 +3,7 @@
  * @var \Ebanx\Payments\Block\Checkout\Success $this
  */
 
-    $order = $this->getOrder();
-    $dueDate = $this->getDueDate();
-?>
+$paymentBlock = $this->getSuccessPaymentBlock();
 
-<div class="ebanx-details">
-    <p><strong><?= $order->getBillingAddress()->getFirstname(); ?></strong>, seu boleto foi gerado e a data de vencimento é dia
-        <strong><?= $dueDate ?></strong> :)</p>
-    <p>Enviamos uma cópia para o email <strong><?= $order->getBillingAddress()->getEmail(); ?></strong></p>
-    <p>Pague o boleto no Internet Banking de seu banco apenas copiando o código de barras! Você também pode imprimir o
-        boleto e pagar em casas lotéricas e no caixa do seu banco.</p>
-    <p><b>Dica</b>: Pagar seu boleto até às 21h de dias úteis, faz com que o pagamento tenha a chance de ser confirmado
-        mais rápido :)</p>
-
-    <div>
-        <iframe id="ebanx-boleto-frame" src="<?php echo $this->getVoucherUrl(); ?>"
-                style="width: 100%; border: 0px; height: 1040px"></iframe>
-    </div>
-
-    <?php include 'apps.phtml' ?>
-</div>
+echo $this->getChildHtml($paymentBlock);
 
