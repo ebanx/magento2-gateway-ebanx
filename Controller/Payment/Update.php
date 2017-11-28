@@ -2,6 +2,7 @@
 namespace Ebanx\Payments\Controller\Payment;
 
 use Ebanx\Payments\Gateway\Http\Client\Api;
+use Ebanx\Payments\Helper\Data;
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -14,6 +15,11 @@ class Update extends Action
      * @var Api
      */
     protected $ebanxApi;
+
+    /**
+     * @var Data
+     */
+    protected $ebanxHelper;
 
     /**
      * @var Collection
@@ -34,6 +40,7 @@ class Update extends Action
      * Constructor
      *
      * @param Context      $context
+     * @param Data         $ebanxHelper
      * @param Api          $ebanxApi
      * @param Collection   $ebanxCollection
      * @param OrderFactory $orderFactory
@@ -41,12 +48,14 @@ class Update extends Action
      */
     public function __construct(
         Context $context,
+        Data $ebanxHelper,
         Api $ebanxApi,
         Collection $ebanxCollection,
         OrderFactory $orderFactory,
         JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
+        $this->ebanxHelper = $ebanxHelper;
         $this->ebanxApi = $ebanxApi;
         $this->ebanxCollection   = $ebanxCollection;
         $this->orderFactory      = $orderFactory;
@@ -150,5 +159,17 @@ class Update extends Action
         }
 
         return $paymentInfo['payment']['status'];
+    }
+
+    private function getEbanxToMagentoStatus($ebanxStatus)
+    {
+        $status = [
+//            'CO' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_co_status'),
+//            'PE' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_pe_status'),
+//            'OP' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_op_status'),
+//            'CA' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_ca_status')
+        ];
+
+        return $status[strtoupper($ebanxStatus)];
     }
 }
