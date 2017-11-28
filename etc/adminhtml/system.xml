@@ -147,7 +147,18 @@
                     </field>
                 </group>
 
+                <!-- Payment Status -->
+                <group id="title_status" translate="label" showInDefault="1" showInWebsite="1" sortOrder="135">
+                    <label>Payment Status</label>
+                    <attribute type="expanded">1</attribute>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
 
+                    <field id="payment_co_status" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Paid Payment Status</label>
+                        <comment>Payment paid, the customer has paid the order and EBANX received the payment.</comment>
+                        <source_model>Ebanx\Payments\Model\Config\Source\Order\Status</source_model>
+                    </field>
+                </group>
 
                 <!--<field id="checkout" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">-->
                     <!--<label>CHECKOUT</label>-->
