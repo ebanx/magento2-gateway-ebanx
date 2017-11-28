@@ -1,6 +1,7 @@
 <?php
 namespace Ebanx\Payments\Controller\Payment;
 
+use Ebanx\Payments\Gateway\Http\Client\Api;
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -9,6 +10,11 @@ use Magento\Sales\Model\OrderFactory;
 
 class Update extends Action
 {
+    /**
+     * @var Api
+     */
+    protected $ebanxApi;
+
     /**
      * @var Collection
      */
@@ -28,17 +34,20 @@ class Update extends Action
      * Constructor
      *
      * @param Context      $context
+     * @param Api          $ebanxApi
      * @param Collection   $ebanxCollection
      * @param OrderFactory $orderFactory
      * @param JsonFactory  $jsonFactory
      */
     public function __construct(
         Context $context,
+        Api $ebanxApi,
         Collection $ebanxCollection,
         OrderFactory $orderFactory,
         JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
+        $this->ebanxApi = $ebanxApi;
         $this->ebanxCollection   = $ebanxCollection;
         $this->orderFactory      = $orderFactory;
         $this->jsonResultFactory = $jsonFactory;
@@ -92,6 +101,17 @@ class Update extends Action
                 return $result;
             }
             $data['order_data'] = $orderData;
+
+            $ebanxPaymentStatus = $this->getEbanxPaymentStatus($hashCode);
+            if (!$ebanxPaymentStatus) {
+                $result->setHttpResponseCode(400);
+                $result->setData([
+                    'status'  => 'ERROR',
+                    'message' => 'Payment not found on EBANX.',
+                ]);
+
+                return $result;
+            }
         }
         $result->setData($data);
 
@@ -114,5 +134,21 @@ class Update extends Action
         }
 
         return '';
+    }
+
+    /**
+     * @param string $hash
+     * @return string
+     */
+    private function getEbanxPaymentStatus($hash)
+    {
+        $isSandbox = $this->ebanxCollection->getEnvironmentByPaymentHash($hash) === 'sandbox';
+        $paymentInfo = $this->ebanxApi->benjamin()->paymentInfo()->findByHash($hash, $isSandbox);
+
+        if ($paymentInfo['status'] !== 'SUCCESS') {
+            return '';
+        }
+
+        return $paymentInfo['payment']['status'];
     }
 }

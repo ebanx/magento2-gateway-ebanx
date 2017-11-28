@@ -27,4 +27,13 @@ class Collection extends AbstractCollection
     public function getOrderIdByPaymentHash($paymentHash) {
         return (int) $this->addFilter('payment_hash', $paymentHash)->getLastItem()->getDataByKey('order_id');
     }
+
+    /**
+     * @param string $paymentHash
+     *
+     * @return string
+     */
+    public function getEnvironmentByPaymentHash($paymentHash) {
+        return $this->addFilter('payment_hash', $paymentHash)->getLastItem()->getDataByKey('environment');
+    }
 }
