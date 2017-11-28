@@ -35,7 +35,6 @@ class CustomerDataBuilder implements BuilderInterface
         /** @var \Magento\Customer\Model\Data\Customer $customer */
         $customer = $this->getCustomer($order->getStoreId(), $billingAddress->getEmail());
         $document = $this->getDocumentNumber($customer, $paymentDataObject);
-        $document = preg_replace('/[^0-9]/', '', $document);
 
         $person = new Person([
             'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
@@ -72,13 +71,15 @@ class CustomerDataBuilder implements BuilderInterface
 
     private function getDocumentNumber($customer, $paymentDataObject)
     {
+        $pattern = '/[^0-9]/';
+
         if (!is_null($customer)) {
-            return $customer->getTaxvat();
+            return preg_replace($pattern, '', $customer->getTaxvat());
         }
 
         /** @var \Magento\Sales\Model\Order $fullOrder*/
         $fullOrder = $paymentDataObject->getPayment()->getOrder();
 
-        return $fullOrder->getBillingAddress()->getData('vat_id');
+        return preg_replace($pattern, '', $fullOrder->getBillingAddress()->getData('vat_id'));
     }
 }
