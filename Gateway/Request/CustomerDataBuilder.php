@@ -31,16 +31,13 @@ class CustomerDataBuilder implements BuilderInterface
 
         $order = $paymentDataObject->getOrder();
         $billingAddress = $order->getBillingAddress();
-        /** @var \Magento\Sales\Model\Order $fullOrder*/
-        $fullOrder = $paymentDataObject->getPayment()->getOrder();
+
         /** @var \Magento\Customer\Model\Data\Customer $customer */
-        $customer = $this->customer->setWebsiteId($order->getStoreId())
-                                   ->loadByEmail($billingAddress->getEmail());
+        $customer = $this->getCustomer($order->getStoreId(), $billingAddress->getEmail());
+        $document = $this->getDocumentNumber($customer, $paymentDataObject);
+        $document = preg_replace('/[^0-9]/', '', $document);
 
-        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
-        preg_replace('/[^0-9]/', '', $document);
-
-	    $person = new Person([
+        $person = new Person([
             'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
             'document' => $document,
             'email' => $billingAddress->getEmail(),
@@ -62,5 +59,26 @@ class CustomerDataBuilder implements BuilderInterface
         }
 
         return Person::TYPE_BUSINESS;
+    }
+
+    private function getCustomer($storeId, $email)
+    {
+        if (is_null($this->customer)) {
+            return null;
+        }
+
+        return $this->customer->setWebsiteId($storeId)->loadByEmail($email);
+    }
+
+    private function getDocumentNumber($customer, $paymentDataObject)
+    {
+        if (!is_null($customer)) {
+            return $customer->getTaxvat();
+        }
+
+        /** @var \Magento\Sales\Model\Order $fullOrder*/
+        $fullOrder = $paymentDataObject->getPayment()->getOrder();
+
+        return $fullOrder->getBillingAddress()->getData('vat_id');
     }
 }
