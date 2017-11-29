@@ -24,7 +24,7 @@ class PaymentCommentHistoryHandler implements HandlerInterface
             $token = "";
         }
 
-        $message = 'EBANX token: ' + $token;
+        $message = 'EBANX token: ' . $token;
         $payment->getOrder()->addStatusHistoryComment($message);
 
         return $this;
