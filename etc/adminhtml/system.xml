@@ -157,21 +157,25 @@
                         <label>Paid Payment Status</label>
                         <comment>Payment paid, the customer has paid the order and EBANX received the payment.</comment>
                         <source_model>Ebanx\Payments\Model\Config\Source\Order\Status</source_model>
+                        <config_path>payment/ebanx_abstract/payment_co_status</config_path>
                     </field>
                     <field id="payment_pe_status" translate="label" type="select" sortOrder="145" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Pending Payment Status</label>
                         <comment>Payment that have not yet been paid or is still being processed.</comment>
                         <source_model>Ebanx\Payments\Model\Config\Source\Order\Status</source_model>
+                        <config_path>payment/ebanx_abstract/payment_pe_status</config_path>
                     </field>
                     <field id="payment_op_status" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Requested Payment Status</label>
                         <comment>Payment was created but it has not yet been assigned to a payment method.</comment>
                         <source_model>Ebanx\Payments\Model\Config\Source\Order\Status</source_model>
+                        <config_path>payment/ebanx_abstract/payment_op_status</config_path>
                     </field>
                     <field id="payment_ca_status" translate="label" type="select" sortOrder="155" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Canceled Payment Status</label>
                         <comment>Payment canceled when the customer hasn't make the payment, so EBANX set as canceled.</comment>
                         <source_model>Ebanx\Payments\Model\Config\Source\Order\Status</source_model>
+                        <config_path>payment/ebanx_abstract/payment_ca_status</config_path>
                     </field>
                 </group>
 
