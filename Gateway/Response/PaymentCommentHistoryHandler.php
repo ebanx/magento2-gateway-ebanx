@@ -1,7 +1,9 @@
 <?php
 namespace Ebanx\Payments\Gateway\Response;
 
+use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
+use Magento\Sales\Model\Order;
 
 class PaymentCommentHistoryHandler implements HandlerInterface
 {
@@ -13,19 +15,19 @@ class PaymentCommentHistoryHandler implements HandlerInterface
      */
     public function handle(array $handlingSubject, array $response)
     {
-        $payment = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($handlingSubject);
+        /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
+        $paymentDataObject = SubjectReader::readPayment($handlingSubject);
 
-        /** @var OrderPaymentInterface $payment */
-        $payment = $payment->getPayment();
+        /** @var Order $order */
+        $order = $paymentDataObject->getPayment()->getOrder();
 
-        if (isset($response['token'])) {
-            $token = $response['token'];
-        } else {
-            $token = "";
+        $hash = "";
+        if (isset($response['hash'])) {
+            $hash = $response['hash'];
         }
 
-        $message = 'EBANX token: ' . $token;
-        $payment->getOrder()->addStatusHistoryComment($message);
+        $message = 'EBANX hash: ' . $hash;
+        $order->addStatusHistoryComment($message);
 
         return $this;
     }
