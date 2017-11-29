@@ -6,8 +6,7 @@ use Ebanx\Payments\Gateway\Http\Client\Api;
 use Ebanx\Payments\Helper\Data;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Controller\Result\RawFactory;
-use Magento\Framework\View\Result\PageFactory;
+use Magento\Framework\Controller\Result\Raw;
 
 class Show extends Action
 {
@@ -23,19 +22,22 @@ class Show extends Action
      * @var \Ebanx\Benjamin\Services\Gateways\Boleto
      */
     protected $_gateway;
-    protected $_rawFactory;
+    /**
+     * @var Raw
+     */
+    protected $_raw;
 
     public function __construct(
         Context $context,
         Data $helper,
-        RawFactory $rawFactory,
+        Raw $raw,
         Api $api
     ) {
         parent::__construct($context);
         $this->resultFactory = $context->getResultFactory();
         $this->_helper = $helper;
         $this->_gateway = $api->benjamin()->boleto();
-        $this->_rawFactory = $rawFactory;
+        $this->_raw = $raw;
     }
 
     /**
@@ -49,6 +51,6 @@ class Show extends Action
     public function execute() {
         $hash = $this->getRequest()->getParam('hash');
         $isSandbox = $this->getRequest()->getParam('is_sandbox');
-        return $this->_rawFactory->create()->setContents($this->_gateway->getTicketHTml($hash, $isSandbox));
+        return $this->_raw->setContents($this->_gateway->getTicketHTml($hash, $isSandbox));
     }
 }

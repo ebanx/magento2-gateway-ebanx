@@ -1,7 +1,7 @@
 <?php
 namespace Ebanx\Payments\Block\Checkout;
 
-use Ebanx\Payments\Model\Resource\Order\Payment\CollectionFactory;
+use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template;
@@ -41,7 +41,7 @@ class Success extends Template
      * @param Context $context
      * @param Session $checkoutSession
      * @param OrderFactory $orderFactory
-     * @param CollectionFactory $collectionFactory
+     * @param Collection $ebanxPaymentCollection
      * @param UrlInterface $urlBuilder
      * @param array $data
      */
@@ -49,13 +49,13 @@ class Success extends Template
         Context $context,
         Session $checkoutSession,
         OrderFactory $orderFactory,
-        CollectionFactory $collectionFactory,
+        Collection $ebanxPaymentCollection,
         UrlInterface $urlBuilder,
         array $data = []
     ) {
         $this->_orderId = $checkoutSession->getLastRealOrderId();
         $this->_orderFactory = $orderFactory;
-        $this->_ebanxPaymentCollection = $collectionFactory->create();
+        $this->_ebanxPaymentCollection = $ebanxPaymentCollection;
         $this->_urlBuilder = $urlBuilder;
         parent::__construct($context, $data);
     }
@@ -63,23 +63,6 @@ class Success extends Template
     /**
      * @return string
      */
-    public function getDueDate() {
-        return $this->_ebanxPaymentCollection->getDueDateByOrderId($this->_orderId, 'dd/MM');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVoucherUrl()
-    {
-        $hash = $this->_ebanxPaymentCollection->getPaymentHashByOrderId($this->_orderId);
-        $isSandbox = $this->_ebanxPaymentCollection->getPaymentModeByOrderId($this->_orderId) === 'sandbox' ? true : false;
-        return $this->_urlBuilder->getUrl('ebanx/voucher/show', array(
-            'hash' => $hash,
-            'is_sandbox' => $isSandbox
-        ));
-    }
-
     public function getSuccessPaymentBlock()
     {
         return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
@@ -90,7 +73,7 @@ class Success extends Template
      */
     public function getOrder()
     {
-        if ($this->_order == null) {
+        if ($this->_order === null) {
             $this->_order = $this->_orderFactory->create()->loadByIncrementId($this->_orderId);
         }
         return $this->_order;
