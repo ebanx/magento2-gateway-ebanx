@@ -16,9 +16,35 @@
             <!--/ko-->
         </div>
 
-        <div>
-            <p>teste</p>
-        </div>
+        <form>
+            <p>Selecione o seu banco. A seguir, você será redirecionado para concluir o pagamento pelo seu internet banking.</p>
+            <div>
+                <p>
+                    <input type="radio" id="ebanx_tef_bradesco"
+                           name="ebanx_tef" value="bradesco">
+                    <label for="ebanx_tef_bradesco">Bradesco</label>
+                </p>
+
+                <p>
+                    <input type="radio" id="ebanx_tef_bb"
+                           name="ebanx_tef" value="bancodobrasil">
+                    <label for="ebanx_tef_bb">Banco do Brasil</label>
+                </p>
+
+                <p>
+                    <input type="radio" id="ebanx_tef_itau"
+                           name="ebanx_tef" value="itau">
+                    <label for="ebanx_tef_itau">Itaú</label>
+                </p>
+
+                <p>
+                    <input type="radio" id="ebanx_tef_banrisul"
+                           name="ebanx_tef" value="banrisul">
+                    <label for="ebanx_tef_banrisul">Banrisul</label>
+                </p>
+            </div>
+        </form>
+
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
             <!-- ko template: getTemplate() --><!-- /ko -->
