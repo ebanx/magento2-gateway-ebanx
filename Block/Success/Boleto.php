@@ -1,6 +1,6 @@
 <?php
 
-namespace Ebanx\Payments\Block\Checkout;
+namespace Ebanx\Payments\Block\Success;
 
 class Boleto extends Success
 {
