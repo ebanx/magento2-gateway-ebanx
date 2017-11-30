@@ -13,7 +13,7 @@ class CustomerDataBuilder implements BuilderInterface
 {
     private $customer;
 
-    public function __construct(Customer $customer = null)
+    public function __construct(Customer $customer)
     {
         $this->customer = $customer;
     }
