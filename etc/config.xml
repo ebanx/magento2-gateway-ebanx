@@ -8,6 +8,10 @@
                 <model>EbanxPaymentsGenericFacade</model>
                 <debug>1</debug>
                 <group>ebanx</group>
+                <payment_co_status>pending</payment_co_status>
+                <payment_pe_status>pending_payment</payment_pe_status>
+                <payment_op_status>pending_payment</payment_op_status>
+                <payment_ca_status>canceled</payment_ca_status>
             </ebanx_abstract>
             <ebanx_boleto>
                 <active>1</active>
