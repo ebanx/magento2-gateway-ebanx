@@ -1,5 +1,5 @@
 <?php
-namespace Ebanx\Payments\Block\Checkout;
+namespace Ebanx\Payments\Block\Success;
 
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Checkout\Model\Session;

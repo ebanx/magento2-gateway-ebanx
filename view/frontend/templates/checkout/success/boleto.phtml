@@ -1,13 +1,13 @@
-<!-- TODO: CHANGING CSS TO XML -->
-<link rel="stylesheet" href="<?= $this->getViewFileUrl('Ebanx_Payments::css/loading.css') ?>" />
 <?php
 /**
- * @var \Ebanx\Payments\Block\Checkout\Boleto $this
+ * @var \Ebanx\Payments\Block\Success\Boleto $this
  */
 
     $order = $this->getOrder();
     $dueDate = $this->getDueDate();
 ?>
+<!-- TODO: CHANGING CSS TO XML -->
+<link rel="stylesheet" href="<?= $this->getViewFileUrl('Ebanx_Payments::css/loading.css') ?>" />
 
 <div class="ebanx-details">
     
