@@ -1,5 +1,5 @@
 <?php
-namespace Ebanx\Payments\Block\Checkout;
+namespace Ebanx\Payments\Block\Success;
 
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Checkout\Model\Session;
@@ -8,7 +8,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Sales\Model\OrderFactory;
 
-class Success extends Template
+class Base extends Template
 {
 
     /**
