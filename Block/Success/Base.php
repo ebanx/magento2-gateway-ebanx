@@ -8,7 +8,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Sales\Model\OrderFactory;
 
-class Success extends Template
+class Base extends Template
 {
 
     /**
