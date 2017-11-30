@@ -7,9 +7,9 @@ use Ebanx\Payments\Helper\Data;
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Sales\Model\OrderFactory;
-use Magento\Sales\Model\ResourceModel\Order;
+use Magento\Framework\Controller\Result\Json;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\ResourceModel\Order as OrderResource;
 
 class Update extends Action
 {
@@ -29,47 +29,47 @@ class Update extends Action
     protected $ebanxCollection;
 
     /**
-     * @var OrderFactory
+     * @var Order
      */
-    protected $orderFactory;
+    protected $order;
 
     /**
-     * @var Order $orderResource
+     * @var OrderResource $orderResource
      */
     protected $orderResource;
 
     /**
-     * @var JsonFactory
+     * @var Json\Interceptor
      */
-    protected $jsonResultFactory;
+    protected $jsonInterceptor;
 
     /**
      * Constructor
      *
-     * @param Context      $context
-     * @param Data         $ebanxHelper
-     * @param Api          $ebanxApi
-     * @param Collection   $ebanxCollection
-     * @param OrderFactory $orderFactory
-     * @param Order        $orderResource
-     * @param JsonFactory  $jsonFactory
+     * @param Context          $context
+     * @param Data             $ebanxHelper
+     * @param Api              $ebanxApi
+     * @param Collection       $ebanxCollection
+     * @param Order            $order
+     * @param OrderResource    $orderResource
+     * @param Json\Interceptor $jsonInterceptor
      */
     public function __construct(
         Context $context,
         Data $ebanxHelper,
         Api $ebanxApi,
         Collection $ebanxCollection,
-        OrderFactory $orderFactory,
-        Order $orderResource,
-        JsonFactory $jsonFactory
+        Order $order,
+        OrderResource $orderResource,
+        Json\Interceptor $jsonInterceptor
     ) {
         parent::__construct($context);
-        $this->ebanxHelper       = $ebanxHelper;
-        $this->ebanxApi          = $ebanxApi;
-        $this->ebanxCollection   = $ebanxCollection;
-        $this->orderFactory      = $orderFactory;
-        $this->orderResource     = $orderResource;
-        $this->jsonResultFactory = $jsonFactory;
+        $this->ebanxHelper     = $ebanxHelper;
+        $this->ebanxApi        = $ebanxApi;
+        $this->ebanxCollection = $ebanxCollection;
+        $this->order           = $order;
+        $this->orderResource   = $orderResource;
+        $this->jsonInterceptor = $jsonInterceptor;
     }
 
     /**
@@ -79,7 +79,7 @@ class Update extends Action
      */
     public function execute()
     {
-        $result  = $this->jsonResultFactory->create();
+        $result  = $this->jsonInterceptor;
         $request = $this->getRequest();
 
         if ($errorMessage = $this->getErrorMessage()) {
@@ -106,7 +106,7 @@ class Update extends Action
                 return $result;
             }
 
-            $order     = $this->orderFactory->create()->loadByIncrementId($orderId);
+            $order     = $this->order->loadByIncrementId($orderId);
             $orderData = $order->getData();
             if (empty($orderData)) {
                 $result->setHttpResponseCode(400);
