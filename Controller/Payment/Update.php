@@ -164,10 +164,10 @@ class Update extends Action
     private function getEbanxToMagentoStatus($ebanxStatus)
     {
         $status = [
-//            'CO' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_co_status'),
-//            'PE' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_pe_status'),
-//            'OP' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_op_status'),
-//            'CA' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_ca_status')
+            'CO' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_co_status'),
+            'PE' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_pe_status'),
+            'OP' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_op_status'),
+            'CA' => $this->ebanxHelper->getEbanxAbstractConfigData('payment_ca_status'),
         ];
 
         return $status[strtoupper($ebanxStatus)];
