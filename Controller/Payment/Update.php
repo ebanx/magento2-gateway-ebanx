@@ -1,4 +1,5 @@
 <?php
+
 namespace Ebanx\Payments\Controller\Payment;
 
 use Ebanx\Payments\Gateway\Http\Client\Api;
@@ -8,6 +9,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Sales\Model\OrderFactory;
+use Magento\Sales\Model\ResourceModel\Order;
 
 class Update extends Action
 {
@@ -32,6 +34,11 @@ class Update extends Action
     protected $orderFactory;
 
     /**
+     * @var Order $orderResource
+     */
+    protected $orderResource;
+
+    /**
      * @var JsonFactory
      */
     protected $jsonResultFactory;
@@ -44,6 +51,7 @@ class Update extends Action
      * @param Api          $ebanxApi
      * @param Collection   $ebanxCollection
      * @param OrderFactory $orderFactory
+     * @param Order        $orderResource
      * @param JsonFactory  $jsonFactory
      */
     public function __construct(
@@ -52,13 +60,15 @@ class Update extends Action
         Api $ebanxApi,
         Collection $ebanxCollection,
         OrderFactory $orderFactory,
+        Order $orderResource,
         JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
-        $this->ebanxHelper = $ebanxHelper;
-        $this->ebanxApi = $ebanxApi;
+        $this->ebanxHelper       = $ebanxHelper;
+        $this->ebanxApi          = $ebanxApi;
         $this->ebanxCollection   = $ebanxCollection;
         $this->orderFactory      = $orderFactory;
+        $this->orderResource     = $orderResource;
         $this->jsonResultFactory = $jsonFactory;
     }
 
@@ -71,7 +81,6 @@ class Update extends Action
     {
         $result  = $this->jsonResultFactory->create();
         $request = $this->getRequest();
-        $data    = $request->getParams();
 
         if ($errorMessage = $this->getErrorMessage()) {
             $result->setHttpResponseCode(400);
@@ -96,7 +105,6 @@ class Update extends Action
 
                 return $result;
             }
-            $data['order_id'] = $orderId;
 
             $order     = $this->orderFactory->create()->loadByIncrementId($orderId);
             $orderData = $order->getData();
@@ -109,7 +117,6 @@ class Update extends Action
 
                 return $result;
             }
-            $data['order_data'] = $orderData;
 
             $ebanxPaymentStatus = $this->getEbanxPaymentStatus($hashCode);
             if (!$ebanxPaymentStatus) {
@@ -121,8 +128,23 @@ class Update extends Action
 
                 return $result;
             }
+
+            $ebanxToMagentoStatus = $this->getEbanxToMagentoStatus($ebanxPaymentStatus);
+            if ($order->getStatus() === $ebanxToMagentoStatus) {
+                $result->setData([
+                    'status' => 'SUCCESS',
+                ]);
+
+                return $result;
+            }
+
+            $order->setStatus($ebanxToMagentoStatus);
+            $order->addStatusHistoryComment('EBANX: The payment has been updated to: ' . $ebanxToMagentoStatus);
+            $this->orderResource->save($order);
         }
-        $result->setData($data);
+        $result->setData([
+            'status' => 'SUCCESS',
+        ]);
 
         return $result;
     }
@@ -151,7 +173,7 @@ class Update extends Action
      */
     private function getEbanxPaymentStatus($hash)
     {
-        $isSandbox = $this->ebanxCollection->getEnvironmentByPaymentHash($hash) === 'sandbox';
+        $isSandbox   = $this->ebanxCollection->getEnvironmentByPaymentHash($hash) === 'sandbox';
         $paymentInfo = $this->ebanxApi->benjamin()->paymentInfo()->findByHash($hash, $isSandbox);
 
         if ($paymentInfo['status'] !== 'SUCCESS') {
