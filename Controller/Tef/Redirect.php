@@ -19,6 +19,7 @@ class Redirect extends Action
      */
     protected $_helper;
     /**
+<<<<<<< HEAD
      * @var \Ebanx\Benjamin\Services\Gateways\Tef
      */
     protected $_ebanx;
