@@ -16,7 +16,7 @@
             <!--/ko-->
         </div>
 
-        <form>
+        <form action="#" method="post">
             <p>Selecione o seu banco. A seguir, você será redirecionado para concluir o pagamento pelo seu internet banking.</p>
             <div>
                 <p>
@@ -55,7 +55,7 @@
                 <button class="action primary checkout"
                         type="submit"
                         data-bind="
-                        click: placeOrder,
+                        click: afterPlaceOrder,
                         attr: {title: $t('Place Order')},
                         css: {disabled: !isPlaceOrderActionAllowed()},
                         enable: (getCode() == isChecked())
