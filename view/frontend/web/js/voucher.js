@@ -1,14 +1,11 @@
 (function(){
     const loadIframe = () => {
-        document.querySelector('#ebanx-boleto-frame').addEventListener("load", function() {
+        document.querySelector("#ebanx-boleto-frame").addEventListener("load", function() {
             const innerDoc = this.contentDocument || this.contentWindow.document;
-            const boletoHeight = innerDoc.querySelector('.ebanx-boleto').scrollHeight + 40;
-            console.log(boletoHeight);
+            const boletoHeight = innerDoc.querySelector('.ebanx-boleto').offsetHeight + 40;
             const style = `
                 width: 100%; 
-                border: 0px;
                 height: ${boletoHeight}px;
-                display: block;
             `;
             this.style = style;
 

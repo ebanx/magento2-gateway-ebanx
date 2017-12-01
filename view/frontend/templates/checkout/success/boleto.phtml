@@ -23,7 +23,15 @@
     </div>
 
     <div>
-        <iframe id="ebanx-boleto-frame" src="<?php echo $this->getVoucherUrl(); ?>" style="display: none; height: 0px;"></iframe>
+        <iframe id="ebanx-boleto-frame" 
+        src="<?php echo $this->getVoucherUrl(); ?>" 
+        style="height: 0;"
+        frameborder="0"
+        width="100%"
+        marginheight="0"
+        marginwidth="0"
+        scrolling="no"
+        ></iframe>
         <div class="loading-fading-circle">
             <div class="loading-circle1 loading-circle"></div>
             <div class="loading-circle2 loading-circle"></div>
