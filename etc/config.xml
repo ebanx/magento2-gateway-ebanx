@@ -8,6 +8,7 @@
                 <model>EbanxPaymentsGenericFacade</model>
                 <debug>1</debug>
                 <group>ebanx</group>
+                <due_date_days>3</due_date_days>
                 <payment_co_status>pending</payment_co_status>
                 <payment_pe_status>pending_payment</payment_pe_status>
                 <payment_op_status>pending_payment</payment_op_status>
