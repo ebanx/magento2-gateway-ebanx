@@ -10,26 +10,6 @@ use Magento\Store\Model\StoreManagerInterface;
 class Data extends AbstractHelper
 {
     /**
-     * @var StoreManagerInterface
-     */
-    protected $_storeManager;
-
-    /**
-     * Data constructor.
-     *
-     * @param Context $context
-     * @param StoreManagerInterface $storeManager
-     */
-    public function __construct(
-        Context $context,
-        StoreManagerInterface $storeManager
-    )
-    {
-        $this->_storeManager           = $storeManager;
-        parent::__construct($context);
-    }
-
-    /**
      * @desc Returns EBANX configuration values
      * @param $field
      * @param null $storeId
