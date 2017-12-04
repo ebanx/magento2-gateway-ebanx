@@ -39,11 +39,12 @@ class CaptureResponseValidator extends AbstractValidator
         $isValid = true;
         $errorMessages = [];
 
-        if ($response['response'] != '[capture-received]') {
-            $errorMsg = __('Error with capture');
-            $this->ebanxLogger->error($errorMsg);
-            $errorMessages[] = $errorMsg;
-        }
+//        TODO: Validate response: Capture
+//        if ($response['response'] != '[capture-received]') {
+//            $errorMsg = __('Error with capture');
+//            $this->ebanxLogger->error($errorMsg);
+//            $errorMessages[] = $errorMsg;
+//        }
 
         return $this->createResult($isValid, $errorMessages);
     }

@@ -13,7 +13,7 @@ define(
         rendererList.push(
             {
                 type: 'ebanx_boleto',
-                component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-boleto-method'
+                component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-boleto'
             }
         );
         /** Add view logic here if needed */
