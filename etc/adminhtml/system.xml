@@ -26,118 +26,118 @@
                         <label>Sandbox Integration Key</label>
                         <config_path>payment/ebanx_abstract/integration_key_sandbox</config_path>
                     </field>
-                    <field id="integration_key_public_sandbox" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
-                        <label>Sandbox Public Integration Key</label>
-                        <config_path>payment/ebanx_abstract/integration_key_public_sandbox</config_path>
-                    </field>
+                    <!--<field id="integration_key_public_sandbox" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                        <!--<label>Sandbox Public Integration Key</label>-->
+                        <!--<config_path>payment/ebanx_abstract/integration_key_public_sandbox</config_path>-->
+                    <!--</field>-->
 
                     <field id="integration_key_live" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Live Integration Key</label>
                         <config_path>payment/ebanx_abstract/integration_key_live</config_path>
                     </field>
-                    <field id="integration_key_public_live" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
-                        <label>Live Public Integration Key</label>
-                        <config_path>payment/ebanx_abstract/integration_key_public_live</config_path>
-                    </field>
+                    <!--<field id="integration_key_public_live" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                        <!--<label>Live Public Integration Key</label>-->
+                        <!--<config_path>payment/ebanx_abstract/integration_key_public_live</config_path>-->
+                    <!--</field>-->
                 </group>
 
-                <group id="title_preferences" translate="label" showInDefault="1" showInWebsite="1" sortOrder="40">
-                    <label>Preferences</label>
-                    <attribute type="expanded">1</attribute>
-                    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                <!--<group id="title_preferences" translate="label" showInDefault="1" showInWebsite="1" sortOrder="40">-->
+                    <!--<label>Preferences</label>-->
+                    <!--<attribute type="expanded">1</attribute>-->
+                    <!--<frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>-->
 
-                    <field id="debug" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Enable Debug Log</label>
-                        <tooltip>Record all errors that occur when executing a transaction.</tooltip>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <config_path>payment/ebanx_abstract/debug</config_path>
-                    </field>
+                    <!--<field id="debug" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Enable Debug Log</label>-->
+                        <!--<tooltip>Record all errors that occur when executing a transaction.</tooltip>-->
+                        <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/debug</config_path>-->
+                    <!--</field>-->
 
-                    <field id="brazil_taxes" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Checkout for</label>
-                        <comment>In order to process with the EBANX Plugin in Brazil there a few mandatory fields such as CPF identification for individuals and CNPJ for companies.</comment>
-                        <source_model>Ebanx\Payments\Model\Config\Source\PersonType</source_model>
-                        <config_path>payment/ebanx_abstract/brazil_taxes</config_path>
-                    </field>
-                </group>
+                    <!--<field id="brazil_taxes" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Checkout for</label>-->
+                        <!--<comment>In order to process with the EBANX Plugin in Brazil there a few mandatory fields such as CPF identification for individuals and CNPJ for companies.</comment>-->
+                        <!--<source_model>Ebanx\Payments\Model\Config\Source\PersonType</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/brazil_taxes</config_path>-->
+                    <!--</field>-->
+                <!--</group>-->
 
-                <group id="title_payment_methods" translate="label" showInDefault="1" showInWebsite="1" sortOrder="55">
-                    <label>Payment Methods</label>
-                    <attribute type="expanded">1</attribute>
-                    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                <!--<group id="title_payment_methods" translate="label" showInDefault="1" showInWebsite="1" sortOrder="55">-->
+                    <!--<label>Payment Methods</label>-->
+                    <!--<attribute type="expanded">1</attribute>-->
+                    <!--<frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>-->
 
-                    <field id="payment_methods_brazil" translate="label" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Brazil</label>
-                        <source_model>Ebanx\Payments\Model\Config\Source\MethodsBrazil</source_model>
-                        <config_path>payment/ebanx_abstract/payment_methods_brazil</config_path>
-                    </field>
-                    <field id="payment_methods_mexico" translate="label" type="multiselect" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Mexico</label>
-                        <source_model>Ebanx\Payments\Model\Config\Source\MethodsMexico</source_model>
-                        <config_path>payment/ebanx_abstract/payment_methods_mexico</config_path>
-                    </field>
-                    <field id="payment_methods_chile" translate="label" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Chile</label>
-                        <source_model>Ebanx\Payments\Model\Config\Source\MethodsChile</source_model>
-                        <config_path>payment/ebanx_abstract/payment_methods_chile</config_path>
-                    </field>
-                    <field id="payment_methods_colombia" translate="label" type="multiselect" sortOrder="75" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Colombia</label>
-                        <source_model>Ebanx\Payments\Model\Config\Source\MethodsColombia</source_model>
-                        <config_path>payment/ebanx_abstract/payment_methods_colombia</config_path>
-                    </field>
-                    <field id="payment_methods_peru" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Peru</label>
-                        <source_model>Ebanx\Payments\Model\Config\Source\MethodsPeru</source_model>
-                        <config_path>payment/ebanx_abstract/payment_methods_peru</config_path>
-                    </field>
-                </group>
+                    <!--<field id="payment_methods_brazil" translate="label" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Brazil</label>-->
+                        <!--<source_model>Ebanx\Payments\Model\Config\Source\MethodsBrazil</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/payment_methods_brazil</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="payment_methods_mexico" translate="label" type="multiselect" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Mexico</label>-->
+                        <!--<source_model>Ebanx\Payments\Model\Config\Source\MethodsMexico</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/payment_methods_mexico</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="payment_methods_chile" translate="label" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Chile</label>-->
+                        <!--<source_model>Ebanx\Payments\Model\Config\Source\MethodsChile</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/payment_methods_chile</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="payment_methods_colombia" translate="label" type="multiselect" sortOrder="75" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Colombia</label>-->
+                        <!--<source_model>Ebanx\Payments\Model\Config\Source\MethodsColombia</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/payment_methods_colombia</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="payment_methods_peru" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Peru</label>-->
+                        <!--<source_model>Ebanx\Payments\Model\Config\Source\MethodsPeru</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/payment_methods_peru</config_path>-->
+                    <!--</field>-->
+                <!--</group>-->
 
-                <group id="title_payment_methods_visualization" translate="label" showInDefault="1" showInWebsite="1" sortOrder="85">
-                    <label>Payment Methods Visualization</label>
-                    <attribute type="expanded">1</attribute>
-                    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                <!--<group id="title_payment_methods_visualization" translate="label" showInDefault="1" showInWebsite="1" sortOrder="85">-->
+                    <!--<label>Payment Methods Visualization</label>-->
+                    <!--<attribute type="expanded">1</attribute>-->
+                    <!--<frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>-->
 
-                    <field id="payment_methods_visualization" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Show payment methods logo for better conversion on your checkout</label>
-                        <comment>The way they are shown can change according to the theme you are using</comment>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <config_path>payment/ebanx_abstract/payment_methods_visualization</config_path>
-                    </field>
-                </group>
+                    <!--<field id="payment_methods_visualization" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Show payment methods logo for better conversion on your checkout</label>-->
+                        <!--<comment>The way they are shown can change according to the theme you are using</comment>-->
+                        <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/payment_methods_visualization</config_path>-->
+                    <!--</field>-->
+                <!--</group>-->
 
-                <group id="title_cc" translate="label" showInDefault="1" showInWebsite="1" sortOrder="95">
-                    <label>Credit Card</label>
-                    <attribute type="expanded">1</attribute>
-                    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                <!--<group id="title_cc" translate="label" showInDefault="1" showInWebsite="1" sortOrder="95">-->
+                    <!--<label>Credit Card</label>-->
+                    <!--<attribute type="expanded">1</attribute>-->
+                    <!--<frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>-->
 
-                    <field id="save_card_data" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Save Card Data</label>
-                        <comment>Allow your customer to save credit card and debit card data for future purchases.</comment>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <config_path>payment/ebanx_abstract/save_card_data</config_path>
-                    </field>
-                    <field id="max_instalments" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Maximum n° of Instalments</label>
-                        <comment>Establish the maximum number of instalments in which your customer can pay, as consented on your contract.</comment>
-                        <source_model>Ebanx\Payments\Model\Config\Source\Instalments</source_model>
-                        <config_path>payment/ebanx_abstract/max_instalments</config_path>
-                    </field>
-                    <field id="min_instalment_value" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
-                        <label>Minimum Instalment (USD)</label>
-                        <comment>Set the minimum instalment value during the ckeckout. The minimum EBANX allows for BRL is 20 and MXN is 100, lower values in these currencies considered will not be considered.</comment>
-                        <config_path>payment/ebanx_abstract/min_instalment_value</config_path>
-                    </field>
-                    <field id="use_interest_rates" translate="label" type="select" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                        <label>Interest Rates</label>
-                        <comment>Enable and set custom interest rates according to the number of installments you have allowed the payment for your customers.</comment>
-                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <config_path>payment/ebanx_abstract/use_interest_rates</config_path>
-                    </field>
-                    <field id="interest_rate" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
-                        <label>Interest</label>
-                    </field>
-                </group>
+                    <!--<field id="save_card_data" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Save Card Data</label>-->
+                        <!--<comment>Allow your customer to save credit card and debit card data for future purchases.</comment>-->
+                        <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/save_card_data</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="max_instalments" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Maximum n° of Instalments</label>-->
+                        <!--<comment>Establish the maximum number of instalments in which your customer can pay, as consented on your contract.</comment>-->
+                        <!--<source_model>Ebanx\Payments\Model\Config\Source\Instalments</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/max_instalments</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="min_instalment_value" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                        <!--<label>Minimum Instalment (USD)</label>-->
+                        <!--<comment>Set the minimum instalment value during the ckeckout. The minimum EBANX allows for BRL is 20 and MXN is 100, lower values in these currencies considered will not be considered.</comment>-->
+                        <!--<config_path>payment/ebanx_abstract/min_instalment_value</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="use_interest_rates" translate="label" type="select" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
+                        <!--<label>Interest Rates</label>-->
+                        <!--<comment>Enable and set custom interest rates according to the number of installments you have allowed the payment for your customers.</comment>-->
+                        <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
+                        <!--<config_path>payment/ebanx_abstract/use_interest_rates</config_path>-->
+                    <!--</field>-->
+                    <!--<field id="interest_rate" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">-->
+                        <!--<label>Interest</label>-->
+                    <!--</field>-->
+                <!--</group>-->
 
                 <group id="title_cash" translate="label" showInDefault="1" showInWebsite="1" sortOrder="125">
                     <label>Cash Payments</label>
