@@ -60,7 +60,7 @@ class Api
             'redirectUrl' => '', // TODO: create notification controller
             'userValues' => array(
                 1 => 'from_magento2',
-                3 => 'version=1.0.0', //TODO: Create a method to get the current version
+                3 => 'version=0.1.0', //TODO: Create a method to get the current version
             ),
         ));
     }
