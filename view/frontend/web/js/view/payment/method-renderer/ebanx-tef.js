@@ -2,20 +2,30 @@
 /*global define*/
 define(
     [
-        'Magento_Checkout/js/view/payment/default',
-        'mage/url'
+        'Magento_Checkout/js/view/payment/default'
     ],
-    function (Component, urlBuilder) {
+    function (Component) {
         'use strict';
         return Component.extend({
             defaults: {
-                template: 'Ebanx_Payments/payment/ebanx_tef'
+                template: 'Ebanx_Payments/payment/ebanx_tef',
+                selectedBank: 'bradesco'
             },
-            afterPlaceOrder: function () {
-                window.location.href = urlBuilder.build('ebanx/tef/redirect');
+            getData: function() {
+                return {
+                    'method': this.getCode(),
+                    'additional_data': {
+                        'selected_bank': this.selectedBank
+                    }
+                };
+            },
+            setSelectedBank: function (selectedBank) {
+                this.selectedBank = selectedBank;
+            },
+            beforePlaceOrder: function (data) {
+                console.log(data);
+                this.setSelectedBank(data.selectedBank);
                 this.placeOrder();
-
-                return false;
             }
         });
     }
