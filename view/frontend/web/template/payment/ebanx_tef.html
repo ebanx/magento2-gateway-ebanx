@@ -21,25 +21,33 @@
             <div>
                 <p>
                     <input type="radio" id="ebanx_tef_bradesco"
-                           name="ebanx_tef" value="bradesco">
+                           name="payment[selected_bank]" value="bradesco"
+                           data-bind="attr: {id: getCode() + '_bradesco'},
+                                      checked: selectedBank">
                     <label for="ebanx_tef_bradesco">Bradesco</label>
                 </p>
 
                 <p>
                     <input type="radio" id="ebanx_tef_bb"
-                           name="ebanx_tef" value="bancodobrasil">
+                           name="payment[selected_bank]" value="bancodobrasil"
+                           data-bind="attr: {id: getCode() + '_bb'},
+                                      checked: selectedBank">
                     <label for="ebanx_tef_bb">Banco do Brasil</label>
                 </p>
 
                 <p>
                     <input type="radio" id="ebanx_tef_itau"
-                           name="ebanx_tef" value="itau">
+                           name="payment[selected_bank]" value="itau"
+                           data-bind="attr: {id: getCode() + '_itau'},
+                                      checked: selectedBank">
                     <label for="ebanx_tef_itau">Itaú</label>
                 </p>
 
                 <p>
                     <input type="radio" id="ebanx_tef_banrisul"
-                           name="ebanx_tef" value="banrisul">
+                           name="payment[selected_bank]" value="banrisul"
+                           data-bind="attr: {id: getCode() + '_banrisul'},
+                                      checked: selectedBank">
                     <label for="ebanx_tef_banrisul">Banrisul</label>
                 </p>
             </div>
@@ -53,9 +61,8 @@
         <div class="actions-toolbar">
             <div class="primary">
                 <button class="action primary checkout"
-                        type="submit"
                         data-bind="
-                        click: afterPlaceOrder,
+                        click: beforePlaceOrder,
                         attr: {title: $t('Place Order')},
                         css: {disabled: !isPlaceOrderActionAllowed()},
                         enable: (getCode() == isChecked())
