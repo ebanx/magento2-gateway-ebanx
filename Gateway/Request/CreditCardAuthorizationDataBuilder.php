@@ -1,13 +1,8 @@
 <?php
 namespace Ebanx\Payments\Gateway\Request;
 
-use Magento\Payment\Gateway\Request\BuilderInterface;
-use Ebanx\Payments\Helper\Data as EbanxData;
-use Magento\Payment\Gateway\Helper\SubjectReader;
-
-class BoletoAuthorizationDataBuilder implements BuilderInterface
+class CreditCardAuthorizationDataBuilder implements BuilderInterface
 {
-
     /**
      * @var \Ebanx\Payments\Helper\Data
      */
@@ -34,11 +29,11 @@ class BoletoAuthorizationDataBuilder implements BuilderInterface
         $order = $paymentDataObject->getOrder();
         $storeId = $order->getStoreId();
 
-        $dueDateDays = (int) $this->ebanxHelper->getEbanxAbstractConfigData("due_date_days", $storeId);
+        // TODO: read auto capture flag
 
         return [
-            'type' => 'boleto',
-            'dueDate' => \DateTime::createFromFormat('U', strtotime("+$dueDateDays days", time())),
+            'type' => 'creditcard',
+            // TODO: read token and cvv
         ];
     }
 }
