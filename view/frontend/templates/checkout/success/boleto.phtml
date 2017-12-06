@@ -11,7 +11,7 @@
 
 <div class="ebanx-details">
     
-    <div class="defails">
+    <div class="details">
         <p><strong><?= $order->getBillingAddress()->getFirstname(); ?></strong>, seu boleto foi gerado e a data de vencimento é dia
             <strong><?= $dueDate ?></strong> :)</p>
         <p>Enviamos uma cópia para o email <strong><?= $order->getBillingAddress()->getEmail(); ?></strong></p>
@@ -53,7 +53,7 @@
     <script src="<?= $this->getViewFileUrl('Ebanx_Payments::js/voucher.js') ?>"></script>
 
     <style>
-        .defails{
+        .details{
             padding: 40px 0 0 0;
         }
 
