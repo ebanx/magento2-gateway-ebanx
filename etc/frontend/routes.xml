@@ -4,8 +4,5 @@
         <route frontName="ebanx" id="ebanx">
             <module name="Ebanx_Payments"/>
         </route>
-        <route frontName="ebanx-tef-redirect" id="tef_redirect">
-            <module name="Ebanx_Payments"/>
-        </route>
     </router>
 </config>
