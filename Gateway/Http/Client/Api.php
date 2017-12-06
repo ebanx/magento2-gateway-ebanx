@@ -3,6 +3,7 @@ namespace Ebanx\Payments\Gateway\Http\Client;
 
 use Ebanx\Payments\Helper\Data as Helper;
 use Ebanx\Benjamin\Models\Configs\Config;
+use Ebanx\Benjamin\Models\Country;
 use Magento\Store\Model\StoreManagerInterface;
 
 class Api
@@ -21,6 +22,11 @@ class Api
      * @var StoreManagerInterface
      */
     private $_storeManager;
+
+    /**
+     * @var array
+     */
+    private $paymentMethodCodeToGatewayName = [];
 
     /**
      * Api constructor.
@@ -44,6 +50,25 @@ class Api
     public function benjamin()
     {
         return $this->benjamin;
+    }
+
+    public function isAvailableForCountry($configProviderCode, $countryCode)
+    {
+        $gateway = $this->codeToGatewayName($configProviderCode);
+        $country = Country::fromIso($countryCode);
+
+        if (!$gateway) {
+            return true;
+        }
+
+        return $gateway::isAvailableForCountry($country);
+    }
+
+    private function codeToGatewayName($configProviderCode)
+    {
+        return isset($this->paymentMethodCodeToGatewayName[$configProviderCode])
+            ? $this->paymentMethodCodeToGatewayName[$configProviderCode]
+            : null;
     }
 
     /**
