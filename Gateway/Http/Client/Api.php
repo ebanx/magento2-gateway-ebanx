@@ -2,9 +2,6 @@
 namespace Ebanx\Payments\Gateway\Http\Client;
 
 use Ebanx\Payments\Helper\Data as Helper;
-
-use Ebanx\Payments\Model\Ui\EbanxBoletoConfigProvider;
-
 use Ebanx\Benjamin\Models\Configs\Config;
 use Ebanx\Benjamin\Models\Country;
 use Magento\Store\Model\StoreManagerInterface;
