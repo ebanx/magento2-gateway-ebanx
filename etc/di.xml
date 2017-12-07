@@ -207,7 +207,7 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="EbanxBoletoCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+    <virtualType name="EbanxBoletoCountryValidator" type="Ebanx\Payments\Model\Validator\CountryValidator">
         <arguments>
             <argument name="config" xsi:type="object">EbanxPaymentsBoletoConfig</argument>
         </arguments>
