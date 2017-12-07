@@ -1,6 +1,10 @@
 <?php
 namespace Ebanx\Payments\Gateway\Request;
 
+use Ebanx\Payments\Helper\Data as EbanxData;
+use Magento\Payment\Gateway\Helper\SubjectReader;
+use Magento\Payment\Gateway\Request\BuilderInterface;
+
 class CreditCardAuthorizationDataBuilder implements BuilderInterface
 {
     /**
@@ -11,7 +15,7 @@ class CreditCardAuthorizationDataBuilder implements BuilderInterface
     /**
      * CaptureDataBuilder constructor.
      *
-     * @param \Ebanx\Payments\Helper\Data $ebanxHelper
+     * @param EbanxData $ebanxHelper
      */
     public function __construct(EbanxData $ebanxHelper)
     {
