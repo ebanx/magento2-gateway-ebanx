@@ -59,13 +59,6 @@ class Api
         return $gateway->isAvailableForCountry($country);
     }
 
-    private function codeToGatewayName($configProviderCode)
-    {
-        return isset($this->paymentMethodCodeToGatewayName[$configProviderCode])
-            ? $this->paymentMethodCodeToGatewayName[$configProviderCode]
-            : null;
-    }
-
     /**
      * @return Config
      */
