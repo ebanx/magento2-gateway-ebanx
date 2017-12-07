@@ -129,7 +129,7 @@
         <arguments>
             <argument name="requestBuilder" xsi:type="object">EbanxPaymentsBoletoAuthorizeRequest</argument>
             <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
-            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\TransactionAuthorization</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\BoletoTransactionAuthorization</argument>
             <argument name="handler" xsi:type="object">EbanxPaymentsBoletoResponseHandlerComposite</argument>
         </arguments>
     </virtualType>
@@ -138,7 +138,7 @@
         <arguments>
             <argument name="requestBuilder" xsi:type="object">EbanxPaymentsCreditCardAuthorizeRequest</argument>
             <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
-            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\TransactionAuthorization</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\CreditCardTransactionAuthorization</argument>
             <argument name="handler" xsi:type="object">EbanxPaymentsCreditCardResponseHandlerComposite</argument>
         </arguments>
     </virtualType>
@@ -189,7 +189,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="EbanxPaymentsCreditCardRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+    <virtualType name="EbanxPaymentsCreditCardAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
             <argument name="builders" xsi:type="array">
                 <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>

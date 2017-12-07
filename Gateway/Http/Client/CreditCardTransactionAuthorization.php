@@ -16,7 +16,7 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 /**
  * Class TransactionSale
  */
-class TransactionAuthorization implements ClientInterface
+class CreditCardTransactionAuthorization implements ClientInterface
 {
     /**
      * @var \Ebanx\Benjamin\Facade
@@ -94,7 +94,7 @@ class TransactionAuthorization implements ClientInterface
     {
         $payment = new Payment($transferObject->getBody());
 
-        $response = $this->_benjamin->boleto()->create($payment);
+        $response = $this->_benjamin->creditCard()->create($payment);
 
         if ($response['status'] !== 'SUCCESS') {
             throw new CouldNotSaveException(__($response['status_code'] . ': ' . $response['status_message']));
@@ -112,7 +112,6 @@ class TransactionAuthorization implements ClientInterface
         $this->_ebanxPaymentModel->setPaymentHash($paymentResponse['hash'])
                           ->setOrderId($paymentResponse['order_number'])
                           ->setDueDate($paymentResponse['due_date'])
-                          ->setBarCode($paymentResponse['boleto_barcode'])
                           ->setInstalments($paymentResponse['instalments'])
                           ->setEnvironment($mode)
                           ->setCustomerDocument($paymentResponse['customer']['document'])
