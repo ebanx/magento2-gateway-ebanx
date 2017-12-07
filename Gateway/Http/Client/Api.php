@@ -47,6 +47,11 @@ class Api
         return $this->benjamin;
     }
 
+    /**
+     * @param  string  $gatewayName Gateway accessor method name in benjamin's facade
+     * @param  string  $countryCode ISO-3166 two letter code
+     * @return boolean
+     */
     public function isAvailableForCountry($gatewayName, $countryCode)
     {
         if (!$gatewayName) {
