@@ -10,6 +10,7 @@
                 <group>ebanx</group>
                 <mode>1</mode>
                 <due_date_days>3</due_date_days>
+                <auto_capture>1</auto_capture>
                 <payment_co_status>pending</payment_co_status>
                 <payment_pe_status>pending_payment</payment_pe_status>
                 <payment_op_status>pending_payment</payment_op_status>
@@ -37,7 +38,7 @@
             <ebanx_creditcard>
                 <active>1</active>
                 <model>EbanxPaymentsCreditCardFacade</model>
-                <title>Credit Card</title>
+                <title>Cartão de Crédito</title>
                 <allowspecific>0</allowspecific>
                 <sort_order>3</sort_order>
                 <payment_action>authorize</payment_action>
