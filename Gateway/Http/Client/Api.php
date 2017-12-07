@@ -1,6 +1,7 @@
 <?php
 namespace Ebanx\Payments\Gateway\Http\Client;
 
+use Ebanx\Benjamin\Models\Configs\CreditCardConfig;
 use Ebanx\Payments\Helper\Data as Helper;
 use Ebanx\Benjamin\Models\Configs\Config;
 use Magento\Store\Model\StoreManagerInterface;
@@ -35,7 +36,7 @@ class Api
     {
         $this->helper = $helper;
         $this->_storeManager = $storeManager;
-        $this->benjamin = EBANX($this->getConfig());
+        $this->benjamin = EBANX($this->getConfig(), $this->getCreditCardConfig());
     }
 
     /**
@@ -51,17 +52,25 @@ class Api
      */
     private function getConfig()
     {
-        return new Config(array(
+        return new Config([
             'integrationKey' => $this->helper->getEbanxAbstractConfigData('integration_key_live'),
             'sandboxIntegrationKey' => $this->helper->getEbanxAbstractConfigData('integration_key_sandbox'),
             'isSandbox' => $this->helper->getEbanxAbstractConfigData('mode'),
             'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
             'notificationUrl' => '', // TODO: create notification controller
             'redirectUrl' => '', // TODO: create notification controller
-            'userValues' => array(
+            'userValues' => [
                 1 => 'from_magento2',
                 3 => 'version=1.0.0', //TODO: Create a method to get the current version
-            ),
-        ));
+            ],
+        ]);
+    }
+
+    /**
+     * @return CreditCardConfig
+     */
+    private function getCreditCardConfig()
+    {
+        return new CreditCardConfig();
     }
 }
