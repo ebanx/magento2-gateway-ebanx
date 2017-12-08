@@ -19,6 +19,7 @@
                 <active>1</active>
                 <model>EbanxPaymentsBoletoFacade</model>
                 <title>Boleto</title>
+                <benjamin_gateway>boleto</benjamin_gateway>
                 <allowspecific>0</allowspecific>
                 <sort_order>1</sort_order>
                 <payment_action>authorize</payment_action>
