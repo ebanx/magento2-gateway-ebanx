@@ -2,23 +2,28 @@
 /**
  * @var \Ebanx\Payments\Block\Success\Tef $this
  */
+
+    $order = $this->getOrder();
 ?>
 
 <div class="ebanx-details">
-
     <div class="details">
-        <?= $this->getRedirectUrl() ?>
+        <p><?= $order->getBillingAddress()->getFirstname(); ?> você será redirecionado para a pagina do seu banco para concluir o pagamento.</p>
+        <p>Caso você não seja redirecionado em alguns instantes <a href="<?= $this->getRedirectUrl() ?>" target="_blank">clique aqui</a></p>
+        <input id="redirectURL" type="hidden" value="<?= $this->getRedirectUrl() ?>">
     </div>
-
 
     <?php include 'apps.phtml' ?>
 
+    <script src="<?= $this->getViewFileUrl('Ebanx_Payments::js/tef.min.js') ?>"></script>
+
+
     <style>
-        .details{
-            padding: 40px 0 0 0;
+        .details {
+            padding: 40px 0 20px 0;
         }
 
-        .ebanx-group{
+        .ebanx-group {
             display: inline-block;
             margin-right: 20px;
         }
