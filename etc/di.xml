@@ -267,7 +267,7 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="EbanxBoletoCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+    <virtualType name="EbanxBoletoCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
         <arguments>
             <argument name="config" xsi:type="object">EbanxPaymentsBoletoConfig</argument>
         </arguments>
@@ -280,7 +280,7 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="EbanxTefCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+    <virtualType name="EbanxTefCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
         <arguments>
             <argument name="config" xsi:type="object">EbanxPaymentsTefConfig</argument>
         </arguments>
