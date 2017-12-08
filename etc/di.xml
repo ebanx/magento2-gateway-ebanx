@@ -286,7 +286,7 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="EbanxCreditCardCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+    <virtualType name="EbanxCreditCardCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
         <arguments>
             <argument name="config" xsi:type="object">EbanxPaymentsCreditCardConfig</argument>
         </arguments>
