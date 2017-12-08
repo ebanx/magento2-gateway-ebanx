@@ -1,5 +1,5 @@
 <?php
-namespace Ebanx\Payments\Model\Validator;
+namespace Ebanx\Payments\Gateway\Validator;
 
 use Ebanx\Payments\Gateway\Http\Client\Api;
 use Magento\Payment\Gateway\Validator\CountryValidator as ParentValidator;
