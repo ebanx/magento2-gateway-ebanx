@@ -8,6 +8,8 @@
                 <!-- Brazil -->
                 <block class="Ebanx\Payments\Block\Success\Boleto" name="ebanx.success.payment.boleto"
                    as="ebanx_boleto" template="checkout/success/boleto.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Creditcard" name="ebanx.success.payment.creditcard"
+                       as="ebanx_creditcard" template="checkout/success/creditcard.phtml"/>
             </block>
         </referenceContainer>
     </body>

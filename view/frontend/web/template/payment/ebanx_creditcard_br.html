@@ -10,6 +10,46 @@
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
+
+        <form id="card-form">
+            <label data-bind="attr: {for: getCode() + '_instalments'}" class="label">
+                <span>Instalments</span>
+            </label>
+            <div class="control">
+                <input  type="text"
+                        class="input-text"
+                        name="payment[instalments]"
+                        autocomplete="off"
+                        data-bind="value: instalments"
+                        data-validate="{'required-entry': true}">
+                </input>
+            </div>
+            <label data-bind="attr: {for: getCode() + '_cvv'}" class="label">
+                <span>Cvv</span>
+            </label>
+            <div class="control">
+                <input  type="text"
+                        class="input-text"
+                        name="payment[cvv]"
+                        autocomplete="off"
+                        data-bind="value: cvv"
+                        data-validate="{'required-entry': true}">
+                </input>
+            </div>
+            <label data-bind="attr: {for: getCode() + '_brand'}" class="label">
+                <span>Brand</span>
+            </label>
+            <div class="control">
+                <input  type="text"
+                        class="input-text"
+                        name="payment[brand]"
+                        autocomplete="off"
+                        data-bind="value: brand"
+                        data-validate="{'required-entry': true}">
+                </input>
+            </div>
+        </form>
+
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
             <!-- ko template: getTemplate() --><!-- /ko -->
@@ -23,9 +63,8 @@
         <div class="actions-toolbar">
             <div class="primary">
                 <button class="action primary checkout"
-                        type="submit"
                         data-bind="
-                        click: placeOrder,
+                        click: beforePlaceOrder,
                         attr: {title: $t('Place Order')},
                         css: {disabled: !isPlaceOrderActionAllowed()},
                         enable: (getCode() == isChecked())

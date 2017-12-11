@@ -3,6 +3,8 @@ namespace Ebanx\Payments\Block\Success;
 
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Checkout\Model\Session;
+use Magento\Directory\Model\Currency;
+use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
@@ -10,6 +12,11 @@ use Magento\Sales\Model\OrderFactory;
 
 class Base extends Template
 {
+
+    /**
+     * @var PriceCurrencyInterface
+     */
+    protected $currency;
 
     /**
      * @var \Magento\Sales\Model\Order $order
@@ -43,6 +50,7 @@ class Base extends Template
      * @param OrderFactory $orderFactory
      * @param Collection $ebanxPaymentCollection
      * @param UrlInterface $urlBuilder
+     * @param Currency $currency
      * @param array $data
      */
     public function __construct(
@@ -51,12 +59,14 @@ class Base extends Template
         OrderFactory $orderFactory,
         Collection $ebanxPaymentCollection,
         UrlInterface $urlBuilder,
+        Currency $currency,
         array $data = []
     ) {
-        $this->_orderId = $checkoutSession->getLastRealOrderId();
-        $this->_orderFactory = $orderFactory;
+        $this->_orderId                = $checkoutSession->getLastRealOrderId();
+        $this->_orderFactory           = $orderFactory;
         $this->_ebanxPaymentCollection = $ebanxPaymentCollection;
-        $this->_urlBuilder = $urlBuilder;
+        $this->_urlBuilder             = $urlBuilder;
+        $this->currency                = $currency;
         parent::__construct($context, $data);
     }
 
@@ -66,6 +76,12 @@ class Base extends Template
     public function getSuccessPaymentBlock()
     {
         return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
+    }
+
+    public function formatAmount($currency, $amount)
+    {
+        $this->currency->load($currency);
+        return $this->currency->format($amount);
     }
 
     /**
