@@ -10,6 +10,7 @@
                 <group>ebanx</group>
                 <mode>1</mode>
                 <due_date_days>3</due_date_days>
+                <auto_capture>1</auto_capture>
                 <payment_co_status>pending</payment_co_status>
                 <payment_pe_status>pending_payment</payment_pe_status>
                 <payment_op_status>pending_payment</payment_op_status>
@@ -55,6 +56,26 @@
                 <can_cancel>1</can_cancel>
                 <group>ebanx</group>
             </ebanx_tef>
+            <ebanx_creditcard>
+                <active>1</active>
+                <model>EbanxPaymentsCreditCardFacade</model>
+                <title>Cartão de Crédito</title>
+                <benjamin_gateway>creditCard</benjamin_gateway>
+                <allowspecific>0</allowspecific>
+                <sort_order>3</sort_order>
+                <payment_action>authorize</payment_action>
+                <is_gateway>1</is_gateway>
+                <can_use_checkout>1</can_use_checkout>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_use_internal>1</can_use_internal>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <group>ebanx</group>
+            </ebanx_creditcard>
         </payment>
     </default>
 </config>

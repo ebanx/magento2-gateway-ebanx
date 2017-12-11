@@ -23,6 +23,12 @@ define(
             }
         );
         /** Add view logic here if needed */
+        rendererList.push(
+            {
+                type: 'ebanx_creditcard',
+                component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-creditcard'
+            }
+        );
         return Component.extend({});
     }
 );
