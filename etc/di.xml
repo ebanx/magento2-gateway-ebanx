@@ -93,8 +93,7 @@
         <arguments>
             <argument name="requestBuilder" xsi:type="object">EbanxPaymentsBoletoAuthorizeRequest</argument>
             <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
-            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\TransactionAuthorization</argument>
-            <!--<argument name="validator" xsi:type="object">GeneralResponseValidator</argument>-->
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\BoletoTransactionAuthorization</argument>
             <argument name="handler" xsi:type="object">EbanxPaymentsBoletoResponseHandlerComposite</argument>
         </arguments>
     </virtualType>
