@@ -39,6 +39,7 @@
                 <active>1</active>
                 <model>EbanxPaymentsWalletFacade</model>
                 <title>Saldo EBANX</title>
+                <benjamin_gateway>ebanxaccount</benjamin_gateway>
                 <allowspecific>0</allowspecific>
                 <sort_order>4</sort_order>
                 <payment_action>authorize</payment_action>
