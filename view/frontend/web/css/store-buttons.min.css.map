@@ -1,0 +1,1 @@
+{"version":3,"file":"store-buttons.min.css","sources":["css/store-buttons.scss"],"sourcesContent":[".details{\n    padding: 40px 0 0 0;\n}\n\n.ebanx-group{\n    display: inline-block;\n    margin-right: 20px;\n}"],"names":[],"mappings":"AAAA,AAAA,QAAQ,AAAA,CACJ,OAAO,CAAE,UAAU,CACtB,AAED,AAAA,YAAY,AAAA,CACR,OAAO,CAAE,YAAY,CACrB,YAAY,CAAE,IAAI,CACrB"}

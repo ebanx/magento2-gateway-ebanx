@@ -11,6 +11,9 @@ use Magento\Sales\Model\OrderFactory;
 
 class Base extends Template
 {
+    /**
+     * @var \Ebanx\Benjamin\Facade
+     */
     protected $ebanx;
 
     /**
@@ -32,6 +35,7 @@ class Base extends Template
      * @var UrlInterface
      */
     protected $_urlBuilder;
+
     /**
      * @var \Ebanx\Payments\Model\Resource\Order\Payment\Collection
      */
@@ -45,6 +49,7 @@ class Base extends Template
      * @param OrderFactory $orderFactory
      * @param Collection $ebanxPaymentCollection
      * @param UrlInterface $urlBuilder
+     * @param Api $api
      * @param array $data
      */
     public function __construct(

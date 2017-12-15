@@ -1,13 +1,14 @@
 <?php
 /**
- * @var \Ebanx\Payments\Block\Success\Wallet $this
+ * @var \Ebanx\Payments\Block\Success\Tef $this
  */
-$order = $this->getOrder();
+
+    $order = $this->getOrder();
 ?>
 
 <div class="ebanx-details">
     <div class="details">
-        <p><?= $order->getBillingAddress()->getFirstname(); ?> você será redirecionado para a pagina do EBANX para concluir o pagamento.</p>
+        <p><?= $order->getBillingAddress()->getFirstname(); ?> você será redirecionado para a pagina do seu banco para concluir o pagamento.</p>
         <p>Caso você não seja redirecionado em alguns instantes <a href="<?= $this->getRedirectUrl() ?>" target="_blank">clique aqui</a></p>
         <input id="redirectURL" type="hidden" value="<?= $this->getRedirectUrl() ?>">
     </div>
@@ -21,6 +22,7 @@ $order = $this->getOrder();
         .details {
             padding: 40px 0 20px 0;
         }
+
         .ebanx-group {
             display: inline-block;
             margin-right: 20px;

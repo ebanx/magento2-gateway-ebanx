@@ -7,11 +7,11 @@
     $dueDate = $this->getDueDate();
 ?>
 <!-- TODO: CHANGING CSS TO XML -->
-<link rel="stylesheet" href="<?= $this->getViewFileUrl('Ebanx_Payments::css/loading.css') ?>" />
+<link rel="stylesheet" href="<?= $this->getViewFileUrl('Ebanx_Payments::css/loading.min.css') ?>" />
 
 <div class="ebanx-details">
     
-    <div class="defails">
+    <div class="details">
         <p><strong><?= $order->getBillingAddress()->getFirstname(); ?></strong>, seu boleto foi gerado e a data de vencimento é dia
             <strong><?= $dueDate ?></strong> :)</p>
         <p>Enviamos uma cópia para o email <strong><?= $order->getBillingAddress()->getEmail(); ?></strong></p>
@@ -50,16 +50,6 @@
 
     <?php include 'apps.phtml' ?>
 
-    <script src="<?= $this->getViewFileUrl('Ebanx_Payments::js/voucher.js') ?>"></script>
+    <script src="<?= $this->getViewFileUrl('Ebanx_Payments::js/voucher.min.js') ?>"></script>
 
-    <style>
-        .defails{
-            padding: 40px 0 0 0;
-        }
-
-        .ebanx-group{
-            display: inline-block;
-            margin-right: 20px;
-        }
-    </style>
 </div>
