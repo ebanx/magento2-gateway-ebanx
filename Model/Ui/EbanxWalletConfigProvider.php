@@ -6,7 +6,7 @@ use Magento\Checkout\Model\ConfigProviderInterface;
 class EbanxWalletConfigProvider implements ConfigProviderInterface
 {
 
-    const CODE = 'ebanx_Wallet';
+    const CODE = 'ebanx_wallet';
 
     /**
      * @return array
