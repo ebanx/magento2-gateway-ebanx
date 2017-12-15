@@ -2,13 +2,6 @@
 
 namespace Ebanx\Payments\Block\Success;
 
-class Tef extends Base
+class Tef extends Redirect
 {
-    public function getRedirectUrl()
-    {
-        $hash = $this->_ebanxPaymentCollection->getPaymentHashByOrderId($this->_orderId);
-        $paymentInfo = $this->ebanx->paymentInfo()->findByHash($hash);
-
-        return $paymentInfo['payment']['redirect_url'];
-    }
 }
