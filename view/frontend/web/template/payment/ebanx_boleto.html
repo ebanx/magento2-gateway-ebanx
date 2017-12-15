@@ -16,7 +16,7 @@
             <!--/ko-->
         </div>
 
-        <form id="document">
+        <form id="document-form">
             <label class="label">CPF</label>
             <input  type="text"
                     class="input-text"
@@ -36,7 +36,7 @@
                 <button class="action primary checkout"
                         type="submit"
                         data-bind="
-                        click: placeOrder,
+                        click: beforePlaceOrder,
                         attr: {title: $t('Place Order')},
                         css: {disabled: !isPlaceOrderActionAllowed()},
                         enable: (getCode() == isChecked())
