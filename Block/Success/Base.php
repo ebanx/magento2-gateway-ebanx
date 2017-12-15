@@ -1,6 +1,7 @@
 <?php
 namespace Ebanx\Payments\Block\Success;
 
+use Ebanx\Payments\Gateway\Http\Client\Api;
 use Ebanx\Payments\Model\Resource\Order\Payment\Collection;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\UrlInterface;
@@ -10,6 +11,7 @@ use Magento\Sales\Model\OrderFactory;
 
 class Base extends Template
 {
+    protected $ebanx;
 
     /**
      * @var \Magento\Sales\Model\Order $order
@@ -51,12 +53,14 @@ class Base extends Template
         OrderFactory $orderFactory,
         Collection $ebanxPaymentCollection,
         UrlInterface $urlBuilder,
+        Api $api,
         array $data = []
     ) {
         $this->_orderId = $checkoutSession->getLastRealOrderId();
         $this->_orderFactory = $orderFactory;
         $this->_ebanxPaymentCollection = $ebanxPaymentCollection;
         $this->_urlBuilder = $urlBuilder;
+        $this->ebanx = $api->benjamin();
         parent::__construct($context, $data);
     }
 
