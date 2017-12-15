@@ -8,7 +8,8 @@ define(
         'use strict';
         return Component.extend({
             defaults: {
-                template: 'Ebanx_Payments/payment/ebanx_boleto'
+                template: 'Ebanx_Payments/payment/ebanx_boleto',
+                payment_document: null
             }
         });
     }

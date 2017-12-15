@@ -15,6 +15,17 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
+
+        <form id="document">
+            <label class="label">CPF</label>
+            <input  type="text"
+                    class="input-text"
+                    name="payment[document]"
+                    autocomplete="off"
+                    data-bind="value: payment_document"
+                    data-validate="{'required-entry': true}">
+        </form>
+
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
             <!-- ko template: getTemplate() --><!-- /ko -->
