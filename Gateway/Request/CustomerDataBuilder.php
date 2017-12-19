@@ -41,7 +41,6 @@ class CustomerDataBuilder implements BuilderInterface
 
 //        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
         $document = $payment->getAdditionalInformation(DocumentDataAssignObserver::DOCUMENT);
-        var_dump($document);
         preg_replace('/[^0-9]/', '', $document);
 
 
