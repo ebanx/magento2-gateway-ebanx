@@ -6,12 +6,19 @@ define(
     ],
     function ($) {
         'use strict';
+        var interval = setInterval(function () {
+            if (typeof $.validator === 'undefined')
+                return;
 
-        $.validator.addMethod([
-            function (document, item) {
-                return false;
-            },
-            'CPF inválido'
-        ]);
+            clearInterval(interval);
+
+            $.validator.addMethod(
+                'document-validator',
+                function (document, item) {
+                    return false;
+                },
+                'CPF inválido'
+            );
+        }, 500);
     }
 );
