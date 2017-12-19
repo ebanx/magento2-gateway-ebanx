@@ -4,7 +4,6 @@ namespace Ebanx\Payments\Gateway\Request;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Ebanx\Payments\Helper\Data as EbanxData;
 use Magento\Payment\Gateway\Helper\SubjectReader;
-use Zend_Date;
 
 class BoletoAuthorizationDataBuilder implements BuilderInterface
 {

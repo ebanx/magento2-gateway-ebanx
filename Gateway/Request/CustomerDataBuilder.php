@@ -2,6 +2,7 @@
 namespace Ebanx\Payments\Gateway\Request;
 
 use Ebanx\Benjamin\Models\Person;
+use Ebanx\Payments\Observer\DocumentDataAssignObserver;
 use Magento\Customer\Model\Customer;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
@@ -30,17 +31,21 @@ class CustomerDataBuilder implements BuilderInterface
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
 
         $order = $paymentDataObject->getOrder();
+        $payment = $paymentDataObject->getPayment();
         $billingAddress = $order->getBillingAddress();
         /** @var \Magento\Sales\Model\Order $fullOrder*/
-        $fullOrder = $paymentDataObject->getPayment()->getOrder();
+        $fullOrder = $payment->getOrder();
         /** @var \Magento\Customer\Model\Data\Customer $customer */
         $customer = $this->customer->setWebsiteId($order->getStoreId())
                                    ->loadByEmail($billingAddress->getEmail());
 
-        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
+//        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
+        $document = $payment->getAdditionalInformation(DocumentDataAssignObserver::DOCUMENT);
+        var_dump($document);
         preg_replace('/[^0-9]/', '', $document);
 
-	    $person = new Person([
+
+        $person = new Person([
             'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
             'document' => $document,
             'email' => $billingAddress->getEmail(),

@@ -10,25 +10,25 @@ define(
         return Component.extend({
             defaults: {
                 template: 'Ebanx_Payments/payment/ebanx_boleto',
-                payment_document: null
+                paymentDocument: null
             },
             getData: function () {
                 return {
                     'method': this.getCode(),
                     'additional_data': {
-                        'document': this.payment_document
+                        'document': this.paymentDocument
                     }
                 }
             },
-            setCardData: function (data) {
-                this.payment_document = data.payment_document;
+            setDocument: function (paymentDocument) {
+                this.paymentDocument = paymentDocument;
             },
             beforePlaceOrder: function (data) {
                 if (!this.validateForm('#document-form')) {
                     return;
                 }
 
-                this.setCardData(data);
+                this.setDocument(data.paymentDocument);
                 this.placeOrder();
             },
             validateForm: function (form) {
