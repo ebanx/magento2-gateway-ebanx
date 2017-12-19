@@ -23,7 +23,6 @@ define(
                 this.selectedBank = selectedBank;
             },
             beforePlaceOrder: function (data) {
-                console.log(data);
                 this.setSelectedBank(data.selectedBank);
                 this.placeOrder();
             }
