@@ -2,12 +2,24 @@
 
 namespace Ebanx\Payments\Setup;
 
+use Magento\Customer\Model\Customer;
+use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
-class InstallSchema implements InstallSchemaInterface {
+class InstallSchema implements InstallSchemaInterface
+{
+
+    private $eavSetupFactory;
+
+
+
+    public function __construct(EavSetupFactory $eavSetupFactory)
+    {
+        $this->eavSetupFactory = $eavSetupFactory;
+    }
 
     public function install( SchemaSetupInterface $setup, ModuleContextInterface $context ) {
 
@@ -78,6 +90,16 @@ class InstallSchema implements InstallSchemaInterface {
                 ['nullable' => false]
             );
         $connection->createTable($table);
+
+        $connection->addColumn(
+            $setup->getTable('customer_entity'),
+            'ebanx_customer_document',
+            [
+                'type' => Table::TYPE_TEXT,
+                'nullable' => true,
+                'comment' => 'Some comment'
+            ]
+        );
         $setup->endSetup();
     }
 }

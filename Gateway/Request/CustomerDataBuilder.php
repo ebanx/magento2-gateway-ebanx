@@ -4,6 +4,8 @@ namespace Ebanx\Payments\Gateway\Request;
 use Ebanx\Benjamin\Models\Person;
 use Ebanx\Payments\Observer\DocumentDataAssignObserver;
 use Magento\Customer\Model\Customer;
+use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
@@ -13,10 +15,15 @@ use Magento\Payment\Gateway\Helper\SubjectReader;
 class CustomerDataBuilder implements BuilderInterface
 {
     private $customer;
+    private $customerRepository;
 
-    public function __construct(Customer $customer)
+    public function __construct(
+        Customer $customer,
+        CustomerRepository $customerRepository
+    )
     {
         $this->customer = $customer;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -33,16 +40,18 @@ class CustomerDataBuilder implements BuilderInterface
         $order = $paymentDataObject->getOrder();
         $payment = $paymentDataObject->getPayment();
         $billingAddress = $order->getBillingAddress();
-        /** @var \Magento\Sales\Model\Order $fullOrder*/
-        $fullOrder = $payment->getOrder();
         /** @var \Magento\Customer\Model\Data\Customer $customer */
         $customer = $this->customer->setWebsiteId($order->getStoreId())
                                    ->loadByEmail($billingAddress->getEmail());
+        $document = $customer->getEbanxCustomerDocument();
 
-//        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
-        $document = $payment->getAdditionalInformation(DocumentDataAssignObserver::DOCUMENT);
+        if ($document === null) {
+            $document = $payment->getAdditionalInformation(DocumentDataAssignObserver::DOCUMENT);
+//            $customer->setEbanxCustomerDocument($document);
+            $cust = $this->customerRepository->getById($customer->getId());
+            $cust->setCustomAttribute('ebanx_customer_document', $document);
+        }
         preg_replace('/[^0-9]/', '', $document);
-
 
         $person = new Person([
             'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
