@@ -42,7 +42,7 @@ define(
                     }
 
                     var firstVerifyingDigit = 11 - (digitSum % 11);
-                    if (firstVerifyingDigit === 10 || firstVerifyingDigit === 11){
+                    if (firstVerifyingDigit > 9){
                         firstVerifyingDigit = 0;
                     }
 
@@ -56,7 +56,7 @@ define(
                     }
 
                     var secondVerifyingDigit = 11 - (digitSum % 11);
-                    if (secondVerifyingDigit === 10 || secondVerifyingDigit === 11){
+                    if (secondVerifyingDigit > 9){
                         secondVerifyingDigit = 0;
                     }
                     return secondVerifyingDigit === parseInt(document.charAt(10));
