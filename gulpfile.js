@@ -7,7 +7,7 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 
-//autoprefixer
+// TODO: add autoprefixer
 
 // Compile SASS
 gulp.task('sass', function() {
@@ -23,8 +23,7 @@ gulp.task('sass', function() {
     .pipe(sourcemaps.write('.'))
     .pipe(
       gulp.dest(function(file) {
-        var src = file.base.replace(/\/src/, '/view');
-        return src;
+        return file.base.replace(/\/src/, '/view');
       })
     );
 });
@@ -48,15 +47,10 @@ gulp.task('scripts', function() {
     .pipe(sourcemaps.write('.'))
     .pipe(
       gulp.dest(function(file) {
-        var src = file.base.replace(/\/src/, '/view');
-        return src;
+        return file.base.replace(/\/src/, '/view');
       })
     );
 });
-
-var somethingToDo = function(file) {
-  console.log(file);
-};
 
 // Watch Files For Changes
 gulp.task('watch', function() {
