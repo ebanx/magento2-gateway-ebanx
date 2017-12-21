@@ -1,11 +1,11 @@
-var gulp = require("gulp"),
-  babelify = require("babelify"),
-  babel = require("gulp-babel"),
-  jshint = require("gulp-jshint"),
-  sass = require("gulp-sass"),
-  uglify = require("gulp-uglify"),
-  rename = require("gulp-rename"),
-  sourcemaps = require("gulp-sourcemaps");
+const gulp = require("gulp");
+const babelify = require("babelify");
+const babel = require("gulp-babel");
+const jshint = require("gulp-jshint");
+const sass = require("gulp-sass");
+const uglify = require("gulp-uglify");
+const rename = require("gulp-rename");
+const sourcemaps = require("gulp-sourcemaps");
 
 //autoprefixer
 
