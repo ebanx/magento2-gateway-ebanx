@@ -23,6 +23,7 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "install": "^0.10.1",
-    "jshint": "^2.9.5"
+    "jshint": "^2.9.5",
+    "vanilla-masker": "^1.2.0"
   }
 }
