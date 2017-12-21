@@ -1,54 +1,54 @@
-const gulp = require("gulp");
-const babelify = require("babelify");
-const babel = require("gulp-babel");
-const jshint = require("gulp-jshint");
-const sass = require("gulp-sass");
-const uglify = require("gulp-uglify");
-const rename = require("gulp-rename");
-const sourcemaps = require("gulp-sourcemaps");
+const gulp = require('gulp');
+const babelify = require('babelify');
+const babel = require('gulp-babel');
+const jshint = require('gulp-jshint');
+const sass = require('gulp-sass');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const sourcemaps = require('gulp-sourcemaps');
 
 //autoprefixer
 
 // Compile SASS
-gulp.task("sass", function() {
+gulp.task('sass', function() {
   return gulp
-    .src("./src/frontend/web/**/*.scss")
+    .src('./src/frontend/web/**/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass({ outputStyle: "compressed" }))
+    .pipe(sass({ outputStyle: 'compressed' }))
     .pipe(
       rename({
-        extname: ".min.css"
+        extname: '.min.css'
       })
     )
-    .pipe(sourcemaps.write("."))
+    .pipe(sourcemaps.write('.'))
     .pipe(
       gulp.dest(function(file) {
-        var src = file.base.replace(/\/src/, "/view");
+        var src = file.base.replace(/\/src/, '/view');
         return src;
       })
     );
 });
 
 // Compile JS
-gulp.task("scripts", function() {
+gulp.task('scripts', function() {
   return gulp
-    .src("./src/frontend/web/**/*.js")
+    .src('./src/frontend/web/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(
       babel({
-        presets: ["es2015"]
+        presets: ['es2015']
       })
     )
     .pipe(uglify())
     .pipe(
       rename({
-        extname: ".min.js"
+        extname: '.min.js'
       })
     )
-    .pipe(sourcemaps.write("."))
+    .pipe(sourcemaps.write('.'))
     .pipe(
       gulp.dest(function(file) {
-        var src = file.base.replace(/\/src/, "/view");
+        var src = file.base.replace(/\/src/, '/view');
         return src;
       })
     );
@@ -59,10 +59,10 @@ var somethingToDo = function(file) {
 };
 
 // Watch Files For Changes
-gulp.task("watch", function() {
-  gulp.watch("./src/**/*.js", ["scripts"]);
-  gulp.watch("./src/**/*.scss", ["sass"]);
+gulp.task('watch', function() {
+  gulp.watch('./src/**/*.js', ['scripts']);
+  gulp.watch('./src/**/*.scss', ['sass']);
 });
 
 // Default Task
-gulp.task("default", ["sass", "scripts"]);
+gulp.task('default', ['sass', 'scripts']);
