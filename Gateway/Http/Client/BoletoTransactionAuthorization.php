@@ -16,7 +16,7 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 /**
  * Class TransactionSale
  */
-class TransactionAuthorization implements ClientInterface
+class BoletoTransactionAuthorization implements ClientInterface
 {
     /**
      * @var \Ebanx\Benjamin\Facade
