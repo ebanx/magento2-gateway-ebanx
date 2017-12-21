@@ -24,7 +24,7 @@ define(
                 this.paymentDocument = paymentDocument;
             },
             beforePlaceOrder: function (data) {
-                if (!this.validateForm('#document-form')) {
+                if (!this.validateForm('#' + this.getCode() + '_document_form')) {
                     return;
                 }
 

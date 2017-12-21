@@ -16,14 +16,23 @@
             <!--/ko-->
         </div>
 
-        <form id="document-form">
-            <label class="label">CPF</label>
-            <input  type="text"
-                    class="input-text"
-                    name="payment[document]"
-                    autocomplete="off"
-                    data-bind="value: paymentDocument"
-                    data-validate="{'required-entry': true, 'document-validator': true}">
+        <form id="ebanx_boleto_document_form">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" class="fieldset payment items" id="payment_form_ebanx_boleto">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_document'}" class="label">
+                        <span><!-- ko text: $t('CPF')-->CPF<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               id="ebanx_boleto_document"
+                               class="input-text"
+                               title="CPF"
+                               maxlength="11"
+                               data-bind="value: paymentDocument"
+                               data-validate="{'required-entry': true, 'document-validator': true}">
+                    </div>
+                </div>
+            </fieldset>
         </form>
 
         <div class="checkout-agreements-block">
