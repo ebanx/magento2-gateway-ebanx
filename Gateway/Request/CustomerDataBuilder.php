@@ -1,6 +1,8 @@
 <?php
 namespace Ebanx\Payments\Gateway\Request;
 
+use Ebanx\Benjamin\Models\Person;
+use Magento\Customer\Model\Customer;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
@@ -9,6 +11,12 @@ use Magento\Payment\Gateway\Helper\SubjectReader;
  */
 class CustomerDataBuilder implements BuilderInterface
 {
+    private $customer;
+
+    public function __construct(Customer $customer)
+    {
+        $this->customer = $customer;
+    }
 
     /**
      * Add shopper data into request
@@ -18,22 +26,41 @@ class CustomerDataBuilder implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
-        $result = [];
-
         /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
 
         $order = $paymentDataObject->getOrder();
         $billingAddress = $order->getBillingAddress();
-        $customerEmail = $billingAddress->getEmail();
-        $customerId = $order->getCustomerId();
+        /** @var \Magento\Sales\Model\Order $fullOrder*/
+        $fullOrder = $paymentDataObject->getPayment()->getOrder();
+        /** @var \Magento\Customer\Model\Data\Customer $customer */
+        $customer = $this->customer->setWebsiteId($order->getStoreId())
+                                   ->loadByEmail($billingAddress->getEmail());
 
-        if ($customerId > 0) {
-            $result['customerId'] = $customerId;
+        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
+        preg_replace('/[^0-9]/', '', $document);
+
+	    $person = new Person([
+            'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
+            'document' => $document,
+            'email' => $billingAddress->getEmail(),
+            'name' => $billingAddress->getFirstname() . ' ' . $billingAddress->getLastname(),
+            'phoneNumber' => $billingAddress->getTelephone(),
+            'ip' => $order->getRemoteIp(),
+        ]);
+
+        return [
+            'person' => $person,
+            'responsible' => $person,
+        ];
+    }
+
+    public function getPersonType($document, $countryAbbr)
+    {
+        if ($countryAbbr !== 'BR' || strlen($document) < 14) {
+            return Person::TYPE_PERSONAL;
         }
 
-        $result ['customerEmail'] = $customerEmail;
-
-        return $result;
+        return Person::TYPE_BUSINESS;
     }
 }

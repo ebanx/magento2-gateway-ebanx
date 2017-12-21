@@ -1,7 +1,9 @@
 <?php
 namespace Ebanx\Payments\Gateway\Response;
 
+use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
+use Magento\Sales\Api\Data\OrderPaymentInterface;
 
 class PaymentAuthorisationDetailsHandler implements HandlerInterface
 {
@@ -11,27 +13,21 @@ class PaymentAuthorisationDetailsHandler implements HandlerInterface
      */
     public function handle(array $handlingSubject, array $response)
     {
-        $payment = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($handlingSubject);
+        $payment = SubjectReader::readPayment($handlingSubject);
 
         /** @var OrderPaymentInterface $payment */
         $payment = $payment->getPayment();
 
-        // set transaction not to processing by default wait for notification
         $payment->setIsTransactionPending(true);
 
-        // no not send order confirmation mail
         $payment->getOrder()->setCanSendNewEmailFlag(false);
 
-        // TODO: set token as transactionId
-        $payment->setCcTransId($response['token']);
-        $payment->setLastTransId($response['token']);
+        $payment->setCcTransId($response['hash']);
+        $payment->setLastTransId($response['hash']);
 
-        // TODO: set transaction id
-        $payment->setTransactionId($response['token']);
+        $payment->setTransactionId($response['hash']);
 
-        // do not close transaction so you can do a cancel() and void
         $payment->setIsTransactionClosed(false);
         $payment->setShouldCloseParentTransaction(false);
-
     }
 }
