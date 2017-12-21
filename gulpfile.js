@@ -6,7 +6,7 @@ const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
-const minifyCss = require('gulp-minify-css');
+const cleancss = require('gulp-clean-css');
 const autoprefixer = require('gulp-autoprefixer');
 
 // Compile SASS
@@ -16,7 +16,7 @@ gulp.task('sass', function() {
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
-    .pipe(minifyCss())
+    .pipe(cleancss())
     .pipe(
       rename({
         extname: '.min.css'
