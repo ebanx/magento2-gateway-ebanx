@@ -6,15 +6,17 @@ const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
-
-// TODO: add autoprefixer
+const minifyCss = require('gulp-minify-css');
+const autoprefixer = require('gulp-autoprefixer');
 
 // Compile SASS
 gulp.task('sass', function() {
   return gulp
     .src('./src/frontend/web/**/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass({ outputStyle: 'compressed' }))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(minifyCss())
     .pipe(
       rename({
         extname: '.min.css'
