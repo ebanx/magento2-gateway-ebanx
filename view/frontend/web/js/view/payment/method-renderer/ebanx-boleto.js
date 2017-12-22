@@ -3,14 +3,19 @@
 define(
     [
         'Magento_Checkout/js/view/payment/default',
-        'jquery'
+        'jquery',
+        'document-mask'
     ],
-    function (Component, $) {
+    function (Component, $, documentMask) {
         'use strict';
         return Component.extend({
             defaults: {
                 template: 'Ebanx_Payments/payment/ebanx_boleto',
                 paymentDocument: null
+            },
+            initialize: function () {
+              this._super();
+              documentMask('#ebanx_boleto_document');
             },
             getData: function () {
                 return {

@@ -1,10 +1,20 @@
-(function(){
-  const VMasker = require('vanilla-masker');
+define([
+  'vanilla-masker'
+], function (VMasker) {
+  const getElementWhenDone = (selector, callback) => {
+    const interval = setInterval(function () {
+      const element = document.querySelector(selector);
+      if (!element)
+        return;
 
-  console.log('caraca muleque');
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('que dia que isso');
-    console.log(document.querySelector('#ebanx_boleto_document'));
-    VMasker(document.querySelector('#ebanx_boleto_document')).maskMoney();
-  });
-})();
+      clearInterval(interval);
+      callback(element);
+    }, 300);
+  };
+
+  return (inputSelector) => {
+    getElementWhenDone(inputSelector, (element) => {
+      VMasker(element).maskPattern('999.999.999-99');
+    });
+  };
+});
