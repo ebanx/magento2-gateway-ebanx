@@ -8,7 +8,7 @@ const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 const cleancss = require('gulp-clean-css');
 const autoprefixer = require('gulp-autoprefixer');
-const browserify = require('browserify');
+const browserify = require('gulp-browserify');
 
 // Compile SASS
 gulp.task('sass', function() {
@@ -33,10 +33,10 @@ gulp.task('sass', function() {
 
 // Compile JS
 gulp.task('scripts', function() {
-  // TODO: Use browserify
   return gulp
     .src('./src/frontend/web/**/*.js')
     .pipe(sourcemaps.init())
+    .pipe(browserify())
     .pipe(
       babel({
         presets: ['env']
