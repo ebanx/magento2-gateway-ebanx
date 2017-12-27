@@ -10,6 +10,8 @@
                    as="ebanx_boleto" template="checkout/success/boleto.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\Tef" name="ebanx.success.payment.tef"
                        as="ebanx_tef" template="checkout/success/tef.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Creditcard" name="ebanx.success.payment.creditcard"
+                       as="ebanx_creditcard" template="checkout/success/creditcard.phtml"/>
             </block>
         </referenceContainer>
     </body>

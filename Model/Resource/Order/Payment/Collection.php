@@ -77,4 +77,9 @@ class Collection extends AbstractCollection
     {
         return $this->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('bar_code');
     }
+
+    public function getEbanxLocalAmountByOrderId($orderId)
+    {
+        return $this->addFilter('order_id', $orderId)->getLastItem()->getDataByKey('local_amount');
+    }
 }

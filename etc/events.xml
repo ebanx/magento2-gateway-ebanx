@@ -2,4 +2,7 @@
     <event name="payment_method_assign_data_ebanx_tef">
         <observer name="ebanx_tef_data_assign" instance="Ebanx\Payments\Observer\TefDataAssignObserver" />
     </event>
+    <event name="payment_method_assign_data_ebanx_creditcard">
+        <observer name="ebanx_creditcard_data_assign" instance="Ebanx\Payments\Observer\CreditCardDataAssignObserver" />
+    </event>
 </config>
