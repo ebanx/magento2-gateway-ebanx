@@ -40,18 +40,11 @@ class CustomerDataBuilder implements BuilderInterface
         $order = $paymentDataObject->getOrder();
         $payment = $paymentDataObject->getPayment();
         $billingAddress = $order->getBillingAddress();
-        /** @var \Magento\Customer\Model\Data\Customer $customer */
+        $document = $payment->getAdditionalInformation(DocumentDataAssignObserver::DOCUMENT);
+        $document = preg_replace('/[^0-9]/', '', $document);
         $customer = $this->customer->setWebsiteId($order->getStoreId())
                                    ->loadByEmail($billingAddress->getEmail());
-        $document = $customer->getEbanxCustomerDocument();
-
-        if ($document === null) {
-            $document = $payment->getAdditionalInformation(DocumentDataAssignObserver::DOCUMENT);
-//            $customer->setEbanxCustomerDocument($document);
-            $cust = $this->customerRepository->getById($customer->getId());
-            $cust->setCustomAttribute('ebanx_customer_document', $document);
-        }
-        preg_replace('/[^0-9]/', '', $document);
+        $this->saveDocumentToCustomer($document, $customer);
 
         $person = new Person([
             'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
@@ -75,5 +68,14 @@ class CustomerDataBuilder implements BuilderInterface
         }
 
         return Person::TYPE_BUSINESS;
+    }
+
+    /**
+     * @param $document
+     * @param $customer
+     */
+    private function saveDocumentToCustomer($document, $customer)
+    {
+        $customer->setEbanxCustomerDocument($document);
     }
 }
