@@ -2,8 +2,8 @@
 
 namespace Ebanx\Payments\Setup;
 
-use Magento\Customer\Model\Customer;
 use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -15,21 +15,33 @@ class InstallSchema implements InstallSchemaInterface
     private $eavSetupFactory;
 
 
-
     public function __construct(EavSetupFactory $eavSetupFactory)
     {
         $this->eavSetupFactory = $eavSetupFactory;
     }
 
-    public function install( SchemaSetupInterface $setup, ModuleContextInterface $context ) {
+    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
 
         $setup->startSetup();
         /**
          * Create table 'ebanx_payments'
          */
         $connection = $setup->getConnection();
-        if ($connection->isTableExists('ebanx_payments')){
-            $setup->endSetup();
+
+        $this->createEbanxPaymentsTable($setup, $connection);
+        $this->createDocumentColumn($setup, $connection);
+
+        $setup->endSetup();
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param AdapterInterface     $connection
+     */
+    private function createEbanxPaymentsTable(SchemaSetupInterface $setup, AdapterInterface $connection)
+    {
+        if ($connection->isTableExists('ebanx_payments')) {
             return;
         }
 
@@ -90,16 +102,27 @@ class InstallSchema implements InstallSchemaInterface
                 ['nullable' => false]
             );
         $connection->createTable($table);
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     * @param AdapterInterface     $connection
+     */
+    private function createDocumentColumn(SchemaSetupInterface $setup, AdapterInterface $connection)
+    {
+        if ($connection->tableColumnExists('customer_entity', 'ebanx_customer_document')) {
+            return;
+        }
 
         $connection->addColumn(
             $setup->getTable('customer_entity'),
             'ebanx_customer_document',
             [
-                'type' => Table::TYPE_TEXT,
+                'type'     => Table::TYPE_TEXT,
+                'size'     => 16,
                 'nullable' => true,
-                'comment' => 'Some comment'
+                'comment'  => 'Obviously, the customer document.',
             ]
         );
-        $setup->endSetup();
     }
 }

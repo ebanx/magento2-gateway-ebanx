@@ -5,6 +5,7 @@ use Ebanx\Benjamin\Models\Person;
 use Ebanx\Payments\Observer\DocumentDataAssignObserver;
 use Magento\Customer\Model\Customer;
 use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Model\ResourceModel\Customer\Interceptor;
 use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
@@ -14,16 +15,29 @@ use Magento\Payment\Gateway\Helper\SubjectReader;
  */
 class CustomerDataBuilder implements BuilderInterface
 {
+    /**
+     * @var Customer
+     */
     private $customer;
-    private $customerRepository;
 
+    /**
+     * @var Interceptor
+     */
+    private $customerResourceModelInterceptor;
+
+    /**
+     * CustomerDataBuilder constructor.
+     *
+     * @param Customer    $customer
+     * @param Interceptor $customerResourceModelInterceptor
+     */
     public function __construct(
         Customer $customer,
-        CustomerRepository $customerRepository
+        Interceptor $customerResourceModelInterceptor
     )
     {
         $this->customer = $customer;
-        $this->customerRepository = $customerRepository;
+        $this->customerResourceModelInterceptor = $customerResourceModelInterceptor;
     }
 
     /**
@@ -71,11 +85,13 @@ class CustomerDataBuilder implements BuilderInterface
     }
 
     /**
-     * @param $document
-     * @param $customer
+     * @param string $document
+     * @param Customer $customer
      */
     private function saveDocumentToCustomer($document, $customer)
     {
-        $customer->setEbanxCustomerDocument($document);
+        $customer->setData('ebanx_customer_document', $document);
+        $customer->setMiddlename('andinho ta tentando');
+        $this->customerResourceModelInterceptor->save($customer);
     }
 }
