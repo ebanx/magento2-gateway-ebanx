@@ -6,14 +6,8 @@ define(
     ],
     function ($) {
         'use strict';
-        var interval = setInterval(function () {
-            if (typeof $.validator === 'undefined'){
-                return;
-            }
-
-            clearInterval(interval);
-
-            $.validator.addMethod(
+        waitFor(function(){return $.validator;}, function (validator) {
+            validator.addMethod(
                 'document-validator',
                 function (document) {
                     document = document.replace(/[^\d]+/g,'');
@@ -63,6 +57,18 @@ define(
                 },
                 'CPF inválido'
             );
-        }, 500);
+        });
     }
 );
+
+function waitFor(elementFinder, callback) {
+    var waiter = setInterval(function(){
+        var element = elementFinder();
+        if (typeof element === 'undefined') {
+            return;
+        }
+
+        clearInterval(waiter);
+        callback(element);
+    }, 500);
+}
