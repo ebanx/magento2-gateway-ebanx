@@ -16,8 +16,23 @@
             <!--/ko-->
         </div>
 
-        <form action="#" method="post">
-            <!-- TODO: Add document -->
+        <form id="ebanx_tef_form" class="payment-form-ebanx">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_boleto">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_document'}" class="label">
+                        <span><!-- ko text: $t('CPF')-->CPF<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               id="ebanx_tef_document"
+                               class="input-text"
+                               title="CPF"
+                               data-bind="value: paymentDocument"
+                               data-validate="{'required-entry': true, 'document-validator': true}">
+                    </div>
+                </div>
+            </fieldset>
+
             <p>Selecione o seu banco. A seguir, você será redirecionado para concluir o pagamento pelo seu internet banking.</p>
             <div>
                 <p>
