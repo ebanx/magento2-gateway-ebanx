@@ -75,7 +75,7 @@ class CustomerDataBuilder implements BuilderInterface
         $document = preg_replace('/[^0-9]/', '', $document);
         $customer = $this->customer->setWebsiteId($order->getStoreId())
                                    ->loadByEmail($billingAddress->getEmail());
-        $this->saveDocumentToCustomer($document, $customer);
+        $this->saveDocumentForCustomerId($document, $customer->getId());
 
         $person = new Person([
             'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
@@ -102,10 +102,10 @@ class CustomerDataBuilder implements BuilderInterface
     }
 
     /**
-     * @param string $customerId
      * @param string $document
+     * @param string $customerId
      */
-    private function saveDocument($customerId, $document)
+    private function saveDocumentForCustomerId($document, $customerId)
     {
         if (!$customerId || !$document) {
             return;

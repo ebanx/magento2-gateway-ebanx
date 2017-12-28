@@ -30,7 +30,7 @@ class InstallSchema implements InstallSchemaInterface
         $connection = $setup->getConnection();
 
         $this->createEbanxPaymentsTable($setup, $connection);
-        $this->createDocumentColumn($setup, $connection);
+        $this->createDocumentTable($setup, $connection);
 
         $setup->endSetup();
     }
@@ -108,7 +108,7 @@ class InstallSchema implements InstallSchemaInterface
      * @param SchemaSetupInterface $setup
      * @param AdapterInterface     $connection
      */
-    private function createDocumentColumn(SchemaSetupInterface $setup, AdapterInterface $connection)
+    private function createDocumentTable(SchemaSetupInterface $setup, AdapterInterface $connection)
     {
         if ($connection->isTableExists('ebanx_customer_document')) {
             return;

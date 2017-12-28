@@ -47,6 +47,8 @@ class DocumentConfigProvider implements ConfigProviderInterface
             return '';
         }
 
-        return $this->customerSession->getCustomerId();
+        return $this->collection->getDocumentForCustomerId(
+            $this->customerSession->getCustomerId()
+        );
     }
 }
