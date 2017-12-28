@@ -1,8 +1,6 @@
 <?php
-
 namespace Ebanx\Payments\Setup;
 
-use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\InstallSchemaInterface;
@@ -11,18 +9,8 @@ use Magento\Framework\Setup\SchemaSetupInterface;
 
 class InstallSchema implements InstallSchemaInterface
 {
-
-    private $eavSetupFactory;
-
-
-    public function __construct(EavSetupFactory $eavSetupFactory)
-    {
-        $this->eavSetupFactory = $eavSetupFactory;
-    }
-
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
-
         $setup->startSetup();
         /**
          * Create table 'ebanx_payments'
