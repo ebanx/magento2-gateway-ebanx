@@ -19,8 +19,26 @@ class Collection extends AbstractCollection
         $this->_init('Ebanx\Payments\Model\Customer\Document', 'Ebanx\Payments\Model\Resource\Customer\Document');
     }
 
+    /**
+     * @param string $customerId
+     * @return string|null
+     */
+    public function getDocumentForCustomerId($customerId)
+    {
+        return $this->findByCustomerId($customerId)->getDocument();
+    }
+
+    /**
+     * @param string $customerId
+     * @return \Ebanx\Payments\Model\Customer\Document
+     */
     public function findByCustomerId($customerId)
     {
-        return $this->addFilter('customer_id', $customerId)->getLastItem();
+        /**
+         * @var $document \Ebanx\Payments\Model\Customer\Document
+         */
+        $document = $this->addFilter('customer_id', $customerId)->getLastItem();
+
+        return $document;
     }
 }
