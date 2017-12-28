@@ -16,8 +16,8 @@
             <!--/ko-->
         </div>
 
-        <form id="ebanx_boleto_document_form">
-            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" class="fieldset payment items" id="payment_form_ebanx_boleto">
+        <form id="ebanx_boleto_document_form" class="payment-form-ebanx">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_boleto">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_document'}" class="label">
                         <span><!-- ko text: $t('CPF')-->CPF<!-- /ko --></span>
