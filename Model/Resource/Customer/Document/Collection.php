@@ -25,7 +25,7 @@ class Collection extends AbstractCollection
      */
     public function getDocumentForCustomerId($customerId)
     {
-        return $this->findByCustomerId($customerId)->getDocument();
+        return $this->findByCustomerId($customerId)->getDataByKey('document');
     }
 
     /**

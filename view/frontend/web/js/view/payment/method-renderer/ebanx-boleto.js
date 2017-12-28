@@ -11,7 +11,7 @@ define(
         return Component.extend({
             defaults: {
                 template: 'Ebanx_Payments/payment/ebanx_boleto',
-                paymentDocument: null
+                paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument
             },
             initialize: function () {
               this._super();
