@@ -110,17 +110,23 @@ class InstallSchema implements InstallSchemaInterface
      */
     private function createDocumentColumn(SchemaSetupInterface $setup, AdapterInterface $connection)
     {
-        if ($connection->isTableExists('ebanx_costumer_document')) {
+        if ($connection->isTableExists('ebanx_customer_document')) {
             return;
         }
 
         $table = $connection
-            ->newTable($setup->getTable('ebanx_costumer_document'))
+            ->newTable($setup->getTable('ebanx_customer_document'))
             ->addColumn(
-                'costumer_id',
+                'id',
                 Table::TYPE_INTEGER,
                 null,
                 ['identity' => true, 'nullable' => false, 'primary' => true]
+            )
+            ->addColumn(
+                'customer_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['nullable' => false]
             )
             ->addColumn(
                 'document',

@@ -1,14 +1,16 @@
 <?php
+
 namespace Ebanx\Payments\Gateway\Request;
 
 use Ebanx\Benjamin\Models\Person;
+use Ebanx\Payments\Model\Customer\Document;
+use Ebanx\Payments\Model\Resource\Customer\Document as DocumentResource;
+use Ebanx\Payments\Model\Resource\Customer\Document\Collection as DocumentCollection;
 use Ebanx\Payments\Observer\DocumentDataAssignObserver;
 use Magento\Customer\Model\Customer;
-use Magento\Customer\Model\CustomerFactory;
 use Magento\Customer\Model\ResourceModel\Customer\Interceptor;
-use Magento\Customer\Model\ResourceModel\CustomerRepository;
-use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
+use Magento\Payment\Gateway\Request\BuilderInterface;
 
 /**
  * Class CustomerDataBuilder
@@ -26,18 +28,33 @@ class CustomerDataBuilder implements BuilderInterface
     private $customerResourceModelInterceptor;
 
     /**
+     * @var DocumentResource
+     */
+    private $ebanxDocumentResource;
+
+    /**
+     * @var DocumentCollection
+     */
+    private $ebanxDocumentCollection;
+
+    /**
      * CustomerDataBuilder constructor.
      *
-     * @param Customer    $customer
-     * @param Interceptor $customerResourceModelInterceptor
+     * @param Customer           $customer
+     * @param Interceptor        $customerResourceModelInterceptor
+     * @param DocumentResource   $ebanxDocumentResource
+     * @param DocumentCollection $ebanxDocumentCollection
      */
     public function __construct(
         Customer $customer,
-        Interceptor $customerResourceModelInterceptor
-    )
-    {
-        $this->customer = $customer;
+        Interceptor $customerResourceModelInterceptor,
+        DocumentResource $ebanxDocumentResource,
+        DocumentCollection $ebanxDocumentCollection
+    ) {
+        $this->customer                         = $customer;
         $this->customerResourceModelInterceptor = $customerResourceModelInterceptor;
+        $this->ebanxDocumentResource            = $ebanxDocumentResource;
+        $this->ebanxDocumentCollection          = $ebanxDocumentCollection;
     }
 
     /**
@@ -85,13 +102,26 @@ class CustomerDataBuilder implements BuilderInterface
     }
 
     /**
+     * @param string $customerId
      * @param string $document
-     * @param Customer $customer
      */
-    private function saveDocumentToCustomer($document, $customer)
+    private function saveDocument($customerId, $document)
     {
-        $customer->setData('ebanx_customer_document', $document);
-        $customer->setMiddlename('andinho ta tentando');
-        $this->customerResourceModelInterceptor->save($customer);
+        if (!$customerId || !$document) {
+            return;
+        }
+
+        /**
+         * @var Document $documentModel
+         */
+        $documentModel = $this->ebanxDocumentCollection
+            ->findByCustomerId($customerId);
+
+        if ($documentModel->getCustomerId() !== $customerId) {
+            $documentModel->setCustomerId($customerId);
+        }
+        $documentModel->setDocument($document);
+
+        $this->ebanxDocumentResource->save($documentModel);
     }
 }
