@@ -26,19 +26,19 @@
                         <label>Sandbox Integration Key</label>
                         <config_path>payment/ebanx_abstract/integration_key_sandbox</config_path>
                     </field>
-                    <!--<field id="integration_key_public_sandbox" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">-->
-                        <!--<label>Sandbox Public Integration Key</label>-->
-                        <!--<config_path>payment/ebanx_abstract/integration_key_public_sandbox</config_path>-->
-                    <!--</field>-->
+                    <field id="integration_key_public_sandbox" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Sandbox Public Integration Key</label>
+                        <config_path>payment/ebanx_abstract/integration_key_public_sandbox</config_path>
+                    </field>
 
                     <field id="integration_key_live" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Live Integration Key</label>
                         <config_path>payment/ebanx_abstract/integration_key_live</config_path>
                     </field>
-                    <!--<field id="integration_key_public_live" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">-->
-                        <!--<label>Live Public Integration Key</label>-->
-                        <!--<config_path>payment/ebanx_abstract/integration_key_public_live</config_path>-->
-                    <!--</field>-->
+                    <field id="integration_key_public_live" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Live Public Integration Key</label>
+                        <config_path>payment/ebanx_abstract/integration_key_public_live</config_path>
+                    </field>
                 </group>
 
                 <!--<group id="title_preferences" translate="label" showInDefault="1" showInWebsite="1" sortOrder="40">-->
