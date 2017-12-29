@@ -76,6 +76,22 @@
                     <input id="cc-cvc" placeholder="CVV" type="text" name="cvc" maxlength="4" name="payment[cvv]" data-bind="value: cvv" data-validate="{'required-entry': true}"/>
                 </div>
             </div>
+
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_creditcard">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_document'}" class="label">
+                        <span><!-- ko text: $t('CPF')-->CPF<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               id="ebanx_creditcard_document"
+                               class="input-text"
+                               title="CPF"
+                               data-bind="value: paymentDocument"
+                               data-validate="{'required-entry': true, 'document-validator': true}">
+                    </div>
+                </div>
+            </fieldset>
         </form>
 
         <div class="actions-toolbar">
