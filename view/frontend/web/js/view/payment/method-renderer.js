@@ -29,7 +29,6 @@ define(
                 component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-wallet'
             }
         );
-        /** Add view logic here if needed */
         return Component.extend({});
     }
 );
