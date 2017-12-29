@@ -1,21 +1,60 @@
 <?php
+
 namespace Ebanx\Payments\Gateway\Request;
 
 use Ebanx\Benjamin\Models\Person;
+use Ebanx\Payments\Model\Customer\Document;
+use Ebanx\Payments\Model\Resource\Customer\Document as DocumentResource;
+use Ebanx\Payments\Model\Resource\Customer\Document\Collection as DocumentCollection;
+use Ebanx\Payments\Observer\DocumentDataAssignObserver;
 use Magento\Customer\Model\Customer;
-use Magento\Payment\Gateway\Request\BuilderInterface;
+use Magento\Customer\Model\ResourceModel\Customer\Interceptor;
 use Magento\Payment\Gateway\Helper\SubjectReader;
+use Magento\Payment\Gateway\Request\BuilderInterface;
 
 /**
  * Class CustomerDataBuilder
  */
 class CustomerDataBuilder implements BuilderInterface
 {
+    /**
+     * @var Customer
+     */
     private $customer;
 
-    public function __construct(Customer $customer)
-    {
-        $this->customer = $customer;
+    /**
+     * @var Interceptor
+     */
+    private $customerResourceModelInterceptor;
+
+    /**
+     * @var DocumentResource
+     */
+    private $ebanxDocumentResource;
+
+    /**
+     * @var DocumentCollection
+     */
+    private $ebanxDocumentCollection;
+
+    /**
+     * CustomerDataBuilder constructor.
+     *
+     * @param Customer           $customer
+     * @param Interceptor        $customerResourceModelInterceptor
+     * @param DocumentResource   $ebanxDocumentResource
+     * @param DocumentCollection $ebanxDocumentCollection
+     */
+    public function __construct(
+        Customer $customer,
+        Interceptor $customerResourceModelInterceptor,
+        DocumentResource $ebanxDocumentResource,
+        DocumentCollection $ebanxDocumentCollection
+    ) {
+        $this->customer                         = $customer;
+        $this->customerResourceModelInterceptor = $customerResourceModelInterceptor;
+        $this->ebanxDocumentResource            = $ebanxDocumentResource;
+        $this->ebanxDocumentCollection          = $ebanxDocumentCollection;
     }
 
     /**
@@ -30,17 +69,15 @@ class CustomerDataBuilder implements BuilderInterface
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
 
         $order = $paymentDataObject->getOrder();
+        $payment = $paymentDataObject->getPayment();
         $billingAddress = $order->getBillingAddress();
-        /** @var \Magento\Sales\Model\Order $fullOrder*/
-        $fullOrder = $paymentDataObject->getPayment()->getOrder();
-        /** @var \Magento\Customer\Model\Data\Customer $customer */
+        $document = $payment->getAdditionalInformation(DocumentDataAssignObserver::DOCUMENT);
+        $document = preg_replace('/[^0-9]/', '', $document);
         $customer = $this->customer->setWebsiteId($order->getStoreId())
                                    ->loadByEmail($billingAddress->getEmail());
+        $this->saveDocumentForCustomerId($document, $customer->getId());
 
-        $document = $customer->getTaxvat() ?: $fullOrder->getBillingAddress()->getData('vat_id');
-        preg_replace('/[^0-9]/', '', $document);
-
-	    $person = new Person([
+        $person = new Person([
             'type' => $this->getPersonType($document, $billingAddress->getCountryId()),
             'document' => $document,
             'email' => $billingAddress->getEmail(),
@@ -62,5 +99,29 @@ class CustomerDataBuilder implements BuilderInterface
         }
 
         return Person::TYPE_BUSINESS;
+    }
+
+    /**
+     * @param string $document
+     * @param string $customerId
+     */
+    private function saveDocumentForCustomerId($document, $customerId)
+    {
+        if (!$customerId || !$document) {
+            return;
+        }
+
+        /**
+         * @var Document $documentModel
+         */
+        $documentModel = $this->ebanxDocumentCollection
+            ->findByCustomerId($customerId);
+
+        if ($documentModel->getCustomerId() !== $customerId) {
+            $documentModel->setCustomerId($customerId);
+        }
+        $documentModel->setDocument($document);
+
+        $this->ebanxDocumentResource->save($documentModel);
     }
 }

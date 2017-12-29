@@ -15,6 +15,25 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
+
+        <form id="ebanx_boleto_document_form" class="payment-form-ebanx">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_boleto">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_document'}" class="label">
+                        <span><!-- ko text: $t('CPF')-->CPF<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               id="ebanx_boleto_document"
+                               class="input-text"
+                               title="CPF"
+                               data-bind="value: paymentDocument"
+                               data-validate="{'required-entry': true, 'document-validator': true}">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
             <!-- ko template: getTemplate() --><!-- /ko -->
@@ -25,7 +44,7 @@
                 <button class="action primary checkout"
                         type="submit"
                         data-bind="
-                        click: placeOrder,
+                        click: beforePlaceOrder,
                         attr: {title: $t('Place Order')},
                         css: {disabled: !isPlaceOrderActionAllowed()},
                         enable: (getCode() == isChecked())

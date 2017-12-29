@@ -1,26 +1,14 @@
 <?php
 namespace Ebanx\Payments\Model\Ui;
 
-use Ebanx\Payments\Helper\Data as EbanxData;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\UrlInterface;
-use Magento\Payment\Helper\Data;
 
 class EbanxTefConfigProvider implements ConfigProviderInterface
 {
 
     const CODE = 'ebanx_tef';
-
-    /**
-     * @var Data
-     */
-    protected $_paymentHelper;
-
-    /**
-     * @var EbanxData
-     */
-    protected $_ebanxHelper;
 
     /**
      * @var UrlInterface
@@ -37,19 +25,13 @@ class EbanxTefConfigProvider implements ConfigProviderInterface
     /**
      * EbanxBoletoConfigProvider constructor.
      *
-     * @param Data             $paymentHelper
-     * @param EbanxData        $ebanxHelper
      * @param UrlInterface     $urlBuilder
      * @param RequestInterface $request
      */
     public function __construct(
-        Data $paymentHelper,
-        EbanxData $ebanxHelper,
         UrlInterface $urlBuilder,
         RequestInterface $request
     ) {
-        $this->_paymentHelper = $paymentHelper;
-        $this->_ebanxHelper = $ebanxHelper;
         $this->_urlBuilder = $urlBuilder;
         $this->_request = $request;
     }
