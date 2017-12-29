@@ -64,13 +64,13 @@
                     <span>Expiry</span>
                 </label>
                 <div class="control">
-                    <input id="cc-expiry" placeholder="MM/YYYY" type="text" name="expiry" name="payment[expiry]" data-bind="value: expiry" data-validate="{'required-entry': true}"/>
+                    <input id="cc-expiry" placeholder="MM/YY" type="text" name="expiry" maxlength="7" name="payment[expiry]" data-bind="value: expiry" data-validate="{'required-entry': true}"/>
                 </div>
             </div>
 
             <div class="field" style="width: 30%; display: inline-block;">
                 <label class="label">
-                    <span>CVC</span>
+                    <span>CVV</span>
                 </label>
                 <div class="control">
                     <input id="cc-cvc" placeholder="CVV" type="text" name="cvc" maxlength="4" name="payment[cvv]" data-bind="value: cvv" data-validate="{'required-entry': true}"/>
