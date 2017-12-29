@@ -54,7 +54,7 @@ define(
       },
       tokenizer: function(param) {
         EBANX.config.setMode("test");
-        EBANX.config.setPublishableKey("pk_1231000");
+        EBANX.config.setPublishableKey(window.checkoutConfig.payment.ebanx.publicKey);
         EBANX.config.setCountry("br");
 
         var createTokenCallback = function(ebanxResponse) {
