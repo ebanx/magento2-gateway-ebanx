@@ -6,10 +6,12 @@ define(
         "jquery",
         "lib-js",
         'document-mask',
+        'Magento_Checkout/js/model/quote',
+        'mage/url',
         "card-js",
         "cc-br"
     ],
-    function (Component, $, EBANX, documentMask) {
+    function (Component, $, EBANX, documentMask, quote, url) {
         "use strict";
 
         window.EBANX = EBANX;
@@ -24,10 +26,14 @@ define(
                 expiry: null,
                 token: null,
                 paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument,
+                total: null,
             },
             initialize: function () {
                 this._super();
                 documentMask('#ebanx_creditcard_document');
+                var totals = quote.getTotals();
+                totals.subscribe(this.onUpdateTotals, this);
+                this.onUpdateTotals(totals.peek());
             },
             getData: function () {
                 return {
@@ -40,6 +46,23 @@ define(
                         document: this.paymentDocument,
                     }
                 };
+            },
+            onUpdateTotals: function (totals) {
+                this.total = totals.subtotal_with_discount;
+                var self = this;
+                $.post(
+                    url.build('ebanx/payment/interestrate'),
+                    {
+                        country: 'Brazil',
+                        amount: this.total
+                    },
+                    'json'
+                ).done(function (response) {
+
+                });
+            },
+            updatePaymentTerms: function (paymentTerms) {
+
             },
             setCardData: function (data) {
                 this.brand = data.payment_type_code;
