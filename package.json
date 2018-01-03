@@ -13,6 +13,7 @@
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
     "babelify": "^7.3.0",
+    "gulp-browserify": "^0.5.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^7.0.0",
@@ -23,6 +24,7 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "install": "^0.10.1",
-    "jshint": "^2.9.5"
+    "jshint": "^2.9.5",
+    "vanilla-masker": "^1.2.0"
   }
 }
