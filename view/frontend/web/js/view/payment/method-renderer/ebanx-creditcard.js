@@ -15,7 +15,6 @@ define(
         "use strict";
 
         window.EBANX = EBANX;
-        window.ko = ko;
 
         return Component.extend({
             defaults: {
