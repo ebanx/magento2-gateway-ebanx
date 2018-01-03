@@ -19,11 +19,13 @@ class PublicKeyConfigProvider implements ConfigProviderInterface
     public function getConfig()
     {
         $mode = $this->ebanxHelper->getEbanxAbstractConfigData('mode') ? 'sandbox' : 'live';
+        $libJsMode = $this->ebanxHelper->getEbanxAbstractConfigData('mode') ? 'test' : 'production';
 
         return [
             'payment' => [
                 'ebanx' => [
-                    'publicKey' => $this->ebanxHelper->getEbanxAbstractConfigData('integration_key_public_' . $mode)
+                    'publicKey' => $this->ebanxHelper->getEbanxAbstractConfigData('integration_key_public_' . $mode),
+                    'mode' => $libJsMode,
                 ]
             ]
         ];

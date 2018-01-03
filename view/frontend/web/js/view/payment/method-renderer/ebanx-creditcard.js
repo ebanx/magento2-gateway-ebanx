@@ -24,6 +24,7 @@ define(
                 expiry: null,
                 token: null,
                 paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument,
+                mode: window.checkoutConfig.payment.ebanx.mode,
             },
             initialize: function () {
                 this._super();
@@ -64,7 +65,7 @@ define(
                 });
             },
             tokenizer: function (param) {
-                EBANX.config.setMode("test");
+                EBANX.config.setMode(this.mode);
                 EBANX.config.setPublishableKey(window.checkoutConfig.payment.ebanx.publicKey);
                 EBANX.config.setCountry("br");
 
