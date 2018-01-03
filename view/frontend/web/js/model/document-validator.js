@@ -2,9 +2,10 @@
 /*global alert*/
 define(
     [
-        'jquery'
+        'jquery',
+        'wait-for'
     ],
-    function ($) {
+    function ($, waitFor) {
         'use strict';
         waitFor(function(){return $.validator;}, function (validator) {
             validator.addMethod(
@@ -60,15 +61,3 @@ define(
         });
     }
 );
-
-function waitFor(elementFinder, callback) {
-    var waiter = setInterval(function(){
-        var element = elementFinder();
-        if (typeof element === 'undefined') {
-            return;
-        }
-
-        clearInterval(waiter);
-        callback(element);
-    }, 500);
-}

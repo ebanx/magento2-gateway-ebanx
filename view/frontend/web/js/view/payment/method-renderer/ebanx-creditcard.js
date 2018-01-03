@@ -8,10 +8,9 @@ define(
         'document-mask',
         'Magento_Checkout/js/model/quote',
         'mage/url',
-        "card-js",
         "cc-br",
     ],
-    function (Component, $, EBANX, documentMask, quote, url) {
+    function (Component, $, EBANX, documentMask, quote, url, cc) {
         "use strict";
 
         window.EBANX = EBANX;
@@ -48,7 +47,7 @@ define(
                 };
             },
             onUpdateTotals: function (totals) {
-                this.total = totals.subtotal_with_discount;
+                this.total = totals.grand_total;
                 var self = this;
                 $.post(
                     url.build('ebanx/payment/interestrate'),
@@ -58,11 +57,11 @@ define(
                     },
                     'json'
                 ).done(function (response) {
-
+                    self.updatePaymentTerms(response);
                 });
             },
             updatePaymentTerms: function (paymentTerms) {
-
+                cc.createInstalment(paymentTerms);
             },
             setCardData: function (data) {
                 this.brand = data.payment_type_code;
@@ -79,6 +78,7 @@ define(
                 }
 
                 this.setDocument(data.paymentDocument);
+                this.instalments = data.instalments;
 
                 this.tokenizer({
                     card_number: data.number.replace(/ /g, ""),
