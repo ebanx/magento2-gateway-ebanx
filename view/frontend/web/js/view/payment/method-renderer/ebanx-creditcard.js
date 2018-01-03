@@ -9,12 +9,13 @@ define(
         'Magento_Checkout/js/model/quote',
         'mage/url',
         "card-js",
-        "cc-br"
+        "cc-br",
     ],
     function (Component, $, EBANX, documentMask, quote, url) {
         "use strict";
 
         window.EBANX = EBANX;
+        window.ko = ko;
 
         return Component.extend({
             defaults: {
@@ -85,7 +86,6 @@ define(
                     card_due_date: data.expiry.replace(/ /g, ""),
                     card_cvv: data.cvv,
                 });
-
             },
             tokenizer: function (param) {
                 EBANX.config.setMode("test");

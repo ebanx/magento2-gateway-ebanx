@@ -1,1 +1,1 @@
-{"version":3,"sources":["css/billing-form.css"],"names":[],"mappings":"AAAA,yBACE,cAAe","file":"billing-form.min.css","sourcesContent":[null]}
+{"version":3,"file":"billing-form.min.css","sources":["css/billing-form.scss"],"sourcesContent":[".payment-form-ebanx {\n  margin-bottom: 20px;\n}\n"],"names":[],"mappings":"AAAA,AAAA,mBAAmB,AAAC,CAClB,aAAa,CAAE,IAAI,CACpB"}

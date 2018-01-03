@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="field" style="width: 30%; display: inline-block;">
+            <div class="field" style="width: 20%; display: inline-block;">
                 <label class="label">
                     <span>Expiry</span>
                 </label>
@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="field" style="width: 30%; display: inline-block;">
+            <div class="field" style="width: 20%; display: inline-block;">
                 <label class="label">
                     <span>CVV</span>
                 </label>
@@ -76,7 +76,14 @@
                     <input id="cc-cvc" placeholder="CVV" type="text" name="cvc" maxlength="4" name="payment[cvv]" data-bind="value: cvv" data-validate="{'required-entry': true}"/>
                 </div>
             </div>
-
+            <!--div class="field" style="width: 58%; display: inline-block;">
+                <label class="label">
+                    <span>Parcelas</span>
+                </label>
+                <div class="control">
+                    <div id="instalment-cc-br"></div>
+                </div>
+            </div-->
             <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_creditcard">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_document'}" class="label">
