@@ -14,7 +14,6 @@
 
   setTimeout(() => {
     const cardForm = document.querySelector("#card-form");
-
     buildCreditCardForm();
   }, 2000);
 })();
