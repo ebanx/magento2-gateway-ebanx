@@ -251,7 +251,7 @@
                 <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
                 <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
                 <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
-                 <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\TefAuthorizationDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\TefAuthorizationDataBuilder</item>
             </argument>
         </arguments>
     </virtualType>
