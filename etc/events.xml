@@ -8,6 +8,8 @@
     </event>
     <event name="payment_method_assign_data_ebanx_creditcard">
         <observer name="ebanx_creditcard_data_assign" instance="Ebanx\Payments\Observer\CreditCardDataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_ebanx_wallet">
         <observer name="ebanx_document_data_assign" instance="Ebanx\Payments\Observer\DocumentDataAssignObserver" />
     </event>
 </config>

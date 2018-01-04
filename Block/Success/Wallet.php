@@ -2,6 +2,6 @@
 
 namespace Ebanx\Payments\Block\Success;
 
-class Tef extends Redirect
+class Wallet extends Redirect
 {
 }
