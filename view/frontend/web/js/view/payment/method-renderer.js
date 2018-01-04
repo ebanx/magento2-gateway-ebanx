@@ -10,6 +10,8 @@ define(
         rendererList
     ) {
         'use strict';
+
+        // Brazil
         rendererList.push(
             {
                 type: 'ebanx_boleto',
@@ -29,13 +31,21 @@ define(
                 component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-wallet'
             }
         );
-        /** Add view logic here if needed */
         rendererList.push(
             {
                 type: 'ebanx_creditcard',
                 component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-creditcard'
             }
         );
+
+        // Mexico
+        rendererList.push(
+            {
+                type: 'ebanx_oxxo',
+                component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-oxxo'
+            }
+        );
+
         return Component.extend({});
     }
 );
