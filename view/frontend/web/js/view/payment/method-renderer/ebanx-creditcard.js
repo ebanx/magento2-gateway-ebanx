@@ -26,6 +26,7 @@ define(
                 token: null,
                 paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument,
                 total: null,
+                mode: window.checkoutConfig.payment.ebanx.mode,
             },
             initialize: function () {
                 this._super();
@@ -82,12 +83,12 @@ define(
 
                 this.tokenizer({
                     card_number: data.number.replace(/ /g, ""),
-                    card_due_date: data.expiry.replace(/ /g, ""),
+                    card_due_date: this.formatDueDate(data.expiry),
                     card_cvv: data.cvv,
                 });
             },
             tokenizer: function (param) {
-                EBANX.config.setMode("test");
+                EBANX.config.setMode(this.mode);
                 EBANX.config.setPublishableKey(window.checkoutConfig.payment.ebanx.publicKey);
                 EBANX.config.setCountry("br");
 
@@ -115,6 +116,11 @@ define(
             validateForm: function (form) {
                 return $(form).validation() && $(form).validation("isValid");
             },
+            formatDueDate: function(expiry){
+                const dueDateSplited = expiry.replace(/ /g, "").split("/");
+                const dueDate = dueDateSplited[0] + "/20" +  dueDateSplited[1];
+                return dueDate;
+            }
         });
     }
 );

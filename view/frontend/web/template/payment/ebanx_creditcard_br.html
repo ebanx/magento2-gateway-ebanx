@@ -50,40 +50,61 @@
 
         <form id="card-form">
             
-            <div class="field">
-                <label class="label">
-                    <span>Number</span>
-                </label>
-                <div class="control">
-                    <input id="cc-number" placeholder="Number" type="text" name="number" maxlength="25" name="payment[number]" data-bind="value: number" data-validate="{'required-entry': true}"/>
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_number'}" class="label">
+                        <span><!-- ko text: $t('Number')-->Number<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" 
+                            id="cc-number" 
+                            placeholder="Number"  
+                            name="number" 
+                            maxlength="25" 
+                            name="payment[number]" 
+                            data-bind="value: number" 
+                            data-validate="{'required-entry': true}"/>
+                    </div>
                 </div>
-            </div>
+            </fieldset>
 
-            <div class="field" style="width: 20%; display: inline-block;">
-                <label class="label">
-                    <span>Expiry</span>
-                </label>
-                <div class="control">
-                    <input id="cc-expiry" placeholder="MM/YY" type="text" name="expiry" maxlength="7" name="payment[expiry]" data-bind="value: expiry" data-validate="{'required-entry': true}"/>
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}" style="width: 30%; display: inline-block;">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_expiry'}" class="label">
+                        <span><!-- ko text: $t('Expiry')-->Expiry<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" 
+                            id="cc-expiry" 
+                            placeholder="MM/YY"  
+                            name="expiry" 
+                            maxlength="7" 
+                            name="payment[expiry]" 
+                            data-bind="value: expiry" 
+                            data-validate="{'required-entry': true}"/>
+                    </div>
                 </div>
-            </div>
+            </fieldset>
 
-            <div class="field" style="width: 20%; display: inline-block;">
-                <label class="label">
-                    <span>CVV</span>
-                </label>
-                <div class="control">
-                    <input id="cc-cvc" placeholder="CVV" type="text" name="cvc" maxlength="4" name="payment[cvv]" data-bind="value: cvv" data-validate="{'required-entry': true}"/>
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}" style="width: 30%; display: inline-block;">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_cvv'}" class="label">
+                        <span><!-- ko text: $t('CVV')-->CVV<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" 
+                               id="cc-cvc"
+                               class="input-text"
+                               placeholder="CVV"  
+                               name="cvc" 
+                               maxlength="4" 
+                               name="payment[cvv]" 
+                               data-bind="value: cvv" 
+                               data-validate="{'required-entry': true}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="field" style="width: 58%; display: inline-block;">
-                <label class="label">
-                    <span>Parcelas</span>
-                </label>
-                <div class="control" data-bind="value: instalments">
-                    <div id="instalment-cc-br"></div>
-                </div>
-            </div>
+            </fieldset>
+
             <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_creditcard">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_document'}" class="label">
@@ -95,6 +116,7 @@
                                class="input-text"
                                title="CPF"
                                data-bind="value: paymentDocument"
+                               placeholder="CPF"
                                data-validate="{'required-entry': true, 'document-validator': true}">
                     </div>
                 </div>
