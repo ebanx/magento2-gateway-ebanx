@@ -3,10 +3,10 @@ namespace Ebanx\Payments\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 
-class EbanxBoletoConfigProvider implements ConfigProviderInterface
+class EbanxCreditCardConfigProvider implements ConfigProviderInterface
 {
 
-    const CODE = 'ebanx_boleto';
+    const CODE = 'ebanx_creditcard';
 
     /**
      * @return array

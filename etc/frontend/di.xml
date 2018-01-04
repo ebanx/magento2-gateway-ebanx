@@ -4,6 +4,7 @@
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
+                <item name="PublicKeyConfigProvider" xsi:type="object">Ebanx\Payments\Model\Ui\PublicKeyConfigProvider</item>
                 <item name="DocumentConfigProvider" xsi:type="object">Ebanx\Payments\Model\Ui\DocumentConfigProvider</item>
             </argument>
         </arguments>

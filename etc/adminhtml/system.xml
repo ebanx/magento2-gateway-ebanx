@@ -26,19 +26,19 @@
                         <label>Sandbox Integration Key</label>
                         <config_path>payment/ebanx_abstract/integration_key_sandbox</config_path>
                     </field>
-                    <!--<field id="integration_key_public_sandbox" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">-->
-                        <!--<label>Sandbox Public Integration Key</label>-->
-                        <!--<config_path>payment/ebanx_abstract/integration_key_public_sandbox</config_path>-->
-                    <!--</field>-->
+                    <field id="integration_key_public_sandbox" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Sandbox Public Integration Key</label>
+                        <config_path>payment/ebanx_abstract/integration_key_public_sandbox</config_path>
+                    </field>
 
                     <field id="integration_key_live" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Live Integration Key</label>
                         <config_path>payment/ebanx_abstract/integration_key_live</config_path>
                     </field>
-                    <!--<field id="integration_key_public_live" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">-->
-                        <!--<label>Live Public Integration Key</label>-->
-                        <!--<config_path>payment/ebanx_abstract/integration_key_public_live</config_path>-->
-                    <!--</field>-->
+                    <field id="integration_key_public_live" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Live Public Integration Key</label>
+                        <config_path>payment/ebanx_abstract/integration_key_public_live</config_path>
+                    </field>
                 </group>
 
                 <!--<group id="title_preferences" translate="label" showInDefault="1" showInWebsite="1" sortOrder="40">-->
@@ -106,11 +106,17 @@
                     <!--</field>-->
                 <!--</group>-->
 
-                <!--<group id="title_cc" translate="label" showInDefault="1" showInWebsite="1" sortOrder="95">-->
-                    <!--<label>Credit Card</label>-->
-                    <!--<attribute type="expanded">1</attribute>-->
-                    <!--<frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>-->
+                <group id="title_cc" translate="label" showInDefault="1" showInWebsite="1" sortOrder="95">
+                    <label>Credit Card</label>
+                    <attribute type="expanded">1</attribute>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
 
+                    <field id="auto_capture" translate="label" type="select" sortOrder="95" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Auto Capture</label>
+                        <comment>Automatically capture credit card payments from your customers.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/ebanx_abstract/auto_capture</config_path>
+                    </field>
                     <!--<field id="save_card_data" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
                         <!--<label>Save Card Data</label>-->
                         <!--<comment>Allow your customer to save credit card and debit card data for future purchases.</comment>-->
@@ -137,7 +143,7 @@
                     <!--<field id="interest_rate" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">-->
                         <!--<label>Interest</label>-->
                     <!--</field>-->
-                <!--</group>-->
+                </group>
 
                 <group id="title_cash" translate="label" showInDefault="1" showInWebsite="1" sortOrder="125">
                     <label>Cash Payments</label>

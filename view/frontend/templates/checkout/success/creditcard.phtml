@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var \Ebanx\Payments\Block\Success\Creditcard $this
+ */
+
+$order = $this->getOrder();
+?>
+<div class="ebanx-details">
+    <div class="details">
+        <p><strong><?= trim($order->getBillingAddress()->getFirstname()) ?></strong>, seu pagamento de
+            <strong><?= $this->formatAmount($this->currencyCode, $this->getEbanxLocalAmount()); ?></strong>
+            foi aprovado o/</p>
+        <p>Se tiver alguma dúvida em relação ao seu pagamento, acesse a Conta EBANX com o email
+            <strong><?= $order->getBillingAddress()->getEmail() ?></strong>.</p>
+    </div>
+
+    <?php include 'apps.phtml' ?>
+
+    <style>
+        .details{
+            padding: 40px 0 25px 0;
+        }
+
+        .ebanx-group{
+            display: inline-block;
+            margin-right: 20px;
+        }
+    </style>
+</div>
