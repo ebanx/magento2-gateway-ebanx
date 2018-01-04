@@ -543,6 +543,14 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="EbanxPaymentsOxxoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxOxxoCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="EbanxOxxoCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
         <arguments>
             <argument name="config" xsi:type="object">EbanxPaymentsOxxoConfig</argument>
