@@ -53,12 +53,12 @@
             <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_number'}" class="label">
-                        <span><!-- ko text: $t('Number')-->Number<!-- /ko --></span>
+                        <span><!-- ko text: $t('Número do Cartão')-->Número do Cartão<!-- /ko --></span>
                     </label>
                     <div class="control">
                         <input type="text" 
                             id="cc-number" 
-                            placeholder="Number"  
+                            placeholder="Número do Cartão"
                             name="number" 
                             maxlength="25" 
                             name="payment[number]" 
@@ -71,12 +71,12 @@
             <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}" style="width: 30%; display: inline-block;">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_expiry'}" class="label">
-                        <span><!-- ko text: $t('Expiry')-->Expiry<!-- /ko --></span>
+                        <span><!-- ko text: $t('Data de validade')-->Data de validade<!-- /ko --></span>
                     </label>
                     <div class="control">
                         <input type="text" 
                             id="cc-expiry" 
-                            placeholder="MM/YY"  
+                            placeholder="MM/AA"
                             name="expiry" 
                             maxlength="7" 
                             name="payment[expiry]" 
@@ -89,7 +89,7 @@
             <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}" style="width: 30%; display: inline-block;">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_cvv'}" class="label">
-                        <span><!-- ko text: $t('CVV')-->CVV<!-- /ko --></span>
+                        <span><!-- ko text: $t('Código de segurança')-->Código de segurança<!-- /ko --></span>
                     </label>
                     <div class="control">
                         <input type="text" 
