@@ -340,7 +340,7 @@
                 <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
                 <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
                 <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
-                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\BoletoAuthorizationDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\CashAuthorizationDataBuilder</item>
             </argument>
         </arguments>
     </virtualType>
@@ -388,7 +388,7 @@
                 <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
                 <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
                 <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
-                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\OxxoAuthorizationDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\CashAuthorizationDataBuilder</item>
             </argument>
         </arguments>
     </virtualType>
