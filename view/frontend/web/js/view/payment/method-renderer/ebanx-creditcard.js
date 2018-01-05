@@ -6,10 +6,11 @@ define(
         "jquery",
         "lib-js",
         'document-mask',
+        'Magento_Ui/js/modal/alert',
         "card-js",
         "cc-br"
     ],
-    function (Component, $, EBANX, documentMask) {
+    function (Component, $, EBANX, documentMask, alert) {
         "use strict";
 
         window.EBANX = EBANX;
@@ -19,7 +20,7 @@ define(
                 template: "Ebanx_Payments/payment/ebanx_creditcard_br",
                 brand: null,
                 cvv: null,
-                instalments: 1,
+                instalments: 13,
                 number: null,
                 expiry: null,
                 token: null,
@@ -76,7 +77,9 @@ define(
                         var errorMessage =
                             ebanxResponse.error.err.status_message ||
                             ebanxResponse.error.err.message;
+                        this.showErrorMessage(errorMessage);
                         console.error(errorMessage);
+                        console.error(ebanxResponse);
                     }
                 }.bind(this);
 
@@ -97,6 +100,15 @@ define(
                 const dueDateSplited = expiry.replace(/ /g, "").split("/");
                 const dueDate = dueDateSplited[0] + "/20" +  dueDateSplited[1];
                 return dueDate;
+            },
+            showErrorMessage: function(errorMessage){
+                alert({
+                    title: 'Atenção:',
+                    content: errorMessage,
+                    actions: {
+                        always: function(){}
+                    }
+                });
             }
         });
     }
