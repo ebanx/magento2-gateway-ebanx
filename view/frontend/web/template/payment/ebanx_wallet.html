@@ -16,7 +16,7 @@
             <!--/ko-->
         </div>
 
-        <form id="ebanx_boleto_document_form" class="payment-form-ebanx">
+        <form id="ebanx_wallet_document_form" class="payment-form-ebanx">
             <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_boleto">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_document'}" class="label">
@@ -24,7 +24,7 @@
                     </label>
                     <div class="control">
                         <input type="text"
-                               id="ebanx_boleto_document"
+                               id="ebanx_wallet_document"
                                class="input-text"
                                title="CPF"
                                data-bind="value: paymentDocument"
@@ -42,7 +42,6 @@
         <div class="actions-toolbar">
             <div class="primary">
                 <button class="action primary checkout"
-                        type="submit"
                         data-bind="
                             click: beforePlaceOrder,
                             attr: {title: $t('Place Order')},

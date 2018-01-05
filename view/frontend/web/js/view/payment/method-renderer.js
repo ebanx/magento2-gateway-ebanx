@@ -20,6 +20,13 @@ define(
             {
                 type: 'ebanx_tef',
                 component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-tef'
+
+            }
+        );
+        rendererList.push(
+            {
+                type: 'ebanx_wallet',
+                component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-wallet'
             }
         );
         /** Add view logic here if needed */
