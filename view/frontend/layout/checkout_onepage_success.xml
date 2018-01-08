@@ -16,6 +16,8 @@
                        as="ebanx_wallet" template="checkout/success/wallet.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\Oxxo" name="ebanx.success.payment.oxxo"
                        as="ebanx_oxxo" template="checkout/success/oxxo.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Spei" name="ebanx.success.payment.spei"
+                       as="ebanx_spei" template="checkout/success/spei.phtml"/>
             </block>
         </referenceContainer>
     </body>
