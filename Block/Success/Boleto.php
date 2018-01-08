@@ -11,7 +11,7 @@ class Boleto extends Base
     public function getVoucherUrl()
     {
         $hash = $this->_ebanxPaymentCollection->getPaymentHashByOrderId($this->_orderId);
-        $isSandbox = $this->_ebanxPaymentCollection->getEnvironmentByOrderId($this->_orderId) === 'sandbox' ? true : false;
+        $isSandbox = $this->_ebanxPaymentCollection->getEnvironmentByOrderId($this->_orderId) === 'sandbox';
         return $this->_urlBuilder->getUrl('ebanx/voucher/show', array(
             'hash' => $hash,
             'is_sandbox' => $isSandbox
