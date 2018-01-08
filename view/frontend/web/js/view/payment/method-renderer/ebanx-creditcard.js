@@ -85,7 +85,7 @@ define(
                 EBANX.card.createToken(
                     {
                         card_number: param.card_number,
-                        card_name: 'Magento testes',
+                        card_name: 'Magento Credit Card',
                         card_due_date: param.card_due_date,
                         card_cvv: param.card_cvv,
                     },
