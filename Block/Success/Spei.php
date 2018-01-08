@@ -2,7 +2,7 @@
 
 namespace Ebanx\Payments\Block\Success;
 
-class Boleto extends Base
+class Spei extends Base
 {
 
     /**

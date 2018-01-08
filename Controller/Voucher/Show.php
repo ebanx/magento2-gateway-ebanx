@@ -19,9 +19,9 @@ class Show extends Action
      */
     protected $_helper;
     /**
-     * @var \Ebanx\Benjamin\Services\Gateways\Boleto
+     * @var \Ebanx\Benjamin\Facade
      */
-    protected $_gateway;
+    protected $ebanx;
     /**
      * @var Raw
      */
@@ -36,7 +36,7 @@ class Show extends Action
         parent::__construct($context);
         $this->resultFactory = $context->getResultFactory();
         $this->_helper = $helper;
-        $this->_gateway = $api->benjamin()->boleto();
+        $this->ebanx = $api->benjamin();
         $this->_raw = $raw;
     }
 
@@ -51,6 +51,14 @@ class Show extends Action
     public function execute() {
         $hash = $this->getRequest()->getParam('hash');
         $isSandbox = $this->getRequest()->getParam('is_sandbox');
-        return $this->_raw->setContents($this->_gateway->getTicketHTml($hash, $isSandbox));
+
+        // TODO: Create a method getTicketHTml() on \Ebanx\Benjamin\Facade
+        $paymentTypeCode = $this->ebanx->paymentInfo()->findByHash($hash)['payment']['payment_type_code'];
+
+        return $this->_raw->setContents(
+            $this->ebanx
+                ->{$paymentTypeCode}()
+                ->getTicketHTml($hash, $isSandbox)
+        );
     }
 }

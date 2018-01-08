@@ -12,7 +12,7 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 /**
  * Class TransactionSale
  */
-class BoletoTransactionAuthorization implements ClientInterface
+class OxxoTransactionAuthorization implements ClientInterface
 {
     /**
      * @var \Ebanx\Benjamin\Facade
@@ -62,7 +62,7 @@ class BoletoTransactionAuthorization implements ClientInterface
     {
         $payment = new Payment($transferObject->getBody());
 
-        $response = $this->_benjamin->boleto()->create($payment);
+        $response = $this->_benjamin->oxxo()->create($payment);
 
         if ($response['status'] !== 'SUCCESS') {
             throw new CouldNotSaveException(__($response['status_code'] . ': ' . $response['status_message']));
@@ -78,13 +78,13 @@ class BoletoTransactionAuthorization implements ClientInterface
     private function persistPayment($paymentResponse) {
         $mode = $this->_ebanxHelper->getEbanxAbstractConfigData('mode') ? 'sandbox' : 'live';
         $this->_ebanxPaymentModel->setPaymentHash($paymentResponse['hash'])
-                          ->setOrderId($paymentResponse['order_number'])
-                          ->setDueDate($paymentResponse['due_date'])
-                          ->setBarCode($paymentResponse['boleto_barcode'])
-                          ->setInstalments($paymentResponse['instalments'])
-                          ->setEnvironment($mode)
-                          ->setCustomerDocument($paymentResponse['customer']['document'])
-                          ->setLocalAmount($paymentResponse['amount_br']);
+                                 ->setOrderId($paymentResponse['order_number'])
+                                 ->setDueDate($paymentResponse['due_date'])
+                                 ->setBarCode($paymentResponse['oxxo_barcode'])
+                                 ->setInstalments($paymentResponse['instalments'])
+                                 ->setEnvironment($mode)
+                                 ->setCustomerDocument($paymentResponse['customer']['document'])
+                                 ->setLocalAmount($paymentResponse['amount_br']);
         $this->_ebanxResourceModel->save($this->_ebanxPaymentModel);
     }
 }

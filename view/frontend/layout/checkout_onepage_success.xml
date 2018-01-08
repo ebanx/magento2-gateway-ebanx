@@ -14,6 +14,10 @@
                        as="ebanx_creditcard" template="checkout/success/creditcard.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\Wallet" name="ebanx.success.payment.wallet"
                        as="ebanx_wallet" template="checkout/success/wallet.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Oxxo" name="ebanx.success.payment.oxxo"
+                       as="ebanx_oxxo" template="checkout/success/oxxo.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Spei" name="ebanx.success.payment.spei"
+                       as="ebanx_spei" template="checkout/success/spei.phtml"/>
             </block>
         </referenceContainer>
     </body>
