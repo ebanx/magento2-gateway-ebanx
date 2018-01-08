@@ -52,6 +52,14 @@ define(
             }
         );
 
+      // Chile
+      rendererList.push(
+        {
+          type: 'ebanx_sencillito',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-sencillito'
+        }
+      );
+
         return Component.extend({});
     }
 );
