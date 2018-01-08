@@ -45,6 +45,12 @@ define(
                 component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-oxxo'
             }
         );
+        rendererList.push(
+            {
+                type: 'ebanx_spei',
+                component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-spei'
+            }
+        );
 
         return Component.extend({});
     }
