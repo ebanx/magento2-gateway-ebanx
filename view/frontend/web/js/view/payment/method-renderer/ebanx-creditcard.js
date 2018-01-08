@@ -53,9 +53,9 @@ define(
                 this.paymentDocument = paymentDocument;
             },
             beforePlaceOrder: function (data) {
-                this.disableBtnPlaceOrder(true);
+                this.disableBtnPlaceOrder();
                 if (!this.validateForm('#card-form')) {
-                    this.disableBtnPlaceOrder(false);
+                    this.enableBtnPlaceOrder();
                     return null;
                 }
                 this.setDocument(data.paymentDocument);
@@ -71,7 +71,7 @@ define(
                 EBANX.config.setCountry('br');
 
                 var createTokenCallback = function (ebanxResponse) {
-                    this.disableBtnPlaceOrder(false);
+                    this.enableBtnPlaceOrder();
                     if (ebanxResponse.data.hasOwnProperty('status')) {
                         this.setCardData(ebanxResponse.data);
                     } else {
@@ -109,12 +109,11 @@ define(
                     }
                 });
             },
-            disableBtnPlaceOrder: function(isItToDisable){
-                if(isItToDisable){
-                    $('#btn_cc_br_form_place_order').attr('disabled', 'disabled');
-                } else{
-                    $('#btn_cc_br_form_place_order').removeAttr('disabled');
-                }
+            disableBtnPlaceOrder: function(){
+                $('#btn_cc_br_form_place_order').attr('disabled', 'disabled');
+            },
+            enableBtnPlaceOrder: function(){
+                $('#btn_cc_br_form_place_order').removeAttr('disabled');
             }
         });
     }
