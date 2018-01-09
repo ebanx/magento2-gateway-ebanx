@@ -17,7 +17,7 @@ EBANX Payment Gateway for Magento 2.x
 		- [X] :dollar: Sencillito
 		- [X] :arrows_clockwise: Servipag
 		- [ ] :arrows_clockwise: Webpay
-		- [ ] :arrows_clockwise: Multicaja
+		- [X] :arrows_clockwise: Multicaja
 	- [ ] Colombia
 		- [ ] :arrows_clockwise: PSE
 		- [ ] :dollar: Baloto
