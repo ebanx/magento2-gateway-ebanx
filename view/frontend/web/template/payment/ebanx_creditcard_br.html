@@ -10,7 +10,6 @@
         }
         .field .control{
             margin-top: 6px;
-            margin-right: 20px;
         }
         .jp-card-name {
             display: none !important;
@@ -47,6 +46,8 @@
 
 
         <div class="card"></div>
+
+        <div id="message"></div>
 
         <form id="card-form">
             
@@ -125,10 +126,15 @@
 
         <div class="actions-toolbar">
             <div class="primary">
-                <button class="action primary checkout" data-bind="
-                        click: beforePlaceOrder,
-                        attr: {title: $t('Place Order')},
-                        enable: (getCode() == isChecked())" disabled>
+                <button id="btn_cc_br_form_place_order"
+                        class="action primary checkout" 
+                        data-bind="
+                            click: beforePlaceOrder,
+                            attr: {title: $t('Place Order')},
+                            css: {disabled: !isPlaceOrderActionAllowed()},
+                            enable: (getCode() == isChecked())
+                        " 
+                        disabled>
                     <span data-bind="i18n: 'Place Order'"></span>
                 </button>
             </div>

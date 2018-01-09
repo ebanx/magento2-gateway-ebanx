@@ -34,7 +34,9 @@ define(
                 this.selectedBank = selectedBank;
             },
             beforePlaceOrder: function (data) {
+                this.disableBtnPlaceOrder();
                 if (!this.validateForm('#' + this.getCode() + '_form')) {
+                    this.enableBtnPlaceOrder();
                     return;
                 }
 
@@ -44,6 +46,12 @@ define(
             },
             validateForm: function (form) {
                 return $(form).validation() && $(form).validation('isValid');
+            },
+            disableBtnPlaceOrder: function(){
+                $('#btn_tef_form_place_order').attr('disabled', 'disabled');
+            },
+            enableBtnPlaceOrder: function(){
+                $('#btn_tef_form_place_order').removeAttr('disabled');
             }
         });
     }
