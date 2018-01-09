@@ -34,6 +34,7 @@ class AbstractInfo extends Info
      */
     public function isSandboxMode()
     {
+        // TODO: make it work
 //        $storeId = $this->getInfo()->getOrder()->getStoreId();
         return true; //$this->_ebanxHelper->getEbanxAbstractConfigDataFlag('sandbox_mode', $storeId);
     }
