@@ -71,6 +71,12 @@ define(
           component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-multicaja'
         }
       );
+      rendererList.push(
+        {
+          type: 'ebanx_webpay',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-webpay'
+        }
+      );
 
         return Component.extend({});
     }

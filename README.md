@@ -13,10 +13,10 @@ EBANX Payment Gateway for Magento 2.x
 		- [ ] :credit_card: Debit Card
 		- [X] :dollar: OXXO
 		- [X] :dollar: Spei
-	- [ ] Chile
+	- [X] Chile
 		- [X] :dollar: Sencillito
 		- [X] :arrows_clockwise: Servipag
-		- [ ] :arrows_clockwise: Webpay
+		- [X] :arrows_clockwise: Webpay
 		- [X] :arrows_clockwise: Multicaja
 	- [ ] Colombia
 		- [ ] :arrows_clockwise: PSE
