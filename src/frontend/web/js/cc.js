@@ -14,7 +14,7 @@ define(
                 width: 275,
                 placeholders: {
                     number: "•••• •••• •••• ••••",
-                    expiry: "••/••••",
+                    expiry: "••/••",
                     cvc: "•••"
                 }
             });
