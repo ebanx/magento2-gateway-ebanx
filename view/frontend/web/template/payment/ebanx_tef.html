@@ -76,12 +76,13 @@
         </div>
         <div class="actions-toolbar">
             <div class="primary">
-                <button class="action primary checkout"
+                <button id="btn_tef_form_place_order"
+                        class="action primary checkout"
                         data-bind="
-                        click: beforePlaceOrder,
-                        attr: {title: $t('Place Order')},
-                        css: {disabled: !isPlaceOrderActionAllowed()},
-                        enable: (getCode() == isChecked())
+                            click: beforePlaceOrder,
+                            attr: {title: $t('Place Order')},
+                            css: {disabled: !isPlaceOrderActionAllowed()},
+                            enable: (getCode() == isChecked())
                         "
                         disabled>
                     <span data-bind="i18n: 'Place Order'"></span>

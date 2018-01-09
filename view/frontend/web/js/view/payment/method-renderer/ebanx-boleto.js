@@ -29,7 +29,9 @@ define(
                 this.paymentDocument = paymentDocument;
             },
             beforePlaceOrder: function (data) {
+                this.disableBtnPlaceOrder();
                 if (!this.validateForm('#' + this.getCode() + '_document_form')) {
+                    this.enableBtnPlaceOrder();
                     return;
                 }
 
@@ -38,6 +40,12 @@ define(
             },
             validateForm: function (form) {
                 return $(form).validation() && $(form).validation('isValid');
+            },
+            disableBtnPlaceOrder: function(){
+                $('#btn_boleto_form_place_order').attr('disabled', 'disabled');
+            },
+            enableBtnPlaceOrder: function(){
+                $('#btn_boleto_form_place_order').removeAttr('disabled');
             }
         });
     }

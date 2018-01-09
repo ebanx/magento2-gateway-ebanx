@@ -44,6 +44,28 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="EbanxPaymentsWalletFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxWalletConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Wallet</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\Wallet</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsWalletValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsWalletValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsWalletCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxOxxoConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Oxxo</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\Oxxo</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsOxxoValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsOxxoValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsOxxoCommandPool</argument>
+        </arguments>
+    </virtualType>
+
     <!-- Value handlers infrastructure -->
     <virtualType name="EbanxPaymentsGenericValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
         <arguments>
@@ -56,6 +78,19 @@
     <virtualType name="EbanxPaymentsGenericConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
             <argument name="configInterface" xsi:type="object">EbanxPaymentsGenericConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsTefValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsTefConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EbanxPaymentsTefConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsTefConfig</argument>
         </arguments>
     </virtualType>
 
@@ -73,17 +108,17 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="EbanxPaymentsTefValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+    <virtualType name="EbanxPaymentsWalletValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
         <arguments>
             <argument name="handlers" xsi:type="array">
-                <item name="default" xsi:type="string">EbanxPaymentsTefConfigValueHandler</item>
+                <item name="default" xsi:type="string">EbanxPaymentsWalletConfigValueHandler</item>
             </argument>
         </arguments>
     </virtualType>
-
-    <virtualType name="EbanxPaymentsTefConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+  
+    <virtualType name="EbanxPaymentsWalletConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
-            <argument name="configInterface" xsi:type="object">EbanxPaymentsTefConfig</argument>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsWalletConfig</argument>
         </arguments>
     </virtualType>
 
@@ -98,6 +133,20 @@
     <virtualType name="EbanxPaymentsCreditCardConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
             <argument name="configInterface" xsi:type="object">EbanxPaymentsCreditCardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsOxxoConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsOxxoConfig</argument>
         </arguments>
     </virtualType>
 
@@ -123,6 +172,18 @@
     <virtualType name="EbanxPaymentsCreditCardConfig" type="Magento\Payment\Gateway\Config\Config">
         <arguments>
             <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxCreditCardConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWalletConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxWalletConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxOxxoConfigProvider::CODE</argument>
         </arguments>
     </virtualType>
 
@@ -170,6 +231,30 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="EbanxPaymentsWalletCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsWalletAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsOxxoAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <!-- Authorization command  -->
     <virtualType name="EbanxPaymentsBoletoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -198,13 +283,30 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="EbanxPaymentsWalletAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsWalletAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\WalletTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsWalletResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsOxxoAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\OxxoTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsOxxoResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
     <!-- Capture command  -->
     <virtualType name="EbanxPaymentsCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">EbanxPaymentsCaptureRequest</argument>
             <argument name="transferFactory" xsi:type="object">Ebanx\Payment\Gateway\Http\TransferFactory</argument>
             <argument name="client" xsi:type="object">Ebanx\Payment\Gateway\Http\Client\TransactionCapture</argument>
-            <!--<argument name="validator" xsi:type="object">Ebanx\Payment\Gateway\Validator\CaptureResponseValidator</argument>-->
             <argument name="handler" xsi:type="object">EbanxPaymentsCaptureResponseHandlerComposite</argument>
         </arguments>
     </virtualType>
@@ -215,7 +317,6 @@
             <argument name="requestBuilder" xsi:type="object">EbanxPaymentsRefundRequest</argument>
             <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
             <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\TransactionRefund</argument>
-            <!--<argument name="validator" xsi:type="object">Ebanx\Payments\Gateway\Validator\RefundResponseValidator</argument>-->
             <argument name="handler" xsi:type="object">EbanxPaymentsRefundResponseHandlerComposite</argument>
         </arguments>
     </virtualType>
@@ -239,7 +340,19 @@
                 <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
                 <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
                 <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
-                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\BoletoAuthorizationDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\CashAuthorizationDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWalletAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+            <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+            <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+            <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+            <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+            <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\WalletAuthorizationDataBuilder</item>
             </argument>
         </arguments>
     </virtualType>
@@ -251,7 +364,7 @@
                 <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
                 <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
                 <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
-                 <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\TefAuthorizationDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\TefAuthorizationDataBuilder</item>
             </argument>
         </arguments>
     </virtualType>
@@ -264,6 +377,18 @@
                 <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
                 <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
                 <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\CreditCardAuthorizationDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\CashAuthorizationDataBuilder</item>
             </argument>
         </arguments>
     </virtualType>
@@ -307,6 +432,16 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <virtualType name="EbanxPaymentsWalletResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="EbanxPaymentsTefResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
             <argument name="handlers" xsi:type="array">
@@ -317,6 +452,15 @@
     </virtualType>
 
     <virtualType name="EbanxPaymentsCreditCardResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
             <argument name="handlers" xsi:type="array">
                 <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
@@ -358,6 +502,19 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="EbanxPaymentsWalletValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxWalletCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EbanxWalletCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsWalletConfig</argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="EbanxPaymentsTefValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
         <arguments>
             <argument name="validators" xsi:type="array">
@@ -383,6 +540,542 @@
     <virtualType name="EbanxCreditCardCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
         <arguments>
             <argument name="config" xsi:type="object">EbanxPaymentsCreditCardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsOxxoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxOxxoCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxOxxoCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsOxxoConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxSpeiConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Spei</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\Spei</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsSpeiValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsSpeiValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsSpeiCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsSpeiConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsSpeiConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxSpeiConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsSpeiAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsSpeiAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\SpeiTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsSpeiResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\CashAuthorizationDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSpeiValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxSpeiCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxSpeiCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsSpeiConfig</argument>
+        </arguments>
+    </virtualType>
+
+
+    <virtualType name="EbanxPaymentsSencillitoFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxSencillitoConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Sencillito</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\Sencillito</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsSencillitoValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsSencillitoValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsSencillitoCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsSencillitoConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsSencillitoConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxSencillitoConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsSencillitoAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsSencillitoAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\SencillitoTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsSencillitoResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsSencillitoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxSencillitoCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxSencillitoCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsSencillitoConfig</argument>
+        </arguments>
+    </virtualType>
+
+
+    <virtualType name="EbanxPaymentsServipagFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxServipagConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Servipag</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\Servipag</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsServipagValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsServipagValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsServipagCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsServipagConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsServipagConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxServipagConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsServipagAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsServipagAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\ServipagTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsServipagResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsServipagValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxServipagCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxServipagCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsServipagConfig</argument>
+        </arguments>
+    </virtualType>
+
+
+    <virtualType name="EbanxPaymentsWebpayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxWebpayConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Webpay</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\Webpay</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsWebpayValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsWebpayValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsWebpayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsWebpayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsWebpayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxWebpayConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsWebpayAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsWebpayAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\WebpayTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsWebpayResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsWebpayValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxWebpayCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxWebpayCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsWebpayConfig</argument>
+        </arguments>
+    </virtualType>
+
+
+    <virtualType name="EbanxPaymentsMulticajaFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxMulticajaConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Multicaja</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\Multicaja</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsMulticajaValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsMulticajaValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsMulticajaCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsMulticajaConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsMulticajaConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxMulticajaConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsMulticajaAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsMulticajaAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\MulticajaTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsMulticajaResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsMulticajaValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxMulticajaCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxMulticajaCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsMulticajaConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxPagoEfectivoConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\PagoEfectivo</argument>
+            <argument name="infoBlockType" xsi:type="string">Ebanx\Payments\Block\Info\PagoEfectivo</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EbanxPaymentsPagoEfectivoValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">EbanxPaymentsPagoEfectivoValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">EbanxPaymentsPagoEfectivoCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EbanxPaymentsPagoEfectivoConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EbanxPaymentsPagoEfectivoConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxPagoEfectivoConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">EbanxPaymentsPagoEfectivoAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">EbanxPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">EbanxPaymentsCancelCommand</item>
+                <item name="refund" xsi:type="string">EbanxPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">EbanxPaymentsCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EbanxPaymentsPagoEfectivoAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ebanx\Payments\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Ebanx\Payments\Gateway\Http\Client\PagoEfectivoTransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">EbanxPaymentsPagoEfectivoResponseHandlerComposite</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
+                <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\CashAuthorizationDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentAuthorisationDetailsHandler</item>
+                <item name="payment_comments" xsi:type="string">Ebanx\Payments\Gateway\Response\PaymentCommentHistoryHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPaymentsPagoEfectivoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">EbanxPagoEfectivoCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="EbanxPagoEfectivoCountryValidator" type="Ebanx\Payments\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">EbanxPaymentsPagoEfectivoConfig</argument>
         </arguments>
     </virtualType>
 </config>

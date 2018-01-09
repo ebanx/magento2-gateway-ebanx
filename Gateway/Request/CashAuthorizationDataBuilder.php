@@ -5,7 +5,7 @@ use Magento\Payment\Gateway\Request\BuilderInterface;
 use Ebanx\Payments\Helper\Data as EbanxData;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
-class BoletoAuthorizationDataBuilder implements BuilderInterface
+class CashAuthorizationDataBuilder implements BuilderInterface
 {
 
     /**
@@ -37,7 +37,6 @@ class BoletoAuthorizationDataBuilder implements BuilderInterface
         $dueDateDays = (int) $this->ebanxHelper->getEbanxAbstractConfigData("due_date_days", $storeId);
 
         return [
-            'type' => 'boleto',
             'dueDate' => \DateTime::createFromFormat('U', strtotime("+$dueDateDays days", time())),
         ];
     }
