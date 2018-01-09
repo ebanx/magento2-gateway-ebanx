@@ -3,7 +3,7 @@ namespace Ebanx\Payments\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 
-class EbanxPagoefectivoConfigProvider implements ConfigProviderInterface
+class EbanxPagoEfectivoConfigProvider implements ConfigProviderInterface
 {
 
     const CODE = 'ebanx_pagoefectivo';

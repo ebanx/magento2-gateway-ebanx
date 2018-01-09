@@ -12,7 +12,7 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 /**
  * Class TransactionSale
  */
-class PagoefectivoTransactionAuthorization implements ClientInterface
+class PagoEfectivoTransactionAuthorization implements ClientInterface
 {
     /**
      * @var \Ebanx\Benjamin\Facade

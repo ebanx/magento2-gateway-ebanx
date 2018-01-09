@@ -226,7 +226,7 @@
             <!-- Peru -->
             <ebanx_pagoefectivo>
                 <active>1</active>
-                <model>EbanxPaymentsPagoefectivoFacade</model>
+                <model>EbanxPaymentsPagoEfectivoFacade</model>
                 <title>PagoEfectivo</title>
                 <benjamin_gateway>pagoefectivo</benjamin_gateway>
                 <allowspecific>0</allowspecific>
