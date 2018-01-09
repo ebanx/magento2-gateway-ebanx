@@ -78,6 +78,14 @@ define(
         }
       );
 
+      // Peru
+      rendererList.push(
+        {
+          type: 'ebanx_pagoefectivo',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-pagoefectivo'
+        }
+      );
+
         return Component.extend({});
     }
 );
