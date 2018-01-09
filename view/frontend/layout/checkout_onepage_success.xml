@@ -18,6 +18,8 @@
                        as="ebanx_oxxo" template="checkout/success/oxxo.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\Spei" name="ebanx.success.payment.spei"
                        as="ebanx_spei" template="checkout/success/spei.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Sencillito" name="ebanx.success.payment.sencillito"
+                       as="ebanx_sencillito" template="checkout/success/sencillito.phtml"/>
             </block>
         </referenceContainer>
     </body>
