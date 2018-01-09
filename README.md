@@ -25,7 +25,7 @@ EBANX Payment Gateway for Magento 2.x
 	- [ ] Peru
 		- [ ] :arrows_clockwise: SafetyPay
 		- [ ] :dollar: SafetyPay
-		- [ ] :dollar: PagoEfectivo
+		- [X] :dollar: PagoEfectivo
 	- [ ] Argentina
 		- [ ] :credit_card: Credit Card
 		- [ ] :dollar: Rapipago
