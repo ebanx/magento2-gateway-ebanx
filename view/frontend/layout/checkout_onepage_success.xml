@@ -20,6 +20,8 @@
                        as="ebanx_spei" template="checkout/success/spei.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\Sencillito" name="ebanx.success.payment.sencillito"
                        as="ebanx_sencillito" template="checkout/success/sencillito.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Servipag" name="ebanx.success.payment.servipag"
+                       as="ebanx_servipag" template="checkout/success/servipag.phtml"/>
             </block>
         </referenceContainer>
     </body>

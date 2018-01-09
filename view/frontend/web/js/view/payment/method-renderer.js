@@ -59,6 +59,12 @@ define(
           component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-sencillito'
         }
       );
+      rendererList.push(
+        {
+          type: 'ebanx_servipag',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-servipag'
+        }
+      );
 
         return Component.extend({});
     }
