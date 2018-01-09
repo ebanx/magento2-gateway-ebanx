@@ -65,6 +65,12 @@ define(
           component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-servipag'
         }
       );
+      rendererList.push(
+        {
+          type: 'ebanx_multicaja',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-multicaja'
+        }
+      );
 
         return Component.extend({});
     }
