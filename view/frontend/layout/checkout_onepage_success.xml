@@ -22,6 +22,8 @@
                        as="ebanx_sencillito" template="checkout/success/sencillito.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\Servipag" name="ebanx.success.payment.servipag"
                        as="ebanx_servipag" template="checkout/success/servipag.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Webpay" name="ebanx.success.payment.webpay"
+                       as="ebanx_webpay" template="checkout/success/webpay.phtml"/>
             </block>
         </referenceContainer>
     </body>
