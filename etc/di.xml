@@ -11,7 +11,7 @@
         </arguments>
     </virtualType>
 
-    <virtualType name="EbanxPaymentsBoletoFacade" type="Magento\Payment\Model\Methodg\Adapter">
+    <virtualType name="EbanxPaymentsBoletoFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
             <argument name="code" xsi:type="const">Ebanx\Payments\Model\Ui\EbanxBoletoConfigProvider::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Ebanx\Payments\Block\Form\Boleto</argument>
