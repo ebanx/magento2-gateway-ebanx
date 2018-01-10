@@ -85,6 +85,12 @@ define(
           component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-pagoefectivo'
         }
       );
+      rendererList.push(
+        {
+          type: 'ebanx_safetypay',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-safetypay'
+        }
+      );
 
         return Component.extend({});
     }
