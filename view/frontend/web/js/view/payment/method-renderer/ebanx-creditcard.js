@@ -6,11 +6,11 @@ define(
         'jquery',
         'lib-js',
         'document-mask',
-        'Magento_Ui/js/modal/alert',
-        'card-js',
-        'cc-br'
+        'Magento_Checkout/js/model/quote',
+        'mage/url',
+        'cc-br',
     ],
-    function (Component, $, EBANX, documentMask, alert) {
+    function (Component, $, EBANX, documentMask, quote, url, cc) {
         'use strict';
 
         window.EBANX = EBANX;
@@ -25,11 +25,15 @@ define(
                 expiry: null,
                 token: null,
                 paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument,
+                total: null,
                 mode: window.checkoutConfig.payment.ebanx.mode,
             },
             initialize: function () {
                 this._super();
                 documentMask('#ebanx_creditcard_document');
+                var totals = quote.getTotals();
+                totals.subscribe(this.onUpdateTotals, this);
+                this.onUpdateTotals(totals.peek());
             },
             getData: function () {
                 return {
@@ -42,6 +46,23 @@ define(
                         document: this.paymentDocument,
                     }
                 };
+            },
+            onUpdateTotals: function (totals) {
+                this.total = totals.grand_total;
+                var self = this;
+                $.post(
+                    url.build('ebanx/payment/instalmentterms'),
+                    {
+                        country: 'Brazil',
+                        amount: this.total
+                    },
+                    'json'
+                ).done(function (response) {
+                    self.updatePaymentTerms(response);
+                });
+            },
+            updatePaymentTerms: function (paymentTerms) {
+                cc.createInstalment(paymentTerms);
             },
             setCardData: function (data) {
                 this.brand = data.payment_type_code;
@@ -59,6 +80,8 @@ define(
                     return null;
                 }
                 this.setDocument(data.paymentDocument);
+                this.instalments = data.instalments;
+
                 this.tokenizer({
                     card_number: data.number.replace(/ /g, ''),
                     card_due_date: this.formatDueDate(data.expiry),

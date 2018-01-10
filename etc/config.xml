@@ -11,6 +11,8 @@
                 <mode>1</mode>
                 <due_date_days>3</due_date_days>
                 <auto_capture>1</auto_capture>
+                <max_instalments>12</max_instalments>
+                <min_instalment_value>0</min_instalment_value>
                 <payment_co_status>pending</payment_co_status>
                 <payment_pe_status>pending_payment</payment_pe_status>
                 <payment_op_status>pending_payment</payment_op_status>

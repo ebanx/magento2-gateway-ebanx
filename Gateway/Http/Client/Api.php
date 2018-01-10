@@ -89,6 +89,9 @@ class Api
      */
     private function getCreditCardConfig()
     {
-        return new CreditCardConfig();
+        return new CreditCardConfig([
+            'maxInstalments' => $this->helper->getEbanxAbstractConfigData('max_instalments'),
+            'minInstalmentAmount' => $this->helper->getEbanxAbstractConfigData('min_instalment_value'),
+        ]);
     }
 }

@@ -93,15 +93,26 @@
                         <span><!-- ko text: $t('Código de segurança')-->Código de segurança<!-- /ko --></span>
                     </label>
                     <div class="control">
-                        <input type="text" 
+                        <input type="text"
                                id="cc-cvc"
                                class="input-text"
-                               placeholder="CVV"  
-                               name="cvc" 
-                               maxlength="4" 
-                               name="payment[cvv]" 
-                               data-bind="value: cvv" 
+                               placeholder="CVV"
+                               name="cvc"
+                               maxlength="4"
+                               name="payment[cvv]"
+                               data-bind="value: cvv"
                                data-validate="{'required-entry': true}"/>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}">
+                <div class="field required" style="width: 58%; display: inline-block;">
+                    <label data-bind="attr: {for: getCode() + '_instalment'}" class="label">
+                        <span><!-- ko text: $t('Número de parcelas')-->Número de parcelas<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <select id="instalment-cc-br" data-bind="value: instalments"></select>
                     </div>
                 </div>
             </fieldset>
