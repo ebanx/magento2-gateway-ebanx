@@ -28,6 +28,8 @@
                        as="ebanx_webpay" template="checkout/success/webpay.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\PagoEfectivo" name="ebanx.success.payment.pagoefectivo"
                        as="ebanx_pagoefectivo" template="checkout/success/pagoefectivo.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\SafetyPay" name="ebanx.success.payment.safetypay"
+                       as="ebanx_safetypay" template="checkout/success/safetypay.phtml"/>
             </block>
         </referenceContainer>
     </body>
