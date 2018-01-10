@@ -22,18 +22,18 @@ EBANX Payment Gateway for Magento 2.x
 		- [ ] :arrows_clockwise: PSE
 		- [ ] :dollar: Baloto
 		- [ ] :credit_card: Credit Card
-	- [ ] Peru
-		- [ ] :arrows_clockwise: SafetyPay
-		- [ ] :dollar: SafetyPay
+	- [X] Peru
+		- [X] :arrows_clockwise: SafetyPay
+		- [X] :dollar: SafetyPay
 		- [X] :dollar: PagoEfectivo
 	- [ ] Argentina
 		- [ ] :credit_card: Credit Card
 		- [ ] :dollar: Rapipago
 		- [ ] :dollar: PagoFacil
 		- [ ] :dollar: Otros Cupones
-	- [ ] Ecuador
-		- [ ] :arrows_clockwise: SafetyPay
-		- [ ] :dollar: SafetyPay
+	- [X] Ecuador
+		- [X] :arrows_clockwise: SafetyPay
+		- [X] :dollar: SafetyPay
 - [ ] Refund
 - [ ] Manual Capture
 - [ ] Interest Rates
