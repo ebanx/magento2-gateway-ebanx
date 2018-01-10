@@ -7,10 +7,14 @@ var config = {
         'lib-js' : 'https://js.ebanx.com/ebanx-1.5.min',
         'document-mask': 'Ebanx_Payments/js/document-mask.min',
         'vanilla-masker': 'Ebanx_Payments/js/lib/vanilla-masker.min',
+        'cc-util': 'Ebanx_Payments/js/util/cc-util.min',
     },
     shim: {
         'cc-br': {
-            deps: ['card-js', 'lib-js']
+            deps: ['card-js', 'lib-js', 'cc-util']
+        },
+        'cc-util': {
+            deps: ['lib-js']
         }
     }
 };
