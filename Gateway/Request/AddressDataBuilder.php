@@ -45,25 +45,11 @@ class AddressDataBuilder implements BuilderInterface
                 'address' => $billingAddress->getStreetLine1(),
                 'streetNumber' => 'N/A', // TODO: get street number
                 'city' => $billingAddress->getCity(),
-                'country' => $this->adaptCountry($billingAddress->getCountryId()),
+                'country' => Country::fromIso($billingAddress->getCountryId()),
                 'state' => $billingAddress->getRegionCode(),
                 'streetComplement' => $billingAddress->getStreetLine2(),
                 'zipcode' => $billingAddress->getPostcode(),
             ])
         ];
-    }
-
-    private function adaptCountry($countryId)
-    {
-        $countries = [
-            'AR' => Country::ARGENTINA,
-            'BR' => Country::BRAZIL,
-            'CO' => Country::COLOMBIA,
-            'CL' => Country::CHILE,
-            'MX' => Country::MEXICO,
-            'PE' => Country::PERU,
-        ];
-
-        return $countries[$countryId];
     }
 }
