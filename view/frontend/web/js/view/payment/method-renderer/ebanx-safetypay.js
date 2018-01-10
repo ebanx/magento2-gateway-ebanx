@@ -10,7 +10,7 @@ define(
         return Component.extend({
             defaults: {
                 template: 'Ebanx_Payments/payment/ebanx_safetypay',
-                safetypayType: 'bradesco',
+                safetypayType: 'Online',
             },
             getData: function() {
                 return {
