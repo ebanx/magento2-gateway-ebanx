@@ -7,7 +7,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Json;
 
-class InterestRate extends Action
+class InstalmentTerms extends Action
 {
     /**
      * @var Json\Interceptor

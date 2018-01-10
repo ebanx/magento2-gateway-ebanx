@@ -8,10 +8,10 @@ define(
         'document-mask',
         'Magento_Checkout/js/model/quote',
         'mage/url',
-        "cc-br",
+        'cc-br',
     ],
     function (Component, $, EBANX, documentMask, quote, url, cc) {
-        "use strict";
+        'use strict';
 
         window.EBANX = EBANX;
 
@@ -51,7 +51,7 @@ define(
                 this.total = totals.grand_total;
                 var self = this;
                 $.post(
-                    url.build('ebanx/payment/interestrate'),
+                    url.build('ebanx/payment/instalmentterms'),
                     {
                         country: 'Brazil',
                         amount: this.total
