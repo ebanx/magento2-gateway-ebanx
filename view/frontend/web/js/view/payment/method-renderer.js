@@ -92,6 +92,14 @@ define(
         }
       );
 
+      // Colombia
+      rendererList.push(
+        {
+          type: 'ebanx_baloto',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-baloto'
+        }
+      );
+
         return Component.extend({});
     }
 );
