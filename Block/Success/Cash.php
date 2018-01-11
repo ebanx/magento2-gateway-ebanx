@@ -2,7 +2,7 @@
 
 namespace Ebanx\Payments\Block\Success;
 
-class Boleto extends Base
+class Cash extends Base
 {
 
     /**
@@ -18,11 +18,14 @@ class Boleto extends Base
         ));
     }
 
-
     /**
      * @return string
      */
     public function getDueDate() {
         return $this->_ebanxPaymentCollection->getDueDateByOrderId($this->_orderId, 'dd/MM');
+    }
+
+    public function getCashPaymentCode() {
+        return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
     }
 }
