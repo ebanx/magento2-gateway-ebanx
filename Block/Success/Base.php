@@ -89,6 +89,9 @@ class Base extends Template
         if ($this->isCash($paymentCode)) {
             return 'ebanx_cash';
         }
+        if ($this->isRedirect($paymentCode)){
+            return 'ebanx_redirect';
+        }
         return $paymentCode;
     }
 
@@ -120,6 +123,16 @@ class Base extends Template
     {
         try {
             $this->getChildChildHtml('ebanx_cash', $paymentCode);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function isRedirect($paymentCode)
+    {
+        try {
+            $this->getChildChildHtml('ebanx_redirect', $paymentCode);
             return true;
         } catch (\Exception $e) {
             return false;
