@@ -82,7 +82,6 @@ class TefTransactionAuthorization implements ClientInterface
         $this->_ebanxPaymentModel->setPaymentHash($paymentResponse['hash'])
                           ->setOrderId($paymentResponse['order_number'])
                           ->setDueDate($paymentResponse['due_date'])
-                          ->setBarCode(null)
                           ->setInstalments($paymentResponse['instalments'])
                           ->setEnvironment($mode)
                           ->setCustomerDocument($paymentResponse['customer']['document'])
