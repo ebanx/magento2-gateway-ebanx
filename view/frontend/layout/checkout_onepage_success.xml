@@ -34,6 +34,8 @@
                        as="ebanx_webpay" template="checkout/success/webpay.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\SafetyPay" name="ebanx.success.payment.safetypay"
                        as="ebanx_safetypay" template="checkout/success/safetypay.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Eft" name="ebanx.success.payment.eft"
+                       as="ebanx_eft" template="checkout/success/eft.phtml"/>
             </block>
         </referenceContainer>
     </body>
