@@ -348,11 +348,10 @@
     <virtualType name="EbanxPaymentsWalletAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
             <argument name="builders" xsi:type="array">
-            <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
-            <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
-            <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
-            <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
-            <item name="transaction" xsi:type="string">Ebanx\Payments\Gateway\Request\WalletAuthorizationDataBuilder</item>
+                <item name="customer" xsi:type="string">Ebanx\Payments\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">Ebanx\Payments\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">Ebanx\Payments\Gateway\Request\PaymentDataBuilder</item>
+                <item name="items" xsi:type="string">Ebanx\Payments\Gateway\Request\ItemsDataBuilder</item>
             </argument>
         </arguments>
     </virtualType>
