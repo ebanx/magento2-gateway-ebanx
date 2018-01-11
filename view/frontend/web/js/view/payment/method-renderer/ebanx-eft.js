@@ -11,7 +11,7 @@ define(
         'use strict';
         return Component.extend({
             defaults: {
-                template: 'Ebanx_Payments/payment/ebanx_tef',
+                template: 'Ebanx_Payments/payment/ebanx_eft',
                 selectedBank: 'banco_agrario',
                 availableBanks: window.checkoutConfig.payment.ebanx.availableBanks
             },
