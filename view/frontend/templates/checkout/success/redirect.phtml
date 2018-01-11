@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var \Ebanx\Payments\Block\Success\Redirect $this
+ */
+
+$order = $this->getOrder();
+$paymentCode = $this->getPaymentCode();
+?>
+
+<div class="ebanx-details">
+
+    <?php $this->getChildHtml($paymentCode); ?>
+
+    <?php include 'apps.phtml' ?>
+
+    <script src="<?= $this->getViewFileUrl('Ebanx_Payments::js/redirect.min.js') ?>"></script>
+
+
+    <style>
+        .details {
+            padding: 40px 0 20px 0;
+        }
+
+        .ebanx-group {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    </style>
+</div>
