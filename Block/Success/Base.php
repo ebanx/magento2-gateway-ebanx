@@ -86,12 +86,10 @@ class Base extends Template
     public function getSuccessPaymentBlock()
     {
         $paymentCode = $this->getOrder()->getPayment()->getMethodInstance()->getCode();
-        try {
-            $this->getChildChildHtml('ebanx_cash', $paymentCode);
+        if ($this->isCash($paymentCode)) {
             return 'ebanx_cash';
-        } catch (\Exception $e) {
-            return $paymentCode;
         }
+        return $paymentCode;
     }
 
     public function formatAmount($currency, $amount)
@@ -109,5 +107,15 @@ class Base extends Template
             $this->_order = $this->_orderFactory->create()->loadByIncrementId($this->_orderId);
         }
         return $this->_order;
+    }
+
+    private function isCash($paymentCode)
+    {
+        try {
+            $this->getChildChildHtml('ebanx_cash', $paymentCode);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
