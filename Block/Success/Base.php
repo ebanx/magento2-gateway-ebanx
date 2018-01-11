@@ -85,7 +85,13 @@ class Base extends Template
      */
     public function getSuccessPaymentBlock()
     {
-        return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
+        $paymentCode = $this->getOrder()->getPayment()->getMethodInstance()->getCode();
+        try {
+            $this->getChildChildHtml('ebanx_cash', $paymentCode);
+            return 'ebanx_cash';
+        } catch (\Exception $e) {
+            return $paymentCode;
+        }
     }
 
     public function formatAmount($currency, $amount)
