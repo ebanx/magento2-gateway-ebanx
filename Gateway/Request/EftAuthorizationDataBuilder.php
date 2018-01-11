@@ -16,11 +16,11 @@ class EftAuthorizationDataBuilder implements BuilderInterface
         /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
         $payment = $paymentDataObject->getPayment();
-        $selectedBank = $payment->getAdditionalInformation(EftDataAssignObserver::SELECTED_BANK);
+        $eftSelectedBank = $payment->getAdditionalInformation(EftDataAssignObserver::EFT_SELECTED_BANK);
 
         return [
             'type' => 'eft',
-            'bankCode' => $selectedBank,
+            'bankCode' => $eftSelectedBank,
         ];
     }
 }

@@ -12,14 +12,14 @@ define(
         return Component.extend({
             defaults: {
                 template: 'Ebanx_Payments/payment/ebanx_eft',
-                selectedBank: 'banco_agrario',
+                eftSelectedBank: 'banco_agrario',
                 availableBanks: window.checkoutConfig.payment.ebanx.availableBanks
             },
             getData: function() {
                 return {
                     'method': this.getCode(),
                     'additional_data': {
-                        'selected_bank': this.selectedBank,
+                        'eft_selected_bank': this.eftSelectedBank,
                     }
                 };
             },
@@ -27,8 +27,8 @@ define(
                 this._super();
                 eft.populateBankSelectWithBanks('#bank-select-ebanx-eft', this.availableBanks);
             },
-            setSelectedBank: function (selectedBank) {
-                this.selectedBank = selectedBank;
+            setEftSelectedBank: function (eftSelectedBank) {
+                this.eftSelectedBank = eftSelectedBank;
             },
             beforePlaceOrder: function (data) {
                 this.disableBtnPlaceOrder();
@@ -36,8 +36,7 @@ define(
                     this.enableBtnPlaceOrder();
                     return;
                 }
-                console.log(data);
-                this.setSelectedBank(data.selectedBank);
+                this.setEftSelectedBank(data.eftSelectedBank);
                 this.placeOrder();
             },
             validateForm: function (form) {
