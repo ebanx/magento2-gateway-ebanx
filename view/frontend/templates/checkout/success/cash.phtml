@@ -1,0 +1,45 @@
+<?php
+/**
+ * @var \Ebanx\Payments\Block\Success\Cash $this
+ */
+
+$cashCode = $this->getCashPaymentCode();
+?>
+<!-- TODO: CHANGING CSS TO XML -->
+<link rel="stylesheet" href="<?= $this->getViewFileUrl('Ebanx_Payments::css/loading.min.css') ?>" />
+
+<div class="ebanx-details">
+
+    <?php echo $this->getChildHtml($cashCode); ?>
+
+    <div>
+        <iframe id="ebanx-voucher-frame"
+                src="<?php echo $this->getVoucherUrl(); ?>"
+                style="height: 0;"
+                frameborder="0"
+                width="100%"
+                marginheight="0"
+                marginwidth="0"
+                scrolling="no"
+        ></iframe>
+        <div class="loading-fading-circle">
+            <div class="loading-circle1 loading-circle"></div>
+            <div class="loading-circle2 loading-circle"></div>
+            <div class="loading-circle3 loading-circle"></div>
+            <div class="loading-circle4 loading-circle"></div>
+            <div class="loading-circle5 loading-circle"></div>
+            <div class="loading-circle6 loading-circle"></div>
+            <div class="loading-circle7 loading-circle"></div>
+            <div class="loading-circle8 loading-circle"></div>
+            <div class="loading-circle9 loading-circle"></div>
+            <div class="loading-circle10 loading-circle"></div>
+            <div class="loading-circle11 loading-circle"></div>
+            <div class="loading-circle12 loading-circle"></div>
+        </div>
+    </div>
+
+    <?php include 'apps.phtml' ?>
+
+    <script src="<?= $this->getViewFileUrl('Ebanx_Payments::js/voucher.min.js') ?>"></script>
+
+</div>
