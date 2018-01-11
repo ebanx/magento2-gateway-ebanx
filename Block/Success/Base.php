@@ -85,7 +85,7 @@ class Base extends Template
      */
     public function getSuccessPaymentBlock()
     {
-        $paymentCode = $this->getOrder()->getPayment()->getMethodInstance()->getCode();
+        $paymentCode = $this->getPaymentCode();
         if ($this->isCash($paymentCode)) {
             return 'ebanx_cash';
         }
@@ -107,6 +107,13 @@ class Base extends Template
             $this->_order = $this->_orderFactory->create()->loadByIncrementId($this->_orderId);
         }
         return $this->_order;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentCode() {
+        return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
     }
 
     private function isCash($paymentCode)

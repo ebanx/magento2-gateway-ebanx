@@ -24,8 +24,4 @@ class Cash extends Base
     public function getDueDate() {
         return $this->_ebanxPaymentCollection->getDueDateByOrderId($this->_orderId, 'dd/MM');
     }
-
-    public function getCashPaymentCode() {
-        return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
-    }
 }
