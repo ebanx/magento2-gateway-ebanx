@@ -30,6 +30,8 @@
                        as="ebanx_pagoefectivo" template="checkout/success/pagoefectivo.phtml"/>
                 <block class="Ebanx\Payments\Block\Success\SafetyPay" name="ebanx.success.payment.safetypay"
                        as="ebanx_safetypay" template="checkout/success/safetypay.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Baloto" name="ebanx.success.payment.baloto"
+                       as="ebanx_baloto" template="checkout/success/baloto.phtml"/>
             </block>
         </referenceContainer>
     </body>
