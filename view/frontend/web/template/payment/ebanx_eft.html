@@ -17,16 +17,18 @@
         </div>
 
         <p>Serás direccionado a la página de la banca en línea que selecciones.</p>
-        <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}">
-            <div class="field required" style="width: 58%; display: inline-block;">
-                <label data-bind="attr: {for: getCode() + '_bank'}" class="label">
-                    <span><!-- ko text: $t('Banco')-->Banco<!-- /ko --></span>
-                </label>
-                <div class="control">
-                    <select id="bank-select-ebanx-eft" data-bind="value: selectedBank"></select>
+        <form id="ebanx_eft_form" class="payment-form-ebanx">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}">
+                <div class="field required" style="width: 58%; display: inline-block;">
+                    <label data-bind="attr: {for: getCode() + '_bank'}" class="label">
+                        <span><!-- ko text: $t('Banco')-->Banco<!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <select id="bank-select-ebanx-eft" data-bind="value: selectedBank"></select>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
+            </fieldset>
+        </form>
 
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
@@ -35,13 +37,13 @@
         </div>
         <div class="actions-toolbar">
             <div class="primary">
-                <button class="action primary checkout"
-                        type="submit"
+                <button id="btn_eft_form_place_order"
+                        class="action primary checkout"
                         data-bind="
-                        click: placeOrder,
-                        attr: {title: $t('Place Order')},
-                        css: {disabled: !isPlaceOrderActionAllowed()},
-                        enable: (getCode() == isChecked())
+                            click: beforePlaceOrder,
+                            attr: {title: $t('Place Order')},
+                            css: {disabled: !isPlaceOrderActionAllowed()},
+                            enable: (getCode() == isChecked())
                         "
                         disabled>
                     <span data-bind="i18n: 'Place Order'"></span>

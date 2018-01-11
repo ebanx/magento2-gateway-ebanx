@@ -36,7 +36,7 @@ define(
                     this.enableBtnPlaceOrder();
                     return;
                 }
-
+                console.log(data);
                 this.setSelectedBank(data.selectedBank);
                 this.placeOrder();
             },
@@ -44,10 +44,10 @@ define(
                 return $(form).validation() && $(form).validation('isValid');
             },
             disableBtnPlaceOrder: function(){
-                $('#btn_tef_form_place_order').attr('disabled', 'disabled');
+                $('#btn_eft_form_place_order').attr('disabled', 'disabled');
             },
             enableBtnPlaceOrder: function(){
-                $('#btn_tef_form_place_order').removeAttr('disabled');
+                $('#btn_eft_form_place_order').removeAttr('disabled');
             }
         });
     }
