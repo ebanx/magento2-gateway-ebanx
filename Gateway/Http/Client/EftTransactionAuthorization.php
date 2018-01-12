@@ -75,8 +75,6 @@ class EftTransactionAuthorization implements ClientInterface
         return $response['payment'];
     }
 
-
-
     private function persistPayment($paymentResponse) {
         $mode = $this->_ebanxHelper->getEbanxAbstractConfigData('mode') ? 'sandbox' : 'live';
         $this->_ebanxPaymentModel->setPaymentHash($paymentResponse['hash'])
