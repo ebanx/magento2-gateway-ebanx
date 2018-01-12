@@ -76,7 +76,7 @@ class Api
             'isSandbox' => $this->helper->getEbanxAbstractConfigData('mode'),
             'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
             'notificationUrl' => '', // TODO: create notification controller
-            'redirectUrl' => '', // TODO: create notification controller
+            'redirectUrl' => $this->_storeManager->getStore()->getBaseUrl() . 'ebanx/payment/redirecturl/', // TODO: create notification controller
             'userValues' => [
                 1 => 'from_magento2',
                 3 => 'version=1.0.0', //TODO: Create a method to get the current version
