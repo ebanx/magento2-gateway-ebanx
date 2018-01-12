@@ -6,7 +6,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 
-class TefDataAssignObserver extends AbstractDataAssignObserver
+class TefDataAssignObserver extends BaseDataAssignObserver
 {
     const SELECTED_BANK = 'selected_bank';
 
@@ -16,29 +16,4 @@ class TefDataAssignObserver extends AbstractDataAssignObserver
     protected $additionalInformationList = [
         self::SELECTED_BANK,
     ];
-
-    /**
-     * @param Observer $observer
-     * @return void
-     */
-    public function execute(Observer $observer)
-    {
-        $data = $this->readDataArgument($observer);
-
-        $additionalData = $data->getData(PaymentInterface::KEY_ADDITIONAL_DATA);
-        if (!is_array($additionalData)) {
-            return;
-        }
-
-        $paymentInfo = $this->readPaymentModelArgument($observer);
-
-        foreach ($this->additionalInformationList as $additionalInformationKey) {
-            if (isset($additionalData[$additionalInformationKey])) {
-                $paymentInfo->setAdditionalInformation(
-                    $additionalInformationKey,
-                    $additionalData[$additionalInformationKey]
-                );
-            }
-        }
-    }
 }

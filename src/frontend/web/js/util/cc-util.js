@@ -2,9 +2,11 @@ define(
   [
     'lib-js', 
     'jquery', 
-    'Magento_Ui/js/modal/alert'
+    'Magento_Ui/js/modal/alert',
+    'mage/url',
+    'wait-for',
   ], 
-  function(EBANX, $, alert) {
+  function(EBANX, $, alert, url, waitFor) {
     'use strict';
 
     const formatDueDate = expiry => {
@@ -74,11 +76,43 @@ define(
         });
     }
 
+    const createInstalment = paymentTerms => {
+        let options = ``;
+        let localAmount;
+
+        for(let term of paymentTerms){
+            localAmount = parseFloat(Math.round(term.localAmountWithTax*100)/100).toFixed(2);
+            options += `<option value='${term.instalmentNumber}' data-local-amount='${localAmount}'>${term.instalmentNumber}x de R$${localAmount} ${term.hasInterest ? 'com juros' : ''} </option>`
+        }
+
+        waitFor(() => {
+            return document.querySelector('#instalment-cc-br');
+        }, (instalmentSelector) => {
+            instalmentSelector.innerHTML = `${options}`;
+        });
+
+    }
+
+    const onUpdateTotalsAndInstalments = (grand_total, country) => {
+        $.post(
+          url.build('ebanx/payment/instalmentterms'),
+          {
+            country: country,
+            amount: grand_total
+          },
+          'json'
+        ).done((responsePaymentTerms) => {
+          createInstalment(responsePaymentTerms);
+        });
+      }
+
     return {
         formatDueDate: formatDueDate,
         showAlertMessage: showAlertMessage,
-        tokenize: tokenize,
         disableBtnPlaceOrder: disableBtnPlaceOrder,
         enableBtnPlaceOrder: enableBtnPlaceOrder,
+        tokenize: tokenize,
+        createInstalment: createInstalment,
+        onUpdateTotalsAndInstalments: onUpdateTotalsAndInstalments
     };
 });

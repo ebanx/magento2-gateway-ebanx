@@ -7,10 +7,10 @@ define(
     'lib-js',
     'document-mask',
     'cc-util',
-    'card-js',
+    'Magento_Checkout/js/model/quote',
     'cc-br'
   ],
-  function(Component, $, EBANX, documentMask, util) {
+  function(Component, $, EBANX, documentMask, util, quote, cc) {
     'use strict';
 
     window.EBANX = EBANX;
@@ -24,11 +24,14 @@ define(
         number: null,
         expiry: null,
         token: null,
-        paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument
+        paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument,
+        totals: quote.getTotals()
       },
       initialize: function() {
         this._super();
         documentMask('#ebanx_creditcard_document');
+        this.totals.subscribe(util.onUpdateTotalsAndInstalments, this);
+        util.onUpdateTotalsAndInstalments(this.totals.peek().grand_total, 'Brazil');
       },
       getData: function() {
         return {
@@ -42,25 +45,21 @@ define(
           }
         };
       },
-      setCardData: function(data) {
-        this.brand = data.payment_type_code;
-        this.token = data.token;
-        this.placeOrder();
-      },
-      setDocument: function(paymentDocument) {
+      setCardData: function(cardData, paymentDocument) {
+        this.brand = cardData.payment_type_code;
+        this.token = cardData.token;
         this.paymentDocument = paymentDocument;
+
+        this.placeOrder();
       },
       beforePlaceOrder: function(data) {
         var self = this;
-
-        self.setDocument(data.paymentDocument);
-
         util
           .tokenize(data, 'br')
           .then(function(res) {
-              if(res !== false){
-                self.setCardData(res);
-              }
+            if (res !== false) {
+              self.setCardData(res, data.paymentDocument);
+            }
           })
           .catch(function(err) {
             util.showAlertMessage(err, 'Atenção: ');

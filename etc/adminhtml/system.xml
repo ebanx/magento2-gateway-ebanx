@@ -123,17 +123,17 @@
                         <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
                         <!--<config_path>payment/ebanx_abstract/save_card_data</config_path>-->
                     <!--</field>-->
-                    <!--<field id="max_instalments" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
-                        <!--<label>Maximum n° of Instalments</label>-->
-                        <!--<comment>Establish the maximum number of instalments in which your customer can pay, as consented on your contract.</comment>-->
-                        <!--<source_model>Ebanx\Payments\Model\Config\Source\Instalments</source_model>-->
-                        <!--<config_path>payment/ebanx_abstract/max_instalments</config_path>-->
-                    <!--</field>-->
-                    <!--<field id="min_instalment_value" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">-->
-                        <!--<label>Minimum Instalment (USD)</label>-->
-                        <!--<comment>Set the minimum instalment value during the ckeckout. The minimum EBANX allows for BRL is 20 and MXN is 100, lower values in these currencies considered will not be considered.</comment>-->
-                        <!--<config_path>payment/ebanx_abstract/min_instalment_value</config_path>-->
-                    <!--</field>-->
+                    <field id="max_instalments" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Maximum n° of Instalments</label>
+                        <comment>Establish the maximum number of instalments in which your customer can pay, as consented on your contract.</comment>
+                        <source_model>Ebanx\Payments\Model\Config\Source\Instalments</source_model>
+                        <config_path>payment/ebanx_abstract/max_instalments</config_path>
+                    </field>
+                    <field id="min_instalment_value" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Minimum Instalment (USD)</label>
+                        <comment>Set the minimum instalment value during the ckeckout. The minimum EBANX allows for BRL is 20, MXN and COP is 100. Lower values in these currencies will not be considered.</comment>
+                        <config_path>payment/ebanx_abstract/min_instalment_value</config_path>
+                    </field>
                     <!--<field id="use_interest_rates" translate="label" type="select" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
                         <!--<label>Interest Rates</label>-->
                         <!--<comment>Enable and set custom interest rates according to the number of installments you have allowed the payment for your customers.</comment>-->

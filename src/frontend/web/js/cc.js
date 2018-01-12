@@ -1,19 +1,27 @@
-(function() {
-  const buildCreditCardForm = () => {
-    var card = new Card({
-      form: '#card-form',
-      container: '.card',
-      width: 275,
-      placeholders: {
-        number: '•••• •••• •••• ••••',
-        expiry: '••/••',
-        cvc: '•••'
-      }
-    });
-  };
+/*browser:true*/
+/*global define*/
+/*global Card*/
+define(
+    [
+        'wait-for',
+        'card-js',
+    ],
+    function(waitFor) {
+        const buildCreditCardForm = () => {
+            new Card({
+                form: '#card-form',
+                container: '.card',
+                width: 275,
+                placeholders: {
+                    number: '•••• •••• •••• ••••',
+                    expiry: '••/••',
+                    cvc: '•••'
+                }
+            });
+        };
 
-  setTimeout(() => {
-    const cardForm = document.querySelector('#card-form');
-    buildCreditCardForm();
-  }, 2000);
-})();
+        waitFor(function(){
+            return document.querySelector('#card-form');
+        }, buildCreditCardForm);
+    }
+);
