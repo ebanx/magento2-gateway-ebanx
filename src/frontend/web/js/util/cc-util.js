@@ -17,11 +17,8 @@ define(
 
     const showAlertMessage = (errorMessage, title) => {
         alert({
-        title: title,
-        content: errorMessage,
-        actions: {
-            always: function() {}
-        }
+            title: title,
+            content: errorMessage,
         });
     }
 
@@ -34,7 +31,7 @@ define(
     }
 
     const validateForm = (form) => {
-        return $(form).validation() && $(form).validation('isValid');
+        return $(form).validation('isValid');
     }
 
     const tokenize = ({ number, expiry, cvv }, country) => {
