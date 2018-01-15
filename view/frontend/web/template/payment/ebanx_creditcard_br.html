@@ -106,7 +106,7 @@
                 </div>
             </fieldset>
 
-            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}">
                 <div class="field required" style="width: 58%; display: inline-block;">
                     <label data-bind="attr: {for: getCode() + '_instalment'}" class="label">
                         <span><!-- ko text: $t('Número de parcelas')-->Número de parcelas<!-- /ko --></span>
@@ -117,7 +117,7 @@
                 </div>
             </fieldset>
 
-            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}" id="payment_form_ebanx_creditcard">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode()}">
                 <div class="field number required">
                     <label data-bind="attr: {for: getCode() + '_document'}" class="label">
                         <span><!-- ko text: $t('CPF')-->CPF<!-- /ko --></span>
