@@ -1,7 +1,3 @@
 (function(){
-   const redirect = () => {
-      const redirectUrl = document.querySelector('#redirectURL').value;
-      window.open(redirectUrl);
-   }
-   redirect();
+      window.open(document.querySelector('#redirectURL').value);
 })();
