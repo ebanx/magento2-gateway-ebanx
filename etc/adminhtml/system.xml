@@ -134,15 +134,21 @@
                         <comment>Set the minimum instalment value during the ckeckout. The minimum EBANX allows for BRL is 20, MXN and COP is 100. Lower values in these currencies will not be considered.</comment>
                         <config_path>payment/ebanx_abstract/min_instalment_value</config_path>
                     </field>
-                    <!--<field id="use_interest_rates" translate="label" type="select" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">-->
-                        <!--<label>Interest Rates</label>-->
-                        <!--<comment>Enable and set custom interest rates according to the number of installments you have allowed the payment for your customers.</comment>-->
-                        <!--<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>-->
-                        <!--<config_path>payment/ebanx_abstract/use_interest_rates</config_path>-->
-                    <!--</field>-->
-                    <!--<field id="interest_rate" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">-->
-                        <!--<label>Interest</label>-->
-                    <!--</field>-->
+                    <field id="use_interest_rates" translate="label" type="select" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Interest Rates</label>
+                        <comment>Enable and set custom interest rates according to the number of installments you have allowed the payment for your customers.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/ebanx_abstract/use_interest_rates</config_path>
+                    </field>
+                    <field id="interest_rate" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                            <field id="payment/ebanx_abstract/use_interest_rates">1</field>
+                        </depends>
+                        <label>Interests</label>
+                        <frontend_model>Ebanx\Payments\Block\Adminhtml\System\Config\Field\InterestRates</frontend_model>
+                        <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                        <config_path>payment/ebanx_abstract/interest_rates</config_path>
+                    </field>
                 </group>
 
                 <group id="title_cash" translate="label" showInDefault="1" showInWebsite="1" sortOrder="125">
