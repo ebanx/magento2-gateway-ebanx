@@ -37,4 +37,4 @@ EBANX Payment Gateway for Magento 2.x
 - [ ] Refund
 - [ ] Manual Capture
 - [ ] Interest Rates
-- [ ] Taxes
+- [ ] Local amount on checkout
