@@ -99,6 +99,12 @@ define(
           component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-baloto'
         }
       );
+      rendererList.push(
+        {
+          type: 'ebanx_eft',
+          component: 'Ebanx_Payments/js/view/payment/method-renderer/ebanx-eft'
+        }
+      );
 
         return Component.extend({});
     }

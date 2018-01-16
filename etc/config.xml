@@ -266,28 +266,48 @@
                 <can_cancel>1</can_cancel>
                 <group>ebanx</group>
             </ebanx_safetypay>
-        </payment>
 
-        <!-- Colombia -->
-        <ebanx_baloto>
-            <active>1</active>
-            <model>EbanxPaymentsBalotoFacade</model>
-            <title>Baloto</title>
-            <benjamin_gateway>baloto</benjamin_gateway>
-            <allowspecific>0</allowspecific>
-            <sort_order>1</sort_order>
-            <payment_action>authorize</payment_action>
-            <is_gateway>1</is_gateway>
-            <can_use_checkout>1</can_use_checkout>
-            <can_authorize>1</can_authorize>
-            <can_capture>1</can_capture>
-            <can_capture_partial>1</can_capture_partial>
-            <can_use_internal>1</can_use_internal>
-            <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
-            <can_refund>1</can_refund>
-            <can_void>1</can_void>
-            <can_cancel>1</can_cancel>
-            <group>ebanx</group>
-        </ebanx_baloto>
+            <!-- Colombia -->
+            <ebanx_baloto>
+                <active>1</active>
+                <model>EbanxPaymentsBalotoFacade</model>
+                <title>Baloto</title>
+                <benjamin_gateway>baloto</benjamin_gateway>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+                <payment_action>authorize</payment_action>
+                <is_gateway>1</is_gateway>
+                <can_use_checkout>1</can_use_checkout>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_use_internal>1</can_use_internal>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <group>ebanx</group>
+            </ebanx_baloto>
+            <ebanx_eft>
+                <active>1</active>
+                <model>EbanxPaymentsEftFacade</model>
+                <title>Pagos Seguros en Línea (PSE)</title>
+                <benjamin_gateway>eft</benjamin_gateway>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+                <payment_action>authorize</payment_action>
+                <is_gateway>1</is_gateway>
+                <can_use_checkout>1</can_use_checkout>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_use_internal>1</can_use_internal>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <group>ebanx</group>
+            </ebanx_eft>
+        </payment>
     </default>
 </config>

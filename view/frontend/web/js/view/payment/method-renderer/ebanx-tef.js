@@ -45,7 +45,7 @@ define(
                 this.placeOrder();
             },
             validateForm: function (form) {
-                return $(form).validation() && $(form).validation('isValid');
+                return $(form).validation('isValid');
             },
             disableBtnPlaceOrder: function(){
                 $('#btn_tef_form_place_order').attr('disabled', 'disabled');
