@@ -1,5 +1,7 @@
 (function() {
   const url = document.querySelector('#redirectURL').value;
-  const newWinOrTab = window.open(url, "_blank");      
-  newWinOrTab.focus();
+
+  setTimeout(() => {
+    window.location.replace(url);
+  }, 3000)
 })();
