@@ -4,7 +4,7 @@ namespace Ebanx\Payments\Block\Adminhtml\System\Config\Field;
 
 use Magento\Framework\View\Element\Html\Select;
 
-class Installment extends Select
+class Instalment extends Select
 {
     /**
      * Options

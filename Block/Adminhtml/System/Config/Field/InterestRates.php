@@ -4,31 +4,38 @@ namespace Ebanx\Payments\Block\Adminhtml\System\Config\Field;
 
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 use Magento\Framework\DataObject;
+use Magento\Framework\Exception\LocalizedException;
 
 class InterestRates extends AbstractFieldArray
 {
 
     /**
-     * @var Installment
+     * @var Instalment
      */
-    protected $_installmentRenderer = null;
+    protected $_instalmentRenderer = null;
 
     /**
      * Return renderer for installments
      *
-     * @return Installment|\Magento\Framework\View\Element\BlockInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return Instalment|\Magento\Framework\View\Element\BlockInterface
      */
-    protected function getNumberOfInstallmentsRenderer()
+    protected function getNumberOfInstalmentsRenderer()
     {
-        if (!$this->_installmentRenderer) {
-            $this->_installmentRenderer = $this->getLayout()->createBlock(
-                '\Adyen\Payment\Block\Adminhtml\System\Config\Field\Installment',
+        if ($this->_instalmentRenderer) {
+            return $this->_instalmentRenderer;
+        }
+
+        try {
+            $this->_instalmentRenderer = $this->getLayout()->createBlock(
+                '\Ebanx\Payments\Block\Adminhtml\System\Config\Field\Instalment',
                 '',
                 ['data' => ['is_render_to_js_template' => true]]
             );
+        } catch (LocalizedException $e) {
+            // TODO: Log this exception
         }
-        return $this->_installmentRenderer;
+
+        return $this->_instalmentRenderer;
     }
 
     /**
@@ -38,10 +45,10 @@ class InterestRates extends AbstractFieldArray
     protected function _prepareToRender()
     {
         $this->addColumn(
-            'installments',
+            'instalments',
             [
                 'label'     => __('Up To'),
-                'renderer'  => $this->getNumberOfInstallmentsRenderer(),
+                'renderer'  => $this->getNumberOfInstalmentsRenderer(),
             ]
         );
         $this->addColumn(
@@ -63,11 +70,11 @@ class InterestRates extends AbstractFieldArray
      */
     protected function _prepareArrayRow( DataObject $row)
     {
-        $installlments = $row->getInstallments();
+        $instalments = $row->getInstallments();
 
         $options = [];
-        if ($installlments) {
-            $options['option_' . $this->getNumberOfInstallmentsRenderer()->calcOptionHash($installlments)]
+        if ($instalments) {
+            $options['option_' . $this->getNumberOfInstalmentsRenderer()->calcOptionHash($instalments)]
                 = 'selected="selected"';
         }
         $row->setData('option_extra_attrs', $options);
