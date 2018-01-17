@@ -31,7 +31,7 @@ define(
     }
 
     const validateForm = (form) => {
-        return $(form).validation('isValid');
+        return $(form).validation() && $(form).validation('isValid');
     }
 
     const tokenize = ({ number, expiry, cvv }, country) => {
