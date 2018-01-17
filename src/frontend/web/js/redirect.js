@@ -1,3 +1,7 @@
-(function(){
-      window.open(document.querySelector('#redirectURL').value);
+(function() {
+  const url = document.querySelector('#redirectURL').value;
+
+  setTimeout(() => {
+    window.location.replace(url);
+  }, 3000)
 })();

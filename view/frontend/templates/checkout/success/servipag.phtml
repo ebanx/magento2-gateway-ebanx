@@ -1,29 +1,12 @@
 <?php
 /**
- * @var \Ebanx\Payments\Block\Success\Servipag $this
+ * @var \Ebanx\Payments\Block\Success\Redirect $this
  */
 $order = $this->getOrder();
 ?>
 
-<div class="ebanx-details">
-    <div class="details">
-        <p><?= $order->getBillingAddress()->getFirstname(); ?> usted será redirigido a la página de Servipag para completar el pago.</p>
-        <p>Si no se redirige en unos instantes <a href="<?= $this->getRedirectUrl() ?>" target="_blank">haga clic aquí</a></p>
-        <input id="redirectURL" type="hidden" value="<?= $this->getRedirectUrl() ?>">
-    </div>
-
-    <?php include 'apps.phtml' ?>
-
-    <script src="<?= $this->getViewFileUrl('Ebanx_Payments::js/redirect.min.js') ?>"></script>
-
-
-    <style>
-        .details {
-            padding: 40px 0 20px 0;
-        }
-        .ebanx-group {
-            display: inline-block;
-            margin-right: 20px;
-        }
-    </style>
+<div class="details">
+  <p><?= $order->getBillingAddress()->getFirstname(); ?> usted será redirigido a la página de Servipag para completar el pago.</p>
+  <p>Si no se redirige en unos instantes <a href="<?= $this->getRedirectUrl() ?>" target="_blank">haga clic aquí</a></p>
+  <input id="redirectURL" type="hidden" value="<?= $this->getRedirectUrl() ?>">
 </div>

@@ -19,7 +19,6 @@ class TefAuthorizationDataBuilder implements BuilderInterface
         $selectedBank = $payment->getAdditionalInformation(TefDataAssignObserver::SELECTED_BANK);
 
         return [
-            'type' => 'tef',
             'bankCode' => $selectedBank,
         ];
     }
