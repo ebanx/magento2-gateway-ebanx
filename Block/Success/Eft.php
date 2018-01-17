@@ -2,6 +2,6 @@
 
 namespace Ebanx\Payments\Block\Success;
 
-class Multicaja extends Redirect
+class Eft extends Redirect
 {
 }

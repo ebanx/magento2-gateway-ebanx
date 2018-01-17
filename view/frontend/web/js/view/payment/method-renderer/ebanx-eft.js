@@ -1,27 +1,34 @@
 /*browser:true*/
 /*global define*/
+/*global checkoutConfig*/
 define(
     [
         'Magento_Checkout/js/view/payment/default',
         'jquery',
+        'eft',
     ],
-    function (Component, $) {
+    function (Component, $, eft) {
         'use strict';
         return Component.extend({
             defaults: {
-                template: 'Ebanx_Payments/payment/ebanx_safetypay',
-                safetypayType: 'online',
+                template: 'Ebanx_Payments/payment/ebanx_eft',
+                eftSelectedBank: 'banco_agrario',
+                availableBanks: window.checkoutConfig.payment.ebanx.availableBanks
             },
             getData: function() {
                 return {
                     'method': this.getCode(),
                     'additional_data': {
-                        'safetypay_type': this.safetypayType,
-                    },
+                        'eft_selected_bank': this.eftSelectedBank,
+                    }
                 };
             },
-            setSafetypayType: function (safetypayType) {
-                this.safetypayType = safetypayType;
+            initialize: function () {
+                this._super();
+                eft.populateBankSelectWithBanks('#bank-select-ebanx-eft', this.availableBanks);
+            },
+            setEftSelectedBank: function (eftSelectedBank) {
+                this.eftSelectedBank = eftSelectedBank;
             },
             beforePlaceOrder: function (data) {
                 this.disableBtnPlaceOrder();
@@ -29,18 +36,17 @@ define(
                     this.enableBtnPlaceOrder();
                     return;
                 }
-
-                this.setSafetypayType(data.safetypayType);
+                this.setEftSelectedBank(data.eftSelectedBank);
                 this.placeOrder();
             },
             validateForm: function (form) {
                 return $(form).validation() && $(form).validation('isValid');
             },
             disableBtnPlaceOrder: function(){
-                $('#btn_safetypay_form_place_order').attr('disabled', 'disabled');
+                $('#btn_eft_form_place_order').attr('disabled', 'disabled');
             },
             enableBtnPlaceOrder: function(){
-                $('#btn_safetypay_form_place_order').removeAttr('disabled');
+                $('#btn_eft_form_place_order').removeAttr('disabled');
             }
         });
     }

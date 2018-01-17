@@ -58,6 +58,7 @@ gulp.task('scripts', function() {
 
 // Watch Files For Changes
 gulp.task('watch', function() {
+  gulp.start('default');
   gulp.watch('./src/**/*.js', ['scripts']);
   gulp.watch('./src/**/*.scss', ['sass']);
 });
