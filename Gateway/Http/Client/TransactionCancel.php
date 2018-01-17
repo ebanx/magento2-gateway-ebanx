@@ -25,14 +25,12 @@ class TransactionCancel implements ClientInterface
      * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
      * @param \Ebanx\Payments\Helper\Data $ebanxHelper
      * @param \Ebanx\Payments\Logger\EbanxLogger $ebanxLogger
-     * @param array $data
      */
     public function __construct(
         Context $context,
         EncryptorInterface $encryptor,
         EbanxHelper $ebanxHelper,
-        EbanxLogger $ebanxLogger,
-        array $data = []
+        EbanxLogger $ebanxLogger
     ) {
         $this->_encryptor = $encryptor;
         $this->_ebanxHelper = $ebanxHelper;

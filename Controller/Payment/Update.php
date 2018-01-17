@@ -92,56 +92,54 @@ class Update extends Action
             return $result;
         }
 
-        $hashCodes = explode(',', $request->getParam('hash_codes'));
+        $hashCode = $request->getParam('hash_codes');
 
-        foreach ($hashCodes as $hashCode) {
-            $orderId = $this->ebanxCollection->getOrderIdByPaymentHash($hashCode);
-            if (!$orderId) {
-                $result->setHttpResponseCode(400);
-                $result->setData([
-                    'status'  => 'ERROR',
-                    'message' => 'Payment not found.',
-                ]);
+        $orderId = $this->ebanxCollection->getOrderIdByPaymentHash($hashCode);
+        if (!$orderId) {
+            $result->setHttpResponseCode(400);
+            $result->setData([
+                'status'  => 'ERROR',
+                'message' => 'Payment not found.',
+            ]);
 
-                return $result;
-            }
-
-            $order     = $this->order->loadByIncrementId($orderId);
-            $orderData = $order->getData();
-            if (empty($orderData)) {
-                $result->setHttpResponseCode(400);
-                $result->setData([
-                    'status'  => 'ERROR',
-                    'message' => 'Order not found.',
-                ]);
-
-                return $result;
-            }
-
-            $ebanxPaymentStatus = $this->getEbanxPaymentStatus($hashCode);
-            if (!$ebanxPaymentStatus) {
-                $result->setHttpResponseCode(400);
-                $result->setData([
-                    'status'  => 'ERROR',
-                    'message' => 'Payment not found on EBANX.',
-                ]);
-
-                return $result;
-            }
-
-            $ebanxToMagentoStatus = $this->getEbanxToMagentoStatus($ebanxPaymentStatus);
-            if ($order->getStatus() === $ebanxToMagentoStatus) {
-                $result->setData([
-                    'status' => 'SUCCESS',
-                ]);
-
-                return $result;
-            }
-
-            $order->setStatus($ebanxToMagentoStatus);
-            $order->addStatusHistoryComment('EBANX: The payment has been updated to: ' . $ebanxToMagentoStatus);
-            $this->orderResource->save($order);
+            return $result;
         }
+
+        $order     = $this->order->loadByIncrementId($orderId);
+        $orderData = $order->getData();
+        if (empty($orderData)) {
+            $result->setHttpResponseCode(400);
+            $result->setData([
+                'status'  => 'ERROR',
+                'message' => 'Order not found.',
+            ]);
+
+            return $result;
+        }
+
+        $ebanxPaymentStatus = $this->getEbanxPaymentStatus($hashCode);
+        if (!$ebanxPaymentStatus) {
+            $result->setHttpResponseCode(400);
+            $result->setData([
+                'status'  => 'ERROR',
+                'message' => 'Payment not found on EBANX.',
+            ]);
+
+            return $result;
+        }
+
+        $ebanxToMagentoStatus = $this->getEbanxToMagentoStatus($ebanxPaymentStatus);
+        if ($order->getStatus() === $ebanxToMagentoStatus) {
+            $result->setData([
+                'status' => 'SUCCESS',
+            ]);
+
+            return $result;
+        }
+
+        $order->setStatus($ebanxToMagentoStatus);
+        $order->addStatusHistoryComment('EBANX: The payment has been updated to: ' . $ebanxToMagentoStatus);
+        $this->orderResource->save($order);
         $result->setData([
             'status' => 'SUCCESS',
         ]);
