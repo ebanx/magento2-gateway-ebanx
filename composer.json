@@ -26,6 +26,6 @@
     "squizlabs/php_codesniffer": "^3.2"
   },
   "scripts": {
-    "style-check": "phpcs --standard=./vendor/magento-ecg/coding-standard/EcgM2 Block Controller etc Gateway Helper Logger Model Observer Setup src"
+    "style-check": "phpcs --standard=./ Block Controller etc Gateway Helper Logger Model Observer Setup src"
   }
 }
