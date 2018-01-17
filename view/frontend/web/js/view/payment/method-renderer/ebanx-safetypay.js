@@ -34,7 +34,7 @@ define(
                 this.placeOrder();
             },
             validateForm: function (form) {
-                return $(form).validation('isValid');
+                return $(form).validation() && $(form).validation('isValid');
             },
             disableBtnPlaceOrder: function(){
                 $('#btn_safetypay_form_place_order').attr('disabled', 'disabled');
