@@ -39,7 +39,20 @@
 
                 <block class="Ebanx\Payments\Block\Success\Creditcard" name="ebanx.success.payment.creditcard"
                        as="ebanx_creditcard" template="checkout/success/creditcard.phtml"/>
-
+                <block class="Ebanx\Payments\Block\Success\Wallet" name="ebanx.success.payment.wallet"
+                       as="ebanx_wallet" template="checkout/success/wallet.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Sencillito" name="ebanx.success.payment.sencillito"
+                       as="ebanx_sencillito" template="checkout/success/sencillito.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Servipag" name="ebanx.success.payment.servipag"
+                       as="ebanx_servipag" template="checkout/success/servipag.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Multicaja" name="ebanx.success.payment.multicaja"
+                       as="ebanx_multicaja" template="checkout/success/multicaja.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Webpay" name="ebanx.success.payment.webpay"
+                       as="ebanx_webpay" template="checkout/success/webpay.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\SafetyPay" name="ebanx.success.payment.safetypay"
+                       as="ebanx_safetypay" template="checkout/success/safetypay.phtml"/>
+                <block class="Ebanx\Payments\Block\Success\Eft" name="ebanx.success.payment.eft"
+                       as="ebanx_eft" template="checkout/success/eft.phtml"/>
             </block>
         </referenceContainer>
     </body>
