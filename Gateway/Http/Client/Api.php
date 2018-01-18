@@ -97,16 +97,16 @@ class Api
         $rates = json_decode($this->helper->getEbanxAbstractConfigData('interest_rates'), true);
 
         usort($rates, function ($value, $previous) {
-            if ($value['installments'] === $previous['installments']) {
+            if ($value['instalments'] === $previous['instalments']) {
                 return 0;
             }
 
-            return ($value['installments'] < $previous['installments']) ? -1 : 1;
+            return ($value['instalments'] < $previous['instalments']) ? -1 : 1;
         });
 
         for ($i = 1; $i <= $this->helper->getEbanxAbstractConfigData('max_instalments'); $i++) {
             foreach ($rates as $key => $interestConfig) {
-                if ($i <= $interestConfig['installments']) {
+                if ($i <= $interestConfig['instalments']) {
                     $creditCardConfig->addInterest($i, $interestConfig['interest_rate']);
                     break;
                 }

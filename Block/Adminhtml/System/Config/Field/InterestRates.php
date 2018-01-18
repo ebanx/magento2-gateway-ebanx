@@ -70,7 +70,7 @@ class InterestRates extends AbstractFieldArray
      */
     protected function _prepareArrayRow( DataObject $row)
     {
-        $instalments = $row->getInstallments();
+        $instalments = $row->getInstalments();
 
         $options = [];
         if ($instalments) {
