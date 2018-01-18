@@ -6,10 +6,10 @@ define(
   ],
   function (waitFor) {
     const addBanksToElement = (banks, element) => {
-      let options = ``;
+      let options = '';
 
       for (let bank in banks) {
-        options += `<option value="${bank}">${banks[bank]}</option>`
+        options += `<option value="${bank}">${banks[bank]}</option>`;
       }
 
       element.innerHTML = `${options}`;
@@ -25,7 +25,7 @@ define(
     };
 
     return {
-      populateBankSelectWithBanks: populateBankSelectWithBanks
+      populateBankSelectWithBanks: populateBankSelectWithBanks,
     };
   }
 );

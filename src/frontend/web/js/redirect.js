@@ -1,3 +1,3 @@
 (function(){
-      window.open(document.querySelector('#redirectURL').value);
+  window.open(document.querySelector('#redirectURL').value);
 })();

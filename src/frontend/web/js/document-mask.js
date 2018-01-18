@@ -1,5 +1,5 @@
 define([
-  'vanilla-masker'
+  'vanilla-masker',
 ], function (VMasker) {
   const getElementWhenDone = (selector, callback) => {
     const interval = setInterval(function () {
