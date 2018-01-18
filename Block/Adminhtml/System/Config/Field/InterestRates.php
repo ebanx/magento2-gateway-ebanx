@@ -78,6 +78,5 @@ class InterestRates extends AbstractFieldArray
                 = 'selected="selected"';
         }
         $row->setData('option_extra_attrs', $options);
-        return;
     }
 }
