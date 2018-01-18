@@ -104,7 +104,8 @@ class Api
             return ($value['instalments'] < $previous['instalments']) ? -1 : 1;
         });
 
-        for ($i = 1; $i <= $this->helper->getEbanxAbstractConfigData('max_instalments'); $i++) {
+        $maxInstalments = $this->helper->getEbanxAbstractConfigData('max_instalments');
+        for ($i = 1; $i <= $maxInstalments; $i++) {
             foreach ($rates as $key => $interestConfig) {
                 if ($i <= $interestConfig['instalments']) {
                     $creditCardConfig->addInterest($i, $interestConfig['interest_rate']);
