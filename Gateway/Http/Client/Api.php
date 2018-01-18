@@ -89,9 +89,30 @@ class Api
      */
     private function getCreditCardConfig()
     {
-        return new CreditCardConfig([
+        $creditCardConfig = new CreditCardConfig([
             'maxInstalments' => $this->helper->getEbanxAbstractConfigData('max_instalments'),
             'minInstalmentAmount' => $this->helper->getEbanxAbstractConfigData('min_instalment_value'),
         ]);
+
+        $rates = json_decode($this->helper->getEbanxAbstractConfigData('interest_rates'), true);
+
+        usort($rates, function ($value, $previous) {
+            if ($value['installments'] === $previous['installments']) {
+                return 0;
+            }
+
+            return ($value['installments'] < $previous['installments']) ? -1 : 1;
+        });
+
+        for ($i = 1; $i <= $this->helper->getEbanxAbstractConfigData('max_instalments'); $i++) {
+            foreach ($rates as $key => $interestConfig) {
+                if ($i <= $interestConfig['installments']) {
+                    $creditCardConfig->addInterest($i, $interestConfig['interest_rate']);
+                    break;
+                }
+            }
+        }
+
+        return $creditCardConfig;
     }
 }
