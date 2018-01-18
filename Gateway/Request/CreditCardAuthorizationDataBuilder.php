@@ -37,18 +37,6 @@ class CreditCardAuthorizationDataBuilder implements BuilderInterface
         $payment = $paymentDataObject->getPayment();
         $storeId = $order->getStoreId();
 
-        $rates = json_decode($this->ebanxHelper->getEbanxAbstractConfigData('interest_rates'), true);
-
-        usort($rates, function ($value, $previous) {
-            if ($value['instalments'] === $previous['instalments']) {
-                return 0;
-            }
-
-            return ($value['instalments'] < $previous['instalments']) ? -1 : 1;
-        });
-
-        var_dump($rates);
-
         $card = new Card([
             'autoCapture' => $this->shouldAutoCapture($storeId),
             'token' => $payment->getAdditionalInformation(CreditCardDataAssignObserver::TOKEN),
