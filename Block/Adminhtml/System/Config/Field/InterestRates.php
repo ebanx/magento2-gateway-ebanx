@@ -31,8 +31,8 @@ class InterestRates extends AbstractFieldArray
                 '',
                 ['data' => ['is_render_to_js_template' => true]]
             );
-        } catch (LocalizedException $e) {
-            // TODO: Log this exception
+        } catch (LocalizedException $e) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement
+            // TODO: Log this exception and unignore this statement
         }
 
         return $this->_instalmentRenderer;
