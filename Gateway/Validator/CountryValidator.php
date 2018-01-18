@@ -2,6 +2,7 @@
 namespace Ebanx\Payments\Gateway\Validator;
 
 use Ebanx\Payments\Gateway\Http\Client\Api;
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Payment\Gateway\Validator\CountryValidator as ParentValidator;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
 use Magento\Payment\Gateway\ConfigInterface;
@@ -21,6 +22,7 @@ class CountryValidator extends ParentValidator
     /**
      * @param ResultInterfaceFactory $resultFactory
      * @param \Magento\Payment\Gateway\ConfigInterface $config
+     * @param Api $api
      */
     public function __construct(
         ResultInterfaceFactory $resultFactory,
@@ -34,9 +36,7 @@ class CountryValidator extends ParentValidator
 
     /**
      * @param array $validationSubject
-     * @return bool
-     * @throws NotFoundException
-     * @throws \Exception
+     * @return \Magento\Payment\Gateway\Validator\ResultInterface
      */
     public function validate(array $validationSubject)
     {
