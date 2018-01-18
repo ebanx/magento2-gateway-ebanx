@@ -8,7 +8,7 @@ define(
     'document-mask',
     'cc-util',
     'Magento_Checkout/js/model/quote',
-    'cc-br'
+    'cc-br',
   ],
   function(Component, $, EBANX, documentMask, util, quote, cc) {
     'use strict';
@@ -23,10 +23,11 @@ define(
         expiry: null,
         token: null,
         paymentDocument: window.checkoutConfig.payment.ebanx.customerDocument,
-        totals: quote.getTotals()
+        totals: quote.getTotals(),
       },
       initialize: function() {
         this._super();
+        cc.initCreditCard();
         documentMask('#ebanx_creditcard_document');
         this.totals.subscribe(util.onUpdateTotalsAndInstalments, this);
         util.onUpdateTotalsAndInstalments(this.totals.peek().grand_total, 'Brazil');
@@ -39,8 +40,8 @@ define(
             cvv: this.cvv,
             instalments: this.instalments,
             token: this.token,
-            document: this.paymentDocument
-          }
+            document: this.paymentDocument,
+          },
         };
       },
       setCardData: function(cardData, paymentDocument) {
@@ -62,7 +63,7 @@ define(
           .catch(function(err) {
             util.showAlertMessage(err, 'Atenção: ');
           });
-      }
+      },
     });
   }
 );

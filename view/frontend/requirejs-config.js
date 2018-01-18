@@ -8,14 +8,17 @@ var config = {
     'document-mask': 'Ebanx_Payments/js/document-mask.min',
     'vanilla-masker': 'Ebanx_Payments/js/lib/vanilla-masker.min',
     'cc-util': 'Ebanx_Payments/js/util/cc-util.min',
-    'wait-for': 'Ebanx_Payments/js/util/wait-for.min'
+    'wait-for': 'Ebanx_Payments/js/util/wait-for.min',
   },
   shim: {
     'cc-br': {
-      deps: ['card-js', 'lib-js', 'cc-util']
+      deps: ['card-js', 'lib-js', 'cc-util'],
     },
     'cc-util': {
-      deps: ['lib-js']
-    }
-  }
+      deps: ['lib-js'],
+    },
+  },
 };
+
+
+module.export = config;

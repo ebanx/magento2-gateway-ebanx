@@ -3,5 +3,5 @@
 
   setTimeout(() => {
     window.location.replace(url);
-  }, 3000)
+  }, 3000);
 })();
