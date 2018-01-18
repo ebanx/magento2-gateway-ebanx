@@ -48,12 +48,13 @@ gulp.task('scripts', function() {
 });
 
 // Compile JS
-gulp.task('es-lint', function() {
+gulp.task('lint', function() {
+  process.argv.push('--silent');
   return gulp.src(['./src/**/*.js', './view/**/*.js'])
   .pipe(eslint({
     'rules': {
-      'quotes': [1, 'single'],
-      'semi': [1, 'always'],
+      'quotes': ['error', 'single'],
+      'semi': ['error', 'always'],
       'indent': [2, 2],
       'one-var-declaration-per-line': ['error', 'always'],
       'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
@@ -63,6 +64,7 @@ gulp.task('es-lint', function() {
       'comma-dangle': ['error', 'always-multiline'],
       'comma-spacing': ['error', { before: false, after: true }],
       'comma-style': ['error', 'last'],
+      'no-console': 2,
     },
     'parserOptions': {
       'ecmaVersion': 6,
@@ -78,10 +80,9 @@ gulp.task('es-lint', function() {
         'browser',
         'es6',
         'commonjs',
-    ]
+    ],
   }))
   .pipe(eslint.format())
-  .pipe(eslint.failOnError())
   .pipe(eslint.results(results => {
     console.log('');
     console.log('\x1b[37m', '---------------------------------------------------');
@@ -90,16 +91,16 @@ gulp.task('es-lint', function() {
     console.log('\x1b[31m', `Total Errors: ${results.errorCount}`);
     console.log('\x1b[37m', '---------------------------------------------------');
     console.log('');
-  }));
+  }))
+  .pipe(eslint.failAfterError());
 });
 
 // Watch Files For Changes
 gulp.task('watch', function() {
   gulp.start('default');
-  gulp.watch('./src/**/*.js', ['scripts', 'es-lint']);
+  gulp.watch('./src/**/*.js', ['scripts', 'lint']);
   gulp.watch('./src/**/*.scss', ['sass']);
 });
 
 // Default Task
-gulp.task('default', ['sass', 'scripts', 'es-lint']);
-gulp.task('lint', ['es-lint']);
+gulp.task('default', ['sass', 'scripts', 'lint']);

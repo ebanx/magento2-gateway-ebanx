@@ -85,9 +85,12 @@ class Base extends Template
      */
     public function getSuccessPaymentBlock()
     {
-        $paymentCode = $this->getOrder()->getPayment()->getMethodInstance()->getCode();
+        $paymentCode = $this->getPaymentCode();
         if ($this->isCash($paymentCode)) {
             return 'ebanx_cash';
+        }
+        if ($this->isRedirect($paymentCode)){
+            return 'ebanx_redirect';
         }
         return $paymentCode;
     }
@@ -109,10 +112,27 @@ class Base extends Template
         return $this->_order;
     }
 
+    /**
+     * @return string
+     */
+    public function getPaymentCode() {
+        return $this->getOrder()->getPayment()->getMethodInstance()->getCode();
+    }
+
     private function isCash($paymentCode)
     {
         try {
             $this->getChildChildHtml('ebanx_cash', $paymentCode);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function isRedirect($paymentCode)
+    {
+        try {
+            $this->getChildChildHtml('ebanx_redirect', $paymentCode);
             return true;
         } catch (\Exception $e) {
             return false;

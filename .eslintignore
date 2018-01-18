@@ -1,2 +1,3 @@
 view/frontend/web/js/**/*.min.js
+view/frontend/web/js/**/*.min.js.map
 view/frontend/web/js/*.min.js
