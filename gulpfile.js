@@ -12,7 +12,6 @@ const browserify = require('gulp-browserify');
 const eslint = require('gulp-eslint');
 const restrictedGlobals = require('eslint-restricted-globals');
 
-
 // Compile SASS
 gulp.task('sass', function() {
   return gulp.src('./src/frontend/web/**/*.scss')
@@ -49,7 +48,6 @@ gulp.task('scripts', function() {
 
 // Compile JS
 gulp.task('lint', function() {
-  process.argv.push('--silent');
   return gulp.src(['./src/**/*.js', './view/**/*.js'])
   .pipe(eslint({
     'rules': {
@@ -64,7 +62,8 @@ gulp.task('lint', function() {
       'comma-dangle': ['error', 'always-multiline'],
       'comma-spacing': ['error', { before: false, after: true }],
       'comma-style': ['error', 'last'],
-      'no-console': 2,
+      'no-console': 'warn',
+      'no-alert': 'warn',
     },
     'parserOptions': {
       'ecmaVersion': 6,
@@ -97,6 +96,7 @@ gulp.task('lint', function() {
 
 // Watch Files For Changes
 gulp.task('watch', function() {
+  process.argv.push('--silent');
   gulp.start('default');
   gulp.watch('./src/**/*.js', ['scripts', 'lint']);
   gulp.watch('./src/**/*.scss', ['sass']);

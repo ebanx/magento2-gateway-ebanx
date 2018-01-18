@@ -13,6 +13,8 @@ define(
   function(Component, $, EBANX, documentMask, util, quote, cc) {
     'use strict';
 
+    window.EBANX = EBANX;
+
     return Component.extend({
       defaults: {
         template: 'Ebanx_Payments/payment/ebanx_creditcard_br',
