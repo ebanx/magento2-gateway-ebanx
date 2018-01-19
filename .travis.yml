@@ -6,6 +6,17 @@ jobs:
     - stage: lint
       language: php
       php: 7.0
+      before_install: |
+                      echo "
+                      {
+                          \"http-basic\": {
+                              \"repo.magento.com\": {
+                                  \"username\": \"$MAGENTO_REPOSITORY_USERNAME\",
+                                  \"password\": \"$MAGENTO_REPOSITORY_PASSWORD\"
+                              }
+                          }
+                      }
+                      " &> ~/.composer/auth.json
       install: composer install
       script: composer lint
     - language: node_js
