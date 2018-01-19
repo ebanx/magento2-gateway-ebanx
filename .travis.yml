@@ -9,7 +9,9 @@ jobs:
     - stage: lint
       install: composer install
       script: composer lint
-    - install: yarn
+    - language: node
+      node: 9.3
+      install: yarn
       script: yarn run lint
 
 cache:
