@@ -1,12 +1,11 @@
-language: php
 dist: trusty
 sudo: false
-
-php: 7.0
 
 jobs:
   include:
     - stage: lint
+      language: php
+      php: 7.0
       install: composer install
       script: composer lint
     - language: node_js
