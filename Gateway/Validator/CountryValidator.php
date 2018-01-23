@@ -21,6 +21,7 @@ class CountryValidator extends ParentValidator
     /**
      * @param ResultInterfaceFactory $resultFactory
      * @param \Magento\Payment\Gateway\ConfigInterface $config
+     * @param Api $api
      */
     public function __construct(
         ResultInterfaceFactory $resultFactory,
@@ -34,9 +35,7 @@ class CountryValidator extends ParentValidator
 
     /**
      * @param array $validationSubject
-     * @return bool
-     * @throws NotFoundException
-     * @throws \Exception
+     * @return \Magento\Payment\Gateway\Validator\ResultInterface
      */
     public function validate(array $validationSubject)
     {
