@@ -1,0 +1,32 @@
+dist: trusty
+sudo: false
+
+jobs:
+  include:
+    - stage: lint
+      language: php
+      php: 7.0
+      before_install: |
+                      echo "
+                      {
+                          \"http-basic\": {
+                              \"repo.magento.com\": {
+                                  \"username\": \"$MAGENTO_REPOSITORY_USERNAME\",
+                                  \"password\": \"$MAGENTO_REPOSITORY_PASSWORD\"
+                              }
+                          }
+                      }
+                      " &> ~/.composer/auth.json
+      install: composer install
+      script: composer lint
+    - language: node_js
+      node_js: 9.3
+      install: yarn
+      script: yarn run lint
+
+cache:
+  apt: true
+  directories:
+    - $TRAVIS_BUILD_DIR/vendor
+    - $TRAVIS_BUILD_DIR/node_modules
+    - $HOME/.composer/cache
