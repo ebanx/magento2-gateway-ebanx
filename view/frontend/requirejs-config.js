@@ -1,5 +1,6 @@
 /*jshint browser:true jquery:true*/
 /*global alert*/
+
 var config = {
   paths: {
     'cc-br': 'Ebanx_Payments/js/cc.min',
@@ -19,6 +20,3 @@ var config = {
     },
   },
 };
-
-
-module.export = config;
