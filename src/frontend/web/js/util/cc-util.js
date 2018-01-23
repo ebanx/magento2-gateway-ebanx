@@ -80,7 +80,7 @@ define(
 
       for (let term of paymentTerms) {
         localAmount = parseFloat(Math.round(term.localAmountWithTax * 100) / 100).toFixed(2);
-        options += `<option value='${term.instalmentNumber}' data-local-amount='${localAmount}'>${term.instalmentNumber}x de R$${localAmount} ${term.hasInterest ? 'com juros' : ''} </option>`;
+        options += `<option value='${term.instalmentNumber}' data-local-amount='${localAmount}'>${term.instalmentNumber}x de R$${localAmount} ${term.hasInterests ? 'com juros' : ''} </option>`;
       };
 
       waitFor(() => {

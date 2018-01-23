@@ -39,7 +39,7 @@ class CreditCardAuthorizationDataBuilder implements BuilderInterface
 
         $card = new Card([
             'autoCapture' => $this->shouldAutoCapture($storeId),
-            'token' => '7c424206e7a5a5d4bb2380ef72dd6bbad830108f770a45a8255ae7c8b579282914941893fe6059a69d680d2f178a06e6fcfdc2bdd0de0d5cc3c23cc5a5dcec74',
+            'token' => $payment->getAdditionalInformation(CreditCardDataAssignObserver::TOKEN),
             'cvv' => $payment->getAdditionalInformation(CreditCardDataAssignObserver::CVV),
             'type' => $payment->getAdditionalInformation(CreditCardDataAssignObserver::BRAND),
         ]);
