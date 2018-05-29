@@ -1,0 +1,75 @@
+<div class="oneclickpayment-wrapper" data-bind="afterRender: setModalElement">
+    <h2>
+        <!-- ko i18n: 'Buy with 1-Click' --><!-- /ko -->
+    </h2>
+
+    <!-- ko if: !successPage() -->
+        <form id="digitalhub-ebanx-oneclickpayment-form">
+
+            <div class="field required">
+                <label class="label">
+                    <span><!-- ko i18n: 'Choose your shipping address'--><!-- /ko --> <em>*</em></span>
+                </label>
+                <div class="control">
+                    <select name="oneclickpayment[shipping_address_id]"
+                            class="select"
+                            data-validate="{'required-entry': true}"
+                            data-bind="options: shippingAddressList(),
+                                       optionsValue: 'value',
+                                       optionsText: 'label',
+                                       value: shippingAddressId">
+                    </select>
+                </div>
+            </div>
+
+            <!-- ko if: shippingAddressId() -->
+                <div class="field required">
+                    <label class="label">
+                        <span><!-- ko i18n: 'Choose the shipping method'--><!-- /ko --> <em>*</em></span>
+                    </label>
+                    <div class="control">
+                        <select name="oneclickpayment[shipping_method]"
+                                class="select"
+                                data-validate="{'required-entry': true}"
+                                data-bind="options: shippingMethodList(),
+                                           optionsValue: 'value',
+                                           optionsText: 'label',
+                                           value: shippingMethod">
+                        </select>
+                    </div>
+                </div>
+            <!-- /ko -->
+
+            <!-- ko if: shippingMethod() -->
+                <div class="field required">
+                    <label class="label">
+                        <span><!-- ko i18n: 'Select a previously saved credit card to pay your order'--><!-- /ko --> <em>*</em></span>
+                    </label>
+                    <div class="control">
+                        <select name="oneclickpayment[token_id]"
+                                class="select"
+                                data-validate="{'required-entry': true}"
+                                data-bind="options: savedCardsList(),
+                                           optionsValue: 'value',
+                                           optionsText: 'label',
+                                           value: useSavedCard">
+                        </select>
+                    </div>
+                </div>
+            <!-- /ko -->
+
+            <!-- ko if: useSavedCard() -->
+            <div class="field">
+                <button class="action primary" data-bind="click: placeOrder">
+                    <!-- ko i18n: 'Place Order'--><!-- /ko -->
+                </button>
+            </div>
+            <!-- /ko -->
+        </form>
+    <!-- /ko -->
+
+    <!-- ko if: successPage() -->
+    <h4>Thank for your order!</h4>
+    <p>Order Number: <span data-bind="text: orderIncrementId"></span></p>
+    <!-- /ko -->
+</div>

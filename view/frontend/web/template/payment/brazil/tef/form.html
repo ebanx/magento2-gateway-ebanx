@@ -1,0 +1,29 @@
+<fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}">
+    <legend class="legend">
+        <span><!-- ko i18n: 'TEF'--><!-- /ko --></span>
+    </legend>
+
+    <div class="field required field-bank-type">
+        <label data-bind="attr: {for: getCode() + '_use_bank_type'}" class="label">
+            <span><!-- ko i18n: 'Choose your bank'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <select name="payment[bank_type]"
+                    class="select select-use-bank-type"
+                    data-validate="{'required-entry': true}"
+                    data-bind="attr: {id: getCode() + '_use_saved_cc', 'data-container': getCode() + '-use-bank-type'},
+                               enable: isActive($parents),
+                               options: getBankTypeList(),
+                               optionsValue: 'value',
+                               optionsText: 'label',
+                               value: bankType">
+            </select>
+        </div>
+    </div>
+
+    <p class="alert alert-info"><span>You will be redirected after place order to continue with payment details.</span></p>
+
+    <!-- ko if: showDocumentFields() -->
+        <!-- ko template: 'DigitalHub_Ebanx/payment/customer-additionals' --><!-- /ko -->
+    <!-- /ko -->
+</fieldset>

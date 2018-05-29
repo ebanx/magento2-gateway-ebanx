@@ -1,0 +1,33 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h2>EBANX - Mexico Credit Card</h2>
+<table class="admin__table-secondary order-information-table">
+    <tbody>
+        <tr>
+            <th>Credit/Debit Card Type</th>
+            <td><?php echo $paymentData['payment_type_code'] ?></td>
+        </tr>
+        <tr>
+            <th>Credit/Debit Card Masked Number</th>
+            <td><?php echo $paymentData['masked_card_number'] ?></td>
+        </tr>
+        <tr>
+            <th>Installments</th>
+            <td><?php echo $paymentData['instalments'] ?>x</td>
+        </tr>
+        <tr>
+            <th>Payment Hash</th>
+            <td><?php echo $paymentData['hash'] ?></td>
+        </tr>
+        <tr>
+            <th>Payment PIN</th>
+            <td><?php echo $paymentData['pin'] ?></td>
+        </tr>
+        <tr>
+            <th>Merchant Payment Code</th>
+            <td><?php echo $paymentData['merchant_payment_code'] ?></td>
+        </tr>
+    </tbody>
+</table>

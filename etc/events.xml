@@ -1,0 +1,104 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <!-- Notification Status Change -->
+    <event name="digitalhub_ebanx_notification_status_change">
+        <observer name="digitalhub_ebanx_notification_status_change_observer" instance="DigitalHub\Ebanx\Observer\NotificationObserver" />
+    </event>
+
+    <!-- Brazil -->
+    <event name="payment_method_assign_data_digitalhub_ebanx_brazil_creditcard">
+        <observer name="digitalhub_ebanx_brazil_creditcard_data_assign" instance="DigitalHub\Ebanx\Observer\Brazil\CreditCard\DataAssignObserver" />
+    </event>
+
+    <event name="payment_method_assign_data_digitalhub_ebanx_brazil_boleto">
+        <observer name="digitalhub_ebanx_brazil_boleto_data_assign" instance="DigitalHub\Ebanx\Observer\Brazil\Boleto\DataAssignObserver" />
+    </event>
+
+    <event name="payment_method_assign_data_digitalhub_ebanx_brazil_ebanxaccount">
+        <observer name="digitalhub_ebanx_brazil_ebanxaccount_data_assign" instance="DigitalHub\Ebanx\Observer\Brazil\EbanxAccount\DataAssignObserver" />
+    </event>
+
+    <event name="payment_method_assign_data_digitalhub_ebanx_brazil_tef">
+        <observer name="digitalhub_ebanx_brazil_tef_data_assign" instance="DigitalHub\Ebanx\Observer\Brazil\Tef\DataAssignObserver" />
+    </event>
+
+    <event name="digitalhub_ebanx_assign_brazil_creditcard_token">
+        <observer name="digitalhub_ebanx_assign_brazil_creditcard_token_observer" instance="DigitalHub\Ebanx\Observer\Brazil\CreditCard\TokenObserver" />
+    </event>
+
+    <!-- Argentina -->
+    <event name="payment_method_assign_data_digitalhub_ebanx_argentina_creditcard">
+        <observer name="digitalhub_ebanx_argentina_creditcard_data_assign" instance="DigitalHub\Ebanx\Observer\Argentina\CreditCard\DataAssignObserver" />
+    </event>
+    <event name="digitalhub_ebanx_assign_argentina_creditcard_token">
+        <observer name="digitalhub_ebanx_assign_argentina_creditcard_token_observer" instance="DigitalHub\Ebanx\Observer\Argentina\CreditCard\TokenObserver" />
+    </event>
+
+    <event name="payment_method_assign_data_digitalhub_ebanx_argentina_rapipago">
+        <observer name="digitalhub_ebanx_argentina_rapipago_data_assign" instance="DigitalHub\Ebanx\Observer\Argentina\Rapipago\DataAssignObserver" />
+    </event>
+
+    <event name="payment_method_assign_data_digitalhub_ebanx_argentina_pagofacil">
+        <observer name="digitalhub_ebanx_argentina_pagofacil_data_assign" instance="DigitalHub\Ebanx\Observer\Argentina\PagoFacil\DataAssignObserver" />
+    </event>
+
+    <event name="payment_method_assign_data_digitalhub_ebanx_argentina_cupondepagos">
+        <observer name="digitalhub_ebanx_argentina_cupondepagos_data_assign" instance="DigitalHub\Ebanx\Observer\Argentina\CuponDePagos\DataAssignObserver" />
+    </event>
+
+    <!-- Chile -->
+    <event name="payment_method_assign_data_digitalhub_ebanx_chile_servipag">
+        <observer name="digitalhub_ebanx_chile_servipag_data_assign" instance="DigitalHub\Ebanx\Observer\Chile\Servipag\DataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_chile_sencillito">
+        <observer name="digitalhub_ebanx_chile_sencillito_data_assign" instance="DigitalHub\Ebanx\Observer\Chile\Sencillito\DataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_chile_webpay">
+        <observer name="digitalhub_ebanx_chile_webpay_data_assign" instance="DigitalHub\Ebanx\Observer\Chile\Webpay\DataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_chile_multicaja">
+        <observer name="digitalhub_ebanx_chile_multicaja_data_assign" instance="DigitalHub\Ebanx\Observer\Chile\Multicaja\DataAssignObserver" />
+    </event>
+
+    <!-- Colombia -->
+    <event name="payment_method_assign_data_digitalhub_ebanx_colombia_eft">
+        <observer name="digitalhub_ebanx_colombia_eft_data_assign" instance="DigitalHub\Ebanx\Observer\Colombia\Eft\DataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_colombia_baloto">
+        <observer name="digitalhub_ebanx_colombia_baloto_data_assign" instance="DigitalHub\Ebanx\Observer\Colombia\Baloto\DataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_colombia_creditcard">
+        <observer name="digitalhub_ebanx_colombia_creditcard_data_assign" instance="DigitalHub\Ebanx\Observer\Colombia\CreditCard\DataAssignObserver" />
+    </event>
+    <event name="digitalhub_ebanx_assign_colombia_creditcard_token">
+        <observer name="digitalhub_ebanx_assign_colombia_creditcard_token_observer" instance="DigitalHub\Ebanx\Observer\Colombia\CreditCard\TokenObserver" />
+    </event>
+
+    <!-- Ecuador -->
+    <event name="payment_method_assign_data_digitalhub_ebanx_ecuador_safetypay">
+        <observer name="digitalhub_ebanx_ecuador_safetypay_data_assign" instance="DigitalHub\Ebanx\Observer\Ecuador\SafetyPay\DataAssignObserver" />
+    </event>
+
+    <!-- Peru -->
+    <event name="payment_method_assign_data_digitalhub_ebanx_peru_pagoefectivo">
+        <observer name="digitalhub_ebanx_peru_pagoefectivo_data_assign" instance="DigitalHub\Ebanx\Observer\Peru\PagoEfectivo\DataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_peru_safetypay">
+        <observer name="digitalhub_ebanx_peru_safetypay_data_assign" instance="DigitalHub\Ebanx\Observer\Peru\SafetyPay\DataAssignObserver" />
+    </event>
+
+    <!-- Mexico -->
+    <event name="payment_method_assign_data_digitalhub_ebanx_mexico_creditcard">
+        <observer name="digitalhub_ebanx_mexico_creditcard_data_assign" instance="DigitalHub\Ebanx\Observer\Mexico\CreditCard\DataAssignObserver" />
+    </event>
+    <event name="digitalhub_ebanx_assign_mexico_creditcard_token">
+        <observer name="digitalhub_ebanx_assign_mexico_creditcard_token_observer" instance="DigitalHub\Ebanx\Observer\Mexico\CreditCard\TokenObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_mexico_oxxo">
+        <observer name="digitalhub_ebanx_mexico_oxxo_data_assign" instance="DigitalHub\Ebanx\Observer\Mexico\Oxxo\DataAssignObserver" />
+    </event>
+    <event name="payment_method_assign_data_digitalhub_ebanx_mexico_spei">
+        <observer name="digitalhub_ebanx_mexico_spei_data_assign" instance="DigitalHub\Ebanx\Observer\Mexico\Spei\DataAssignObserver" />
+    </event>
+
+</config>

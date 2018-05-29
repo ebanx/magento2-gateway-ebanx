@@ -1,0 +1,35 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h2>EBANX - Mexico SPEI</h2>
+<table class="admin__table-secondary order-information-table">
+    <tbody>
+        <tr>
+            <th>Clabe Account</th>
+            <td><?php echo $paymentData['clabe_account'] ?></td>
+        </tr>
+        <tr>
+            <th>Clabe Reference</th>
+            <td><?php echo $paymentData['clabe_reference'] ?></td>
+        </tr>
+        <tr>
+            <th>SPEI Link</th>
+            <td>
+                <a href="<?php echo $paymentData['spei_url'] ?>" target="_blank">Click here to view SPEI</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Payment Hash</th>
+            <td><?php echo $paymentData['hash'] ?></td>
+        </tr>
+        <tr>
+            <th>Payment PIN</th>
+            <td><?php echo $paymentData['pin'] ?></td>
+        </tr>
+        <tr>
+            <th>Merchant Payment Code</th>
+            <td><?php echo $paymentData['merchant_payment_code'] ?></td>
+        </tr>
+    </tbody>
+</table>

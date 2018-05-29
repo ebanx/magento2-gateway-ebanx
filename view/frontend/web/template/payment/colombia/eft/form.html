@@ -1,0 +1,29 @@
+<fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}">
+    <legend class="legend">
+        <span><!-- ko i18n: 'EFT'--><!-- /ko --></span>
+    </legend>
+
+    <div class="field required">
+        <label data-bind="attr: {for: getCode() + '_eft_code'}" class="label">
+            <span><!-- ko i18n: 'Bank'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <select name="payment[eft_code]"
+                    class="select select-use-eft-code"
+                    data-validate="{'required-entry': true}"
+                    data-bind="attr: {id: getCode() + '_use_eft_code', 'data-container': getCode() + '-use-eft-code'},
+                               enable: isActive($parents),
+                               options: bankList(),
+                               optionsValue: 'value',
+                               optionsText: 'label',
+                               value: eftCode">
+            </select>
+        </div>
+    </div>
+
+    <p class="alert alert-info"><span>You will be redirected after place order to continue with payment details.</span></p>
+
+    <!-- ko if: showDocumentFields() -->
+        <!-- ko template: 'DigitalHub_Ebanx/payment/customer-additionals' --><!-- /ko -->
+    <!-- /ko -->
+</fieldset>

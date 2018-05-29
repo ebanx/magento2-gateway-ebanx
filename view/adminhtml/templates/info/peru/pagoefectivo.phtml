@@ -1,0 +1,31 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h2>EBANX - Peru PagoEfectivo</h2>
+<table class="admin__table-secondary order-information-table">
+    <tbody>
+        <tr>
+            <th>CIP Code</th>
+            <td><?php echo $paymentData['cip_code'] ?></td>
+        </tr>
+        <tr>
+            <th>CIP Link</th>
+            <td>
+                <a href="<?php echo $paymentData['cip_url'] ?>" target="_blank">Click here to open CIP</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Payment Hash</th>
+            <td><?php echo $paymentData['hash'] ?></td>
+        </tr>
+        <tr>
+            <th>Payment PIN</th>
+            <td><?php echo $paymentData['pin'] ?></td>
+        </tr>
+        <tr>
+            <th>Merchant Payment Code</th>
+            <td><?php echo $paymentData['merchant_payment_code'] ?></td>
+        </tr>
+    </tbody>
+</table>

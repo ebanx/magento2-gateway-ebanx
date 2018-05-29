@@ -1,0 +1,18 @@
+<div id="digitalhub-ebanx-oneclickpayment" data-bind="scope: 'ebanx_oneclickpayment'" style="display: none">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "ebanx_oneclickpayment": {
+                    "component": "DigitalHub_Ebanx/js/oneclickpayment/component",
+                    "template" : "DigitalHub_Ebanx/oneclickpayment/container"
+                }
+            }
+        }
+    }
+}
+</script>

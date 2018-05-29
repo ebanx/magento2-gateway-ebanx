@@ -1,0 +1,21 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h2>EBANX - Ecuador SafetyPay</h2>
+<table class="admin__table-secondary order-information-table">
+    <tbody>
+        <tr>
+            <th>Payment Hash</th>
+            <td><?php echo $paymentData['hash'] ?></td>
+        </tr>
+        <tr>
+            <th>Payment PIN</th>
+            <td><?php echo $paymentData['pin'] ?></td>
+        </tr>
+        <tr>
+            <th>Merchant Payment Code</th>
+            <td><?php echo $paymentData['merchant_payment_code'] ?></td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,19 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h4>Baloto</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td>Voucher ID</td>
+            <td><?php echo $paymentData['voucher_id'] ?></td>
+        </tr>
+        <tr>
+            <td>Print link</td>
+            <td>
+                <a href="<?php echo $paymentData['baloto_url'] ?>" target="_blank">Click here to print Baloto</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

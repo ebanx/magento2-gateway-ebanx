@@ -1,0 +1,13 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h4>TEF</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td>Bank Type</td>
+            <td><?php echo $paymentData['payment_type_code'] ?></td>
+        </tr>
+    </tbody>
+</table>

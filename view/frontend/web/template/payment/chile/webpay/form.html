@@ -1,0 +1,11 @@
+<fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}">
+    <legend class="legend">
+        <span><!-- ko i18n: 'Webpay'--><!-- /ko --></span>
+    </legend>
+
+    <p class="alert alert-info"><span>You will be redirected after place order to continue with payment details.</span></p>
+
+    <!-- ko if: showDocumentFields() -->
+        <!-- ko template: 'DigitalHub_Ebanx/payment/customer-additionals' --><!-- /ko -->
+    <!-- /ko -->
+</fieldset>

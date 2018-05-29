@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Customer My Account (All Pages)" design_abstraction="custom">
+    <body>
+	    <referenceBlock name="customer_account_navigation">
+	        <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-ebanx-cards">
+	            <arguments>
+	                <argument name="path" xsi:type="string">digitalhub_ebanx/creditcard/saved</argument>
+	                <argument name="label" xsi:type="string" translate="true">My Saved Credit Cards</argument>
+	            </arguments>
+	        </block>
+	    </referenceBlock>
+	</body>
+</page>

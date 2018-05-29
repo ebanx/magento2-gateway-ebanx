@@ -1,0 +1,31 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h2>EBANX - Colombia Baloto</h2>
+<table class="admin__table-secondary order-information-table">
+    <tbody>
+        <tr>
+            <th>Voucher ID</th>
+            <td><?php echo $paymentData['voucher_id'] ?></td>
+        </tr>
+        <tr>
+            <th>Print link</th>
+            <td>
+                <a href="<?php echo $paymentData['baloto_url'] ?>" target="_blank">Click here to print Baloto</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Payment Hash</th>
+            <td><?php echo $paymentData['hash'] ?></td>
+        </tr>
+        <tr>
+            <th>Payment PIN</th>
+            <td><?php echo $paymentData['pin'] ?></td>
+        </tr>
+        <tr>
+            <th>Merchant Payment Code</th>
+            <td><?php echo $paymentData['merchant_payment_code'] ?></td>
+        </tr>
+    </tbody>
+</table>

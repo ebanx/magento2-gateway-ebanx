@@ -1,0 +1,29 @@
+<?php
+$transactionData = $this->getTransactionData();
+$dueDate = new \DateTime($transactionData['payment']['due_date']);
+?>
+
+<div class="payment-method-details mexico mexico-spei">
+    <h4><?php echo __('Details of your order') ?></h4>
+    <p>
+        <?php
+            echo __(
+                sprintf(
+                    '%s, your SPEI has been generated and the due date is %s.',
+                    $this->getOrderCustomerFirstname(),
+                    $dueDate->format('d/m/Y')
+                )
+            )
+        ?>
+        <br>
+        <?php echo __('We send a copy to email') ?> <?php echo $this->getOrderCustomerEmail() ?>.
+    </p>
+
+    <div class="voucher-data-box">
+        <p class="voucher-id">
+            <small>Clabe Account:</small> <?php echo $transactionData['payment']['clabe_account'] ?>
+            <small>Clabe Reference:</small> <?php echo $transactionData['payment']['clabe_reference'] ?>
+        </p>
+        <a class="voucher-url" href="<?php echo $transactionData['payment']['spei_url'] ?>" target="_blank"><?php echo __('Print SPEI') ?></a>
+    </div>
+</div>

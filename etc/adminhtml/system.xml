@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author      Digital Hub Dev Team <contato@digitalhub.com.br>
+ * @copyright   2018 Digital Hub (http://www.digitalhub.com.br)
+ *
+ * @link        http://www.digitalhub.com.br
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="digitalhub_ebanx_global" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>EBANX</label>
+
+                <field id="active" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Active</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <!-- Integration fields group -->
+
+                <field id="sandbox" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Sandbox Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sandbox_integration_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Integration Key</label>
+                    <depends><field id="sandbox">1</field></depends>
+                </field>
+                <field id="sandbox_public_integration_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Public Integration Key</label>
+                    <depends><field id="sandbox">1</field></depends>
+                </field>
+                <field id="live_integration_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Integration Key</label>
+                    <depends><field id="sandbox">0</field></depends>
+                </field>
+                <field id="live_public_integration_key" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Public Integration Key</label>
+                    <depends><field id="sandbox">0</field></depends>
+                </field>
+
+                <field id="debug" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Record all errors that occur when executing a transaction.</comment>
+                </field>
+
+                <field id="show_local_total" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Show total local amount</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Show your customer the total purchase amount in local currency on the checkout.</comment>
+                </field>
+
+                <field id="show_iof" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Apply IOF to local amount</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Get in touch with the EBANX team to validate the change and then, you just have to select "no" on this option. That way, your customer will not be charged with IOF (Brazilian Tax on Financial Operations).</comment>
+                    <depends><field id="show_local_total">1</field></depends>
+                </field>
+
+                <field id="payments_brazil" translate="label" type="multiselect" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Brazil payments</label>
+                    <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Payment\Brazil</source_model>
+                </field>
+
+                <field id="payments_argentina" translate="label" type="multiselect" sortOrder="310" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Argentina payments</label>
+                    <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Payment\Argentina</source_model>
+                </field>
+
+                <field id="payments_chile" translate="label" type="multiselect" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Chile payments</label>
+                    <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Payment\Chile</source_model>
+                </field>
+
+                <field id="payments_colombia" translate="label" type="multiselect" sortOrder="330" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Colombia payments</label>
+                    <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Payment\Colombia</source_model>
+                </field>
+
+                <field id="payments_ecuador" translate="label" type="multiselect" sortOrder="340" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Ecuador payments</label>
+                    <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Payment\Ecuador</source_model>
+                </field>
+
+                <field id="payments_peru" translate="label" type="multiselect" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Peru payments</label>
+                    <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Payment\Peru</source_model>
+                </field>
+
+                <field id="payments_mexico" translate="label" type="multiselect" sortOrder="360" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Mexico payments</label>
+                    <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Payment\Mexico</source_model>
+                </field>
+
+                <group id="cc" translate="label" type="text" sortOrder="460" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Credit Card configuration</label>
+
+                    <field id="save" translate="label" type="select" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Save credit card</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment>Allow your customer to save credit card and debit card data for future purchases.</comment>
+                    </field>
+
+                    <field id="one_click_payment" translate="label" type="select" sortOrder="410" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>1-Click payment</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment>Allow your customer to complete payments in one-click using credit cards saved.</comment>
+                    </field>
+
+                    <field id="capture" translate="label" type="select" sortOrder="420" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Auto-Capture</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment>Automatically capture payments from your customers, just for credit card. Otherwise you will need to capture the payment manually by creating an invoice for each order. Not captured payments will be cancelled in 4 days.</comment>
+                    </field>
+
+                    <field id="max_installments" translate="label" type="text" sortOrder="430" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Max installments number</label>
+                        <comment>Establish the maximum number of instalments in which your customer can pay, as consented on your contract.</comment>
+                    </field>
+
+                    <field id="min_installment_value" translate="label" type="text" sortOrder="430" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Min installment value</label>
+                        <comment>Set the minimum installment value to show to the options for your customer on the checkout page. The default values are Brazil: BRL 5, Mexico: MXN 100, Colombia: COL 1, Argentina: ARS 1. Any amount under these will not be considered.</comment>
+                    </field>
+
+                    <field id="enable_interest_rate" translate="label" type="select" sortOrder="440" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Enable interest rates</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment>Enable and set custom interest rates according to the number of installments you have allowed the payment for your customers.</comment>
+                    </field>
+
+                    <field id="interest_rates" translate="label" sortOrder="450" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Interest rates</label>
+                        <frontend_model>DigitalHub\Ebanx\Block\Adminhtml\Form\InterestRates</frontend_model>
+                        <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                        <depends><field id="enable_interest_rate">1</field></depends>
+                    </field>
+
+                </group>
+
+                <group id="cash" translate="label" type="text" sortOrder="460" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cash payments configurations</label>
+                    <field id="cash_expiration_days" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Days to expiration</label>
+                        <comment>Define the maximum number of days on which your customer can complete the payment of: Boleto, OXXO, Sencillito, PagoEfectivo and SafetyPay.</comment>
+                    </field>
+                </group>
+
+                <!-- <field id="order_status_paid" translate="label" type="select" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Choose the status of paid orders</label>
+                    <source_model>DigitalHub\Ebanx\Model\System\Config\Source\Order\Status</source_model>
+                </field> -->
+
+                <group id="customer_fields" translate="label" type="text" sortOrder="460" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer fields configuration</label>
+
+                    <field id="street" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Street custom field</label>
+                        <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Address\Fields</source_model>
+                    </field>
+                    <field id="street_number" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Street number custom field</label>
+                        <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Address\Fields</source_model>
+                    </field>
+                    <field id="complement" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Address complement custom field</label>
+                        <source_model>DigitalHub\Ebanx\Model\Adminhtml\Source\Address\Fields</source_model>
+                    </field>
+
+                    <field id="document_field_brazil_cpf" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Brazil CPF Document</label>
+                    </field>
+
+                    <field id="document_field_brazil_cnpj" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Brazil CNPJ Document</label>
+                    </field>
+
+                    <field id="document_field_chile" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Chile RUT Document</label>
+                    </field>
+
+                    <field id="document_field_argentina" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Argentina CUIT/CUIL/CDI Document</label>
+                    </field>
+
+                    <field id="document_field_colombia" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Colombia NIT/CC Document</label>
+                    </field>
+                </group>
+
+            </group>
+        </section>
+    </system>
+</config>

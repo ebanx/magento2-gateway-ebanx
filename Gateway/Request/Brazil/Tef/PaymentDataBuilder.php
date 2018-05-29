@@ -1,0 +1,67 @@
+<?php
+namespace DigitalHub\Ebanx\Gateway\Request\Brazil\Tef;
+
+use Magento\Payment\Gateway\Request\BuilderInterface;
+use DigitalHub\Ebanx\Observer\Brazil\Tef\DataAssignObserver;
+
+class PaymentDataBuilder implements BuilderInterface
+{
+    private $_ebanxHelper;
+    private $_logger;
+    private $_session;
+
+    /**
+     * @var \Magento\Framework\App\State
+     */
+    private $appState;
+
+    /**
+     * PaymentDataBuilder constructor.
+     *
+     * @param \DigitalHub\Ebanx\Helper\Data $ebanxHelper
+     * @param \Magento\Framework\Model\Context $context
+     * @param \DigitalHub\Ebanx\Logger\Logger $logger
+     * @param \Magento\Checkout\Model\Session $session
+     */
+    public function __construct(
+        \DigitalHub\Ebanx\Helper\Data $ebanxHelper,
+        \Magento\Framework\Model\Context $context,
+        \DigitalHub\Ebanx\Logger\Logger $logger,
+        \Magento\Checkout\Model\Session $session
+    )
+    {
+        $this->_ebanxHelper = $ebanxHelper;
+        $this->_logger = $logger;
+        $this->_session = $session;
+        $this->appState = $context->getAppState();
+
+        $this->_logger->info('PaymentDataBuilder :: __construct');
+    }
+
+    /**
+     * @param array $buildSubject
+     * @return mixed
+     */
+    public function build(array $buildSubject)
+    {
+        /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
+        $paymentDataObject = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($buildSubject);
+        $payment = $paymentDataObject->getPayment();
+        $order = $paymentDataObject->getOrder();
+        $storeId = $order->getStoreId();
+
+        $additionalData = $payment->getAdditionalInformation();
+
+        $this->_logger->info('PaymentDataBuilder :: build');
+
+        $request = [
+            'type' => 'tef',
+            'bankCode' => $additionalData[DataAssignObserver::BANK_TYPE],
+            'amountTotal' => $order->getGrandTotalAmount(),
+        ];
+
+        $this->_logger->info('PaymentDataBuilder :: build', $request);
+
+        return $request;
+    }
+}

@@ -1,0 +1,19 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h4>OXXO</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td>OXXO Barcode</td>
+            <td><?php echo $paymentData['oxxo_barcode'] ?></td>
+        </tr>
+        <tr>
+            <td>Print link</td>
+            <td>
+                <a href="<?php echo $paymentData['oxxo_url'] ?>" target="_blank">Click here to print OXXO</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

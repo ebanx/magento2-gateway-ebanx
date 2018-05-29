@@ -1,0 +1,19 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h4>PagoEfectivo</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td>CIP Code</td>
+            <td><?php echo $paymentData['cip_code'] ?></td>
+        </tr>
+        <tr>
+            <td>CIP Link</td>
+            <td>
+                <a href="<?php echo $paymentData['cip_url'] ?>" target="_blank">Click here to view CIP</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

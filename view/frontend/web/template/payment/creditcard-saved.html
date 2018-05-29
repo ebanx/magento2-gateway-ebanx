@@ -1,0 +1,31 @@
+<div class="digitalhub-ebanx-payment-creditcard-saved">
+    <div class="field required">
+        <label data-bind="attr: {for: getCode() + '_document_number'}" class="label">
+            <span><!-- ko i18n: 'Use previously saved credit card'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <!-- <input type="text" name="payment[document_number]" class="input-text _required" value=""
+                data-validate="{'required-entry':true}"
+                data-bind="attr: {
+                    autocomplete: off,
+                    id: getCode() + '_document_number',
+                    title: $t('Document Number'),
+                    placeholder: $t('Enter your document number'),
+                    'data-container': getCode() + '-document-number'
+                },
+                enable: isActive($parents),
+                value: documentNumber,
+                valueUpdate: 'keyup' "/> -->
+            <select name="payment[use_saved_cc]"
+                    class="select select-saved-cc"
+                    data-validate="{'required-entry': true}"
+                    data-bind="attr: {id: getCode() + '_use_saved_cc', 'data-container': getCode() + '-use-saved-cc'},
+                               enable: isActive($parents),
+                               options: getSavedCcList(),
+                               optionsValue: 'value',
+                               optionsText: 'label',
+                               value: useSavedCc">
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<?php if($this->getItems()->getSize()): ?>
+    <table class="data table">
+        <thead>
+            <tr>
+                <th><?php echo __('Card Type') ?></th>
+                <th><?php echo __('Masked Number') ?></th>
+                <th><?php echo __('Created at') ?></th>
+                <th><?php echo __('Actions') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->getItems() as $item): ?>
+                <tr>
+                    <td><?php echo $item->getPaymentTypeCode() ?></td>
+                    <td><?php echo $item->getMaskedCardNumber() ?></td>
+                    <td><?php echo $item->getCreatedAt() ?></td>
+                    <td>
+                        <a href="#" style="display: none" class="remove-saved-card" data-url="<?php echo $this->getUrl('digitalhub_ebanx/creditcard/remove', array('id' => $item->getId())) ?>">Remove</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <div class="message info empty"><span>You have no stored credit card informations.</span></div>
+<?php endif; ?>

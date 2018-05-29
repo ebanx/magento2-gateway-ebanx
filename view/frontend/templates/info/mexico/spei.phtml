@@ -1,0 +1,23 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h4>SPEI</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td>Clabe Account</td>
+            <td><?php echo $paymentData['clabe_account'] ?></td>
+        </tr>
+        <tr>
+            <td>Clabe Reference</td>
+            <td><?php echo $paymentData['clabe_reference'] ?></td>
+        </tr>
+        <tr>
+            <td>SPEI Link</td>
+            <td>
+                <a href="<?php echo $paymentData['spei_url'] ?>" target="_blank">Click here to view SPEI</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

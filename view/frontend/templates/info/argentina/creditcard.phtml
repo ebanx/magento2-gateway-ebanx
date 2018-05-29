@@ -1,0 +1,21 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h4>Credit Card</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td>Credit Card Type</td>
+            <td><?php echo $paymentData['payment_type_code'] ?></td>
+        </tr>
+        <tr>
+            <td>Credit Card Masked Number</td>
+            <td><?php echo $paymentData['masked_card_number'] ?></td>
+        </tr>
+        <tr>
+            <td>Installments</td>
+            <td><?php echo $paymentData['instalments'] ?>x</td>
+        </tr>
+    </tbody>
+</table>

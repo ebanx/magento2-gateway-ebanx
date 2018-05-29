@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author      Digital Hub Dev Team <contato@digitalhub.com.br>
+ * @copyright   2018 Digital Hub (http://www.digitalhub.com.br)
+ *
+ * @link        http://www.digitalhub.com.br
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="renders" xsi:type="array">
+                                                            <!-- merge payment method renders here -->
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="digitalhub_ebanx_brazil_methods" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">DigitalHub_Ebanx/js/view/payment/brazil/methods</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="digitalhub_ebanx_brazil_creditcard" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_brazil_ebanxaccount" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_brazil_boleto" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_brazil_tef" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="digitalhub_ebanx_argentina_methods" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">DigitalHub_Ebanx/js/view/payment/argentina/methods</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="digitalhub_ebanx_argentina_creditcard" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_argentina_rapipago" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_argentina_pagofacil" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_argentina_cupondepagos" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="digitalhub_ebanx_chile_methods" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">DigitalHub_Ebanx/js/view/payment/chile/methods</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="digitalhub_ebanx_chile_servipag" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_chile_sencillito" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_chile_webpay" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_chile_multicaja" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="digitalhub_ebanx_colombia_methods" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">DigitalHub_Ebanx/js/view/payment/colombia/methods</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="digitalhub_ebanx_colombia_eft" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_colombia_baloto" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_colombia_creditcard" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="digitalhub_ebanx_ecuador_methods" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">DigitalHub_Ebanx/js/view/payment/ecuador/methods</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="digitalhub_ebanx_ecuador_safetypay" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="digitalhub_ebanx_peru_methods" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">DigitalHub_Ebanx/js/view/payment/peru/methods</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="digitalhub_ebanx_peru_pagoefectivo" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_peru_safetypay" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="digitalhub_ebanx_mexico_methods" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">DigitalHub_Ebanx/js/view/payment/mexico/methods</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="digitalhub_ebanx_mexico_creditcard" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_mexico_oxxo" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                        <item name="digitalhub_ebanx_mexico_spei" xsi:type="array">
+                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

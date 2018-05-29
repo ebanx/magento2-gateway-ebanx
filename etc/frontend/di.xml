@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_global_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Brazil -->
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_brazil_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\CreditCard\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_brazil_boleto_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\Boleto\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_brazil_ebanxaccount_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\EbanxAccount\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_brazil_tef_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\Tef\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Argentina -->
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_argentina_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\CreditCard\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_argentina_rapipago_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\Rapipago\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_argentina_pagofacil_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\PagoFacil\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_argentina_cupondepagos_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\CuponDePagos\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+
+    <!-- Chile -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_chile_servipag_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Servipag\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_chile_sencillito_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Sencillito\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_chile_webpay_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Webpay\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_chile_multicaja_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Multicaja\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Colombia -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_colombia_eft_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Colombia\Eft\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_colombia_baloto_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Colombia\Baloto\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_colombia_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Colombia\CreditCard\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Ecuador -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_ecuador_safetypay_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Ecuador\SafetyPay\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Peru -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_peru_pagoefectivo_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Peru\PagoEfectivo\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_peru_safetypay_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Peru\SafetyPay\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Mexico -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_mexico_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Mexico\CreditCard\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_mexico_oxxo_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Mexico\Oxxo\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_mexico_spei_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Mexico\Spei\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

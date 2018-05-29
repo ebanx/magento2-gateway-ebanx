@@ -1,0 +1,19 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment'];
+?>
+<h4>Boleto Bancário</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td>Barcode</td>
+            <td><?php echo $paymentData['boleto_barcode'] ?></td>
+        </tr>
+        <tr>
+            <td>Print link</td>
+            <td>
+                <a href="<?php echo $paymentData['boleto_url'] ?>">Click here to print Boleto Bancário</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

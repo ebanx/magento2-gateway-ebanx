@@ -1,0 +1,89 @@
+<div class="digitalhub-ebanx-success-page">
+    <div class="page-title">
+        <h2><?php echo __('Thank you! Your order has been received.') ?></h2>
+    </div>
+
+    <?php if ($block->getOrderId()):?>
+
+        <div class="order-details">
+            <div class="col col-orderid">
+                <h4><?php echo __('Order number:') ?></h4>
+                <?php if($block->getCanViewOrder()): ?>
+                    <p>
+                        <a href="<?php echo $block->getViewOrderUrl() ?>">
+                            <?php echo $this->getOrderId() ?>
+                        </a>
+                    </p>
+                <?php else: ?>
+                    <p><?php echo $this->getOrderId() ?></p>
+                <?php endif; ?>
+            </div>
+            <div class="col col-date">
+                <h4><?php echo __('Date:') ?></h4>
+                <p><?php echo $this->getOrderDate() ?></p>
+            </div>
+            <div class="col col-total">
+                <h4><?php echo __('Total:') ?></h4>
+                <p><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($this->getOrderTotal(),2),true,false); ?></p>
+            </div>
+            <div class="col col-payment">
+                <h4><?php echo __('Payment method:') ?></h4>
+                <p><?php echo $this->getOrderPaymentMethodTitle() ?></p>
+            </div>
+        </div>
+
+    <?php endif;?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_brazil_boleto'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/brazil/boleto.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_argentina_rapipago'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/argentina/rapipago.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_argentina_pagofacil'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/argentina/pagofacil.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_argentina_cupondepagos'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/argentina/cupondepagos.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_colombia_baloto'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/colombia/baloto.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_peru_pagoefectivo'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/peru/pagoefectivo.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_mexico_oxxo'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/mexico/oxxo.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_mexico_spei'): ?>
+        <?php echo $this->getLayout()
+        ->createBlock('DigitalHub\Ebanx\Block\Success')
+        ->setTemplate('DigitalHub_Ebanx::success/mexico/spei.phtml')->toHtml() ?>
+    <?php endif; ?>
+
+</div>
+
+<div class="checkout-success">
+    <?= $block->getAdditionalInfoHtml() ?>
+</div>

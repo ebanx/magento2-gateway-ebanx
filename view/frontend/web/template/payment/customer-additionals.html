@@ -1,0 +1,43 @@
+<!-- ko if: showDocumentTypeField() -->
+    <div class="digitalhub-ebanx-payment-customer-additional">
+        <div class="field required">
+            <label data-bind="attr: {for: getCode() + '_document_type'}" class="label">
+                <span><!-- ko i18n: 'Document Type'--><!-- /ko --></span>
+            </label>
+            <div class="control">
+                <select name="payment[document_type]"
+                        class="select select-use-document-type"
+                        data-validate="{'required-entry': true}"
+                        data-bind="attr: {id: getCode() + '_use_saved_cc', 'data-container': getCode() + '-use-document-type'},
+                                   enable: isActive($parents),
+                                   options: getDocumentTypeList(),
+                                   optionsValue: 'value',
+                                   optionsText: 'label',
+                                   value: documentType">
+                </select>
+            </div>
+        </div>
+    </div>
+<!-- /ko -->
+
+<div class="digitalhub-ebanx-payment-customer-additional">
+    <div class="field required">
+        <label data-bind="attr: {for: getCode() + '_document_number'}" class="label">
+            <span><!-- ko i18n: 'Document Number'--><!-- /ko --></span>
+        </label>
+        <div class="control">
+            <input type="text" name="payment[document_number]" class="input-text _required" value=""
+                data-validate="{'required-entry':true}"
+                data-bind="attr: {
+                    autocomplete: off,
+                    id: getCode() + '_document_number',
+                    title: $t('Document Number'),
+                    placeholder: $t('Enter your document number'),
+                    'data-container': getCode() + '-document-number'
+                },
+                enable: isActive($parents),
+                value: documentNumber,
+                valueUpdate: 'keyup' "/>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,406 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author      Digital Hub Dev Team <contato@digitalhub.com.br>
+ * @copyright   2018 Digital Hub (http://www.digitalhub.com.br)
+ *
+ * @link        http://www.digitalhub.com.br
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <!-- Brazil -->
+            <digitalhub_ebanx_brazil_creditcard>
+                <active>0</active>
+                <model>DigitalHubEbanxBrazilCreditCardFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Credit Card</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_cancel>1</can_cancel>
+                <can_refund>1</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_void>1</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_brazil_creditcard>
+            <digitalhub_ebanx_brazil_boleto>
+                <active>0</active>
+                <model>DigitalHubEbanxBrazilBoletoFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Boleto Bancário</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>1</can_cancel>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_refund>1</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_void>1</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_brazil_boleto>
+            <digitalhub_ebanx_brazil_ebanxaccount>
+                <active>0</active>
+                <model>DigitalHubEbanxBrazilEbanxAccountFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>EBANX Account</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_brazil_ebanxaccount>
+            <digitalhub_ebanx_brazil_tef>
+                <active>0</active>
+                <model>DigitalHubEbanxBrazilTefFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>TEF</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_brazil_tef>
+
+            <!-- Argentina -->
+            <digitalhub_ebanx_argentina_creditcard>
+                <active>0</active>
+                <model>DigitalHubEbanxArgentinaCreditCardFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Credit Card</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_cancel>1</can_cancel>
+                <can_refund>1</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_void>1</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_argentina_creditcard>
+            <digitalhub_ebanx_argentina_rapipago>
+                <active>0</active>
+                <model>DigitalHubEbanxArgentinaRapipagoFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Rapipago</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_cancel>0</can_cancel>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_argentina_rapipago>
+            <digitalhub_ebanx_argentina_pagofacil>
+                <active>0</active>
+                <model>DigitalHubEbanxArgentinaPagoFacilFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>PagoFacil</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_cancel>0</can_cancel>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_argentina_pagofacil>
+            <digitalhub_ebanx_argentina_cupondepagos>
+                <active>0</active>
+                <model>DigitalHubEbanxArgentinaCuponDePagosFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Cupon de Pagos</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_cancel>0</can_cancel>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_argentina_cupondepagos>
+
+            <!-- Chile -->
+            <digitalhub_ebanx_chile_servipag>
+                <active>0</active>
+                <model>DigitalHubEbanxChileServipagFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Servipag</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_chile_servipag>
+            <digitalhub_ebanx_chile_sencillito>
+                <active>0</active>
+                <model>DigitalHubEbanxChileSencillitoFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Sencillito</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_chile_sencillito>
+            <digitalhub_ebanx_chile_webpay>
+                <active>0</active>
+                <model>DigitalHubEbanxChileWebpayFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Webpay</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_chile_webpay>
+            <digitalhub_ebanx_chile_multicaja>
+                <active>0</active>
+                <model>DigitalHubEbanxChileMulticajaFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Multicaja</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_chile_multicaja>
+
+            <!-- Colombia -->
+            <digitalhub_ebanx_colombia_eft>
+                <active>0</active>
+                <model>DigitalHubEbanxColombiaEftFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>EFT</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_colombia_eft>
+            <digitalhub_ebanx_colombia_baloto>
+                <active>0</active>
+                <model>DigitalHubEbanxColombiaBalotoFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Baloto</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_colombia_baloto>
+            <digitalhub_ebanx_colombia_creditcard>
+                <active>0</active>
+                <model>DigitalHubEbanxColombiaCreditCardFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Credit Card</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_cancel>1</can_cancel>
+                <can_refund>1</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_void>1</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_colombia_creditcard>
+
+            <!-- Ecuador -->
+            <digitalhub_ebanx_ecuador_safetypay>
+                <active>0</active>
+                <model>DigitalHubEbanxEcuadorSafetyPayFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>SafetyPay</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_ecuador_safetypay>
+
+            <!-- Peru -->
+            <digitalhub_ebanx_peru_pagoefectivo>
+                <active>0</active>
+                <model>DigitalHubEbanxPeruPagoEfectivoFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>PagoEfectivo</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_peru_pagoefectivo>
+            <digitalhub_ebanx_peru_safetypay>
+                <active>0</active>
+                <model>DigitalHubEbanxPeruSafetyPayFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>SafetyPay</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_peru_safetypay>
+
+            <!-- Mexico -->
+            <digitalhub_ebanx_mexico_creditcard>
+                <active>0</active>
+                <model>DigitalHubEbanxMexicoCreditCardFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Credit/Debit Card</title>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_cancel>1</can_cancel>
+                <can_refund>1</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_void>1</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <!-- <can_use_internal>1</can_use_internal> -->
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_mexico_creditcard>
+            <digitalhub_ebanx_mexico_oxxo>
+                <active>0</active>
+                <model>DigitalHubEbanxMexicoOxxoFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>OXXO</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_mexico_oxxo>
+            <digitalhub_ebanx_mexico_spei>
+                <active>0</active>
+                <model>DigitalHubEbanxMexicoSpeiFacade</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize</payment_action>
+                <title>SPEI</title>
+                <can_authorize>1</can_authorize>
+                <can_cancel>0</can_cancel>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+            </digitalhub_ebanx_mexico_spei>
+        </payment>
+    </default>
+</config>

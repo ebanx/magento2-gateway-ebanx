@@ -1,0 +1,33 @@
+{
+    "name": "digitalhub/ebanx",
+    "description": "Oficial EBANX Magento2 Payment Gateway",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [],
+    "require": {
+        "ebanx/benjamin": "^1.8.2",
+        "magento/framework": "*",
+        "php": "~5.6.0|~7.0.0|~7.1.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*",
+        "magento-ecg/coding-standard": ">=3.0"
+    },
+    "authors":[
+        {
+            "name": "Digital Hub",
+            "email": "contato@digitalhub.com.br"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "DigitalHub\\Ebanx\\": ""
+        }
+    },
+    "scripts": {
+        "phpcs": "php ./vendor/squizlabs/php_codesniffer/bin/phpcs --standard=./vendor/magento-ecg/coding-standard/Ecg ./vendor/digitalhub/ebanx"
+    }
+ }

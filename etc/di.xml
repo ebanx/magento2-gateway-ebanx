@@ -1,0 +1,2499 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author      Digital Hub Dev Team <contato@digitalhub.com.br>
+ * @copyright   2018 Digital Hub (http://www.digitalhub.com.br)
+ *
+ * @link        http://www.digitalhub.com.br
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_global_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="DigitalHub\Ebanx\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="DigitalHub\Ebanx\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">ebanxLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="debug" xsi:type="object">DigitalHub\Ebanx\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Brazil -->
+
+        <!-- Credit Card -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_brazil_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\CreditCard\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Brazil\CreditCard\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Brazil\CreditCard</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxBrazilCreditCardValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxBrazilCreditCardValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxBrazilCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxBrazilCreditCardAuthorizeCommand</item>
+                        <item name="sale" xsi:type="string">DigitalHubEbanxBrazilCreditCardAuthorizeCommand</item>
+                        <item name="refund" xsi:type="string">DigitalHubEbanxBrazilCreditCardRefundCommand</item>
+                        <item name="cancel" xsi:type="string">DigitalHubEbanxBrazilCreditCardCancelCommand</item>
+                        <item name="void" xsi:type="string">DigitalHubEbanxBrazilCreditCardCancelCommand</item>
+                        <item name="capture" xsi:type="string">DigitalHubEbanxGatewayCommandBrazilCreditCardCaptureStrategyCommand</item>
+                        <item name="settlement" xsi:type="string">DigitalHubEbanxBrazilCreditCardCaptureCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\CreditCard\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\CreditCard\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilCreditCardAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\CreditCard\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\CreditCard\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Command -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardCaptureRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\CreditCard\TransactionCapture</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\CreditCard\CaptureValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilCreditCardCaptureResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\CreditCard\CaptureDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCaptureResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\CreditCard\CaptureHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Strategy Command definition -->
+            <virtualType name="DigitalHubEbanxGatewayCommandBrazilCreditCardCaptureStrategyCommand" type="DigitalHub\Ebanx\Gateway\Command\Brazil\CreditCard\CaptureStrategyCommand">
+                <arguments>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxBrazilCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Command -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardRefundRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\CreditCard\TransactionRefund</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\CreditCard\RefundValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilCreditCardRefundResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\CreditCard\RefundDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardRefundResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\CreditCard\RefundHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Command -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardCancelRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\CreditCard\TransactionCancel</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\CreditCard\CancelValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilCreditCardCancelResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\CreditCard\CancelDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCancelResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\CreditCard\CancelHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxBrazilCreditCardValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\CreditCard\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\CreditCard\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxBrazilCreditCardValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxBrazilCreditCardConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Brazil\CreditCard\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxBrazilCreditCardConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Brazil\CreditCard\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Credit Card -->
+
+        <!-- Boleto Bancário -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_brazil_boleto_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\Boleto\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Brazil\Boleto\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Brazil\Boleto</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxBrazilBoletoValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxBrazilBoletoValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxBrazilBoletoCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxBrazilBoletoAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilBoletoAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\Boleto\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\Boleto\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilBoletoAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\Boleto\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\Boleto\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxBrazilBoletoValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\Boleto\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\Boleto\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxBrazilBoletoValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxBrazilBoletoConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Brazil\Boleto\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxBrazilBoletoConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Brazil\Boleto\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Boleto -->
+
+        <!-- EBANX Account -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_brazil_ebanxaccount_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\EbanxAccount\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Brazil\EbanxAccount\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Brazil\EbanxAccount</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxBrazilEbanxAccountValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxBrazilEbanxAccountValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxBrazilEbanxAccountCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxBrazilEbanxAccountAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilEbanxAccountAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\EbanxAccount\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\EbanxAccount\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilEbanxAccountAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\EbanxAccount\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\EbanxAccount\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxBrazilEbanxAccountValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\EbanxAccount\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\EbanxAccount\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxBrazilEbanxAccountConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Brazil\EbanxAccount\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Brazil\EbanxAccount\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END EBANX Account -->
+
+        <!-- TEF -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_brazil_tef_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\Tef\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxBrazilTefFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Brazil\Tef\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Brazil\Tef</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxBrazilTefValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxBrazilTefValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxBrazilTefCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxBrazilTefCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxBrazilTefAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxBrazilTefAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilTefAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\Tef\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\Tef\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilTefAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxBrazilTefAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\Tef\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxBrazilTefAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\Tef\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxBrazilTefValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxBrazilTefValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\Tef\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\Tef\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxBrazilTefValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxBrazilTefConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxBrazilTefValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Brazil\Tef\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxBrazilTefConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Brazil\Tef\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END TEF -->
+
+    <!-- END Brazil -->
+
+    <!-- Argentina -->
+
+        <!-- Credit Card -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_argentina_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\CreditCard\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Argentina\CreditCard\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Argentina\CreditCard</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxArgentinaCreditCardValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxArgentinaCreditCardValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxArgentinaCreditCardAuthorizeCommand</item>
+                        <item name="sale" xsi:type="string">DigitalHubEbanxArgentinaCreditCardAuthorizeCommand</item>
+                        <item name="refund" xsi:type="string">DigitalHubEbanxArgentinaCreditCardRefundCommand</item>
+                        <item name="cancel" xsi:type="string">DigitalHubEbanxArgentinaCreditCardCancelCommand</item>
+                        <item name="void" xsi:type="string">DigitalHubEbanxArgentinaCreditCardCancelCommand</item>
+                        <item name="capture" xsi:type="string">DigitalHubEbanxGatewayCommandArgentinaCreditCardCaptureStrategyCommand</item>
+                        <item name="settlement" xsi:type="string">DigitalHubEbanxArgentinaCreditCardCaptureCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Argentina\CreditCard\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Argentina\CreditCard\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxArgentinaCreditCardAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Argentina\CreditCard\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Argentina\CreditCard\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Command -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCaptureRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Argentina\CreditCard\TransactionCapture</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Argentina\CreditCard\CaptureValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCaptureResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Argentina\CreditCard\CaptureDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCaptureResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Argentina\CreditCard\CaptureHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Strategy Command definition -->
+            <virtualType name="DigitalHubEbanxGatewayCommandArgentinaCreditCardCaptureStrategyCommand" type="DigitalHub\Ebanx\Gateway\Command\Argentina\CreditCard\CaptureStrategyCommand">
+                <arguments>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Command -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardRefundRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Argentina\CreditCard\TransactionRefund</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Argentina\CreditCard\RefundValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxArgentinaCreditCardRefundResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Argentina\CreditCard\RefundDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardRefundResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Argentina\CreditCard\RefundHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Command -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCancelRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Argentina\CreditCard\TransactionCancel</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Argentina\CreditCard\CancelValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCancelResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Argentina\CreditCard\CancelDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCancelResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Argentina\CreditCard\CancelHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxArgentinaCreditCardValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\CreditCard\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\CreditCard\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxArgentinaCreditCardConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Argentina\CreditCard\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Argentina\CreditCard\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Credit Card -->
+
+        <!-- Rapipago -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_argentina_rapipago_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\Rapipago\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Argentina\Rapipago\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Argentina\Rapipago</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxArgentinaRapipagoValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxArgentinaRapipagoValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxArgentinaRapipagoCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxArgentinaRapipagoAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaRapipagoAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Argentina\Rapipago\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Argentina\Rapipago\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxArgentinaRapipagoAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Argentina\Rapipago\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Argentina\Rapipago\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxArgentinaRapipagoValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\Rapipago\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\Rapipago\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxArgentinaRapipagoConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Argentina\Rapipago\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Argentina\Rapipago\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Rapipago -->
+
+        <!-- PagoFacil -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_argentina_pagofacil_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\PagoFacil\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Argentina\PagoFacil\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Argentina\PagoFacil</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxArgentinaPagoFacilValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxArgentinaPagoFacilValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxArgentinaPagoFacilCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxArgentinaPagoFacilAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaPagoFacilAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Argentina\PagoFacil\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Argentina\PagoFacil\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxArgentinaPagoFacilAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Argentina\PagoFacil\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Argentina\PagoFacil\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxArgentinaPagoFacilValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\PagoFacil\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\PagoFacil\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxArgentinaPagoFacilConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Argentina\PagoFacil\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Argentina\PagoFacil\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END PagoFacil -->
+
+        <!-- CuponDePagos -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_argentina_cupondepagos_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\CuponDePagos\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Argentina\CuponDePagos\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Argentina\CuponDePagos</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxArgentinaCuponDePagosValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxArgentinaCuponDePagosValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxArgentinaCuponDePagosCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxArgentinaCuponDePagosAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCuponDePagosAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Argentina\CuponDePagos\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Argentina\CuponDePagos\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxArgentinaCuponDePagosAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Argentina\CuponDePagos\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Argentina\CuponDePagos\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxArgentinaCuponDePagosValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\CuponDePagos\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Argentina\CuponDePagos\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxArgentinaCuponDePagosConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Argentina\CuponDePagos\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Argentina\CuponDePagos\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END CuponDePagos -->
+
+    <!-- END Argentina -->
+
+    <!-- Chile -->
+
+        <!-- Servipag -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_chile_servipag_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Servipag\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxChileServipagFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Chile\Servipag\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Chile\Servipag</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxChileServipagValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxChileServipagValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxChileServipagCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxChileServipagCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxChileServipagAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxChileServipagAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileServipagAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Chile\Servipag\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Chile\Servipag\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxChileServipagAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxChileServipagAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Chile\Servipag\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxChileServipagAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Chile\Servipag\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxChileServipagValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxChileServipagValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Servipag\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Servipag\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxChileServipagValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxChileServipagConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxChileServipagValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Chile\Servipag\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxChileServipagConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Chile\Servipag\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Servipag -->
+
+        <!-- Sencillito -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_chile_sencillito_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Sencillito\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxChileSencillitoFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Chile\Sencillito\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Chile\Sencillito</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxChileSencillitoValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxChileSencillitoValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxChileSencillitoCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxChileSencillitoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxChileSencillitoAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxChileSencillitoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileSencillitoAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Chile\Sencillito\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Chile\Sencillito\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxChileSencillitoAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxChileSencillitoAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Chile\Sencillito\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxChileSencillitoAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Chile\Sencillito\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxChileSencillitoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxChileSencillitoValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Sencillito\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Sencillito\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxChileSencillitoValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxChileSencillitoConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxChileSencillitoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Chile\Sencillito\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxChileSencillitoConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Chile\Sencillito\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Sencillito -->
+
+        <!-- Webpay -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_chile_webpay_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Webpay\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxChileWebpayFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Chile\Webpay\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Chile\Webpay</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxChileWebpayValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxChileWebpayValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxChileWebpayCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxChileWebpayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxChileWebpayAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxChileWebpayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileWebpayAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Chile\Webpay\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Chile\Webpay\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxChileWebpayAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxChileWebpayAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Chile\Webpay\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxChileWebpayAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Chile\Webpay\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxChileWebpayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxChileWebpayValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Webpay\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Webpay\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxChileWebpayValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxChileWebpayConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxChileWebpayValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Chile\Webpay\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxChileWebpayConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Chile\Webpay\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Webpay -->
+
+        <!-- Multicaja -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_chile_multicaja_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Chile\Multicaja\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxChileMulticajaFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Chile\Multicaja\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Chile\Multicaja</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxChileMulticajaValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxChileMulticajaValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxChileMulticajaCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxChileMulticajaCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxChileMulticajaAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxChileMulticajaAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileMulticajaAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Chile\Multicaja\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Chile\Multicaja\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxChileMulticajaAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxChileMulticajaAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Chile\Multicaja\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxChileMulticajaAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Chile\Multicaja\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxChileMulticajaValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxChileMulticajaValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Multicaja\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Chile\Multicaja\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxChileMulticajaValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxChileMulticajaConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxChileMulticajaValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Chile\Multicaja\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxChileMulticajaConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Chile\Multicaja\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Multicaja -->
+
+    <!-- END Chile -->
+
+    <!-- Colombia -->
+
+        <!-- Eft -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_colombia_eft_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Colombia\Eft\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxColombiaEftFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Colombia\Eft\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Colombia\Eft</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxColombiaEftValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxColombiaEftValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxColombiaEftCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxColombiaEftCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxColombiaEftAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxColombiaEftAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaEftAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Colombia\Eft\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Colombia\Eft\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxColombiaEftAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxColombiaEftAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Colombia\Eft\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxColombiaEftAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Colombia\Eft\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxColombiaEftValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxColombiaEftValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Colombia\Eft\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Colombia\Eft\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxColombiaEftValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxColombiaEftConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxColombiaEftValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Colombia\Eft\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxColombiaEftConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Colombia\Eft\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Eft -->
+
+        <!-- Baloto -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_colombia_baloto_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Colombia\Baloto\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Colombia\Baloto\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Colombia\Baloto</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxColombiaBalotoValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxColombiaBalotoValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxColombiaBalotoCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxColombiaBalotoAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaBalotoAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Colombia\Baloto\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Colombia\Baloto\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxColombiaBalotoAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Colombia\Baloto\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Colombia\Baloto\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxColombiaBalotoValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Colombia\Baloto\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Colombia\Baloto\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxColombiaBalotoValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxColombiaBalotoConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Colombia\Baloto\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxColombiaBalotoConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Colombia\Baloto\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Baloto -->
+
+        <!-- Credit Card -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_colombia_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Colombia\CreditCard\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Colombia\CreditCard\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Colombia\CreditCard</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxColombiaCreditCardValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxColombiaCreditCardValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxColombiaCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxColombiaCreditCardAuthorizeCommand</item>
+                        <item name="sale" xsi:type="string">DigitalHubEbanxColombiaCreditCardAuthorizeCommand</item>
+                        <item name="refund" xsi:type="string">DigitalHubEbanxColombiaCreditCardRefundCommand</item>
+                        <item name="cancel" xsi:type="string">DigitalHubEbanxColombiaCreditCardCancelCommand</item>
+                        <item name="void" xsi:type="string">DigitalHubEbanxColombiaCreditCardCancelCommand</item>
+                        <item name="capture" xsi:type="string">DigitalHubEbanxGatewayCommandColombiaCreditCardCaptureStrategyCommand</item>
+                        <item name="settlement" xsi:type="string">DigitalHubEbanxColombiaCreditCardCaptureCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Colombia\CreditCard\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Colombia\CreditCard\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxColombiaCreditCardAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Colombia\CreditCard\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Colombia\CreditCard\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Command -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardCaptureRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Colombia\CreditCard\TransactionCapture</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Colombia\CreditCard\CaptureValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxColombiaCreditCardCaptureResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Colombia\CreditCard\CaptureDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCaptureResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Colombia\CreditCard\CaptureHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Strategy Command definition -->
+            <virtualType name="DigitalHubEbanxGatewayCommandColombiaCreditCardCaptureStrategyCommand" type="DigitalHub\Ebanx\Gateway\Command\Colombia\CreditCard\CaptureStrategyCommand">
+                <arguments>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxColombiaCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Command -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardRefundRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Colombia\CreditCard\TransactionRefund</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Colombia\CreditCard\RefundValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxColombiaCreditCardRefundResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Colombia\CreditCard\RefundDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardRefundResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Colombia\CreditCard\RefundHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Command -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardCancelRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Colombia\CreditCard\TransactionCancel</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Colombia\CreditCard\CancelValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxColombiaCreditCardCancelResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Colombia\CreditCard\CancelDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCancelResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Colombia\CreditCard\CancelHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxColombiaCreditCardValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Colombia\CreditCard\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Colombia\CreditCard\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxColombiaCreditCardValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxColombiaCreditCardConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Colombia\CreditCard\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxColombiaCreditCardConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Colombia\CreditCard\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Credit Card -->
+
+    <!-- END Colombia -->
+
+    <!-- Ecuador -->
+
+        <!-- SafetyPay -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_ecuador_safetypay_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Ecuador\SafetyPay\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Ecuador\SafetyPay\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Ecuador\SafetyPay</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxEcuadorSafetyPayValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxEcuadorSafetyPayValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxEcuadorSafetyPayCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxEcuadorSafetyPayAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxEcuadorSafetyPayAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Ecuador\SafetyPay\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Ecuador\SafetyPay\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxEcuadorSafetyPayAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Ecuador\SafetyPay\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Ecuador\SafetyPay\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxEcuadorSafetyPayValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Ecuador\SafetyPay\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Ecuador\SafetyPay\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxEcuadorSafetyPayConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Ecuador\SafetyPay\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Ecuador\SafetyPay\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END SafetyPay -->
+
+    <!-- END Ecuador -->
+
+    <!-- Peru -->
+
+        <!-- PagoEfectivo -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_peru_pagoefectivo_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Peru\PagoEfectivo\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Peru\PagoEfectivo\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Peru\PagoEfectivo</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxPeruPagoEfectivoValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxPeruPagoEfectivoValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxPeruPagoEfectivoCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxPeruPagoEfectivoAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxPeruPagoEfectivoAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Peru\PagoEfectivo\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Peru\PagoEfectivo\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxPeruPagoEfectivoAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Peru\PagoEfectivo\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Peru\PagoEfectivo\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxPeruPagoEfectivoValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Peru\PagoEfectivo\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Peru\PagoEfectivo\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxPeruPagoEfectivoConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Peru\PagoEfectivo\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Peru\PagoEfectivo\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END PagoEfectivo -->
+
+        <!-- SafetyPay -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_peru_safetypay_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Peru\SafetyPay\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Peru\SafetyPay\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Peru\SafetyPay</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxPeruSafetyPayValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxPeruSafetyPayValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxPeruSafetyPayCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxPeruSafetyPayAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxPeruSafetyPayAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Peru\SafetyPay\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Peru\SafetyPay\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxPeruSafetyPayAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Peru\SafetyPay\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Peru\SafetyPay\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxPeruSafetyPayValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Peru\SafetyPay\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Peru\SafetyPay\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxPeruSafetyPayValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxPeruSafetyPayConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Peru\SafetyPay\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxPeruSafetyPayConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Peru\SafetyPay\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END SafetyPay -->
+
+    <!-- END Peru -->
+
+    <!-- Mexico -->
+
+        <!-- Credit Card -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_mexico_creditcard_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Mexico\CreditCard\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Mexico\CreditCard\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Mexico\CreditCard</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxMexicoCreditCardValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxMexicoCreditCardValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxMexicoCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxMexicoCreditCardAuthorizeCommand</item>
+                        <item name="sale" xsi:type="string">DigitalHubEbanxMexicoCreditCardAuthorizeCommand</item>
+                        <item name="refund" xsi:type="string">DigitalHubEbanxMexicoCreditCardRefundCommand</item>
+                        <item name="cancel" xsi:type="string">DigitalHubEbanxMexicoCreditCardCancelCommand</item>
+                        <item name="void" xsi:type="string">DigitalHubEbanxMexicoCreditCardCancelCommand</item>
+                        <item name="capture" xsi:type="string">DigitalHubEbanxGatewayCommandMexicoCreditCardCaptureStrategyCommand</item>
+                        <item name="settlement" xsi:type="string">DigitalHubEbanxMexicoCreditCardCaptureCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Mexico\CreditCard\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Mexico\CreditCard\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxMexicoCreditCardAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Mexico\CreditCard\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Mexico\CreditCard\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Command -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardCaptureRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Mexico\CreditCard\TransactionCapture</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Mexico\CreditCard\CaptureValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxMexicoCreditCardCaptureResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Mexico\CreditCard\CaptureDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCaptureResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="capture" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Mexico\CreditCard\CaptureHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Capture Strategy Command definition -->
+            <virtualType name="DigitalHubEbanxGatewayCommandMexicoCreditCardCaptureStrategyCommand" type="DigitalHub\Ebanx\Gateway\Command\Mexico\CreditCard\CaptureStrategyCommand">
+                <arguments>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxMexicoCreditCardCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Command -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardRefundRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Mexico\CreditCard\TransactionRefund</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Mexico\CreditCard\RefundValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxMexicoCreditCardRefundResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Mexico\CreditCard\RefundDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Refund Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardRefundResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="refund" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Mexico\CreditCard\RefundHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Command -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardCancelRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Mexico\CreditCard\TransactionCancel</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Mexico\CreditCard\CancelValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxMexicoCreditCardCancelResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Mexico\CreditCard\CancelDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Cancel Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCancelResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Mexico\CreditCard\CancelHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxMexicoCreditCardValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Mexico\CreditCard\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Mexico\CreditCard\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxMexicoCreditCardValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxMexicoCreditCardConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Mexico\CreditCard\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxMexicoCreditCardConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Mexico\CreditCard\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END Credit Card -->
+
+        <!-- OXXO -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_mexico_oxxo_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Mexico\Oxxo\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Mexico\Oxxo\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Mexico\Oxxo</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxMexicoOxxoValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxMexicoOxxoValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxMexicoOxxoCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxMexicoOxxoAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoOxxoAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Mexico\Oxxo\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Mexico\Oxxo\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxMexicoOxxoAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Mexico\Oxxo\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Mexico\Oxxo\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxMexicoOxxoValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Mexico\Oxxo\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Mexico\Oxxo\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxMexicoOxxoValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxMexicoOxxoConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Mexico\Oxxo\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxMexicoOxxoConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Mexico\Oxxo\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END OXXO -->
+
+        <!-- SPEI -->
+
+            <type name="Magento\Checkout\Model\CompositeConfigProvider">
+               <arguments>
+                   <argument name="configProviders" xsi:type="array">
+                       <item name="digitalhub_ebanx_mexico_spei_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Mexico\Spei\ConfigProvider</item>
+                   </argument>
+               </arguments>
+            </type>
+
+            <!-- Method Facade -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiFacade" type="Magento\Payment\Model\Method\Adapter">
+                <arguments>
+                    <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Mexico\Spei\ConfigProvider::CODE</argument>
+                    <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+                    <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Mexico\Spei</argument>
+                    <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxMexicoSpeiValueHandlerPool</argument>
+                    <argument name="validatorPool" xsi:type="object">DigitalHubEbanxMexicoSpeiValidatorPool</argument>
+                    <argument name="commandPool" xsi:type="object">DigitalHubEbanxMexicoSpeiCommandPool</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Command Pool -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+                <arguments>
+                    <argument name="commands" xsi:type="array">
+                        <item name="authorize" xsi:type="string">DigitalHubEbanxMexicoSpeiAuthorizeCommand</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Command -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+                <arguments>
+                    <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoSpeiAuthorizationRequest</argument>
+                    <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+                    <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Mexico\Spei\TransactionAuthorization</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Mexico\Spei\AuthorizationValidator</argument>
+                    <argument name="handler" xsi:type="object">DigitalHubEbanxMexicoSpeiAuthorizationResponseHandler</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Request Builder Composite -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+                <arguments>
+                    <argument name="builders" xsi:type="array">
+                        <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                        <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                        <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                        <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Mexico\Spei\PaymentDataBuilder</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Authorize Response Handler Composite -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Mexico\Spei\AuthorizationHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Value Handlers -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+                <arguments>
+                    <argument name="handlers" xsi:type="array">
+                        <item name="default" xsi:type="string">DigitalHubEbanxMexicoSpeiValueHandler</item>
+                        <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Mexico\Spei\ActiveValueHandler</item>
+                        <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Mexico\Spei\PaymentActionValueHandler</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+            <virtualType name="DigitalHubEbanxMexicoSpeiValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+                <arguments>
+                    <argument name="configInterface" xsi:type="object">DigitalHubEbanxMexicoSpeiConfig</argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Validators Pool -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+                <arguments>
+                    <argument name="validators" xsi:type="array">
+                        <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Mexico\Spei\CountryValidator</item>
+                    </argument>
+                </arguments>
+            </virtualType>
+
+            <!-- Config Interface -->
+            <virtualType name="DigitalHubEbanxMexicoSpeiConfig" type="Magento\Payment\Gateway\Config\Config">
+                <arguments>
+                    <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Mexico\Spei\ConfigProvider::CODE</argument>
+                </arguments>
+            </virtualType>
+
+        <!-- END SPEI -->
+
+    <!-- END Mexico -->
+
+</config>
