@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
-    <groups>
-        <group id="ebanx">
-            <label>EBANX Payments</label>
-        </group>
-    </groups>
-</payment>
