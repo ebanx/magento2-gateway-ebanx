@@ -11,13 +11,15 @@ class Address extends \Magento\Framework\App\Action\Action
 		\Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
 		\DigitalHub\Ebanx\Helper\Data $ebanxHelper,
-		\Magento\Customer\Model\Session $session
+		\Magento\Customer\Model\Session $session,
+		\Magento\Customer\Model\CustomerFactory $customerFactory
     )
 	{
         parent::__construct($context);
 		$this->resultJsonFactory = $resultJsonFactory;
 		$this->ebanxHelper = $ebanxHelper;
 		$this->session = $session;
+		$this->customerFactory = $customerFactory;
 	}
 
 	public function execute()
@@ -27,8 +29,8 @@ class Address extends \Magento\Framework\App\Action\Action
 		$items = [];
 
 		if($this->session->getCustomerId()){
-			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-			$customerObj = $objectManager->create('Magento\Customer\Model\Customer')->load($this->session->getCustomerId());
+			$customerModel = $this->customerFactory->create();
+			$customerObj = $customerModel->load($this->session->getCustomerId());
 
 			foreach ($customerObj->getAddresses() as $address)
 			{

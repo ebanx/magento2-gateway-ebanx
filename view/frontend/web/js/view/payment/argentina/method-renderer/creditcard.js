@@ -230,6 +230,7 @@ define(
 
             canSaveCc: function(){
                 return this.getGlobalConfig().can_save_cc
+                    && window.checkoutConfig.quoteData.customer_id
             },
 
             getInfoTotalFormated: function(use_iof){

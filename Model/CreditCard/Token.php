@@ -24,4 +24,21 @@ class Token
 		$values = [];
 		return $values;
 	}
+
+    public function getTokenByIdAndCustomer($token_id, $customer_id)
+    {
+        $tokenCollection = $this->getCollection();
+        $tokenCollection->addFieldToFilter('id', (int)$token_id);
+        $tokenCollection->addFieldToFilter('customer_id', (int)$customer_id);
+        $tokenCollection->load();
+        return $tokenCollection->getSize() ? $tokenCollection->getFirstItem() : null;
+    }
+
+    public function customerHasToken($customer_id)
+    {
+        $tokenCollection = $this->getCollection();
+        $tokenCollection->addFieldToFilter('customer_id', (int)$customer_id);
+        $tokenCollection->load();
+        return $tokenCollection->getSize() ? true : false;
+    }
 }

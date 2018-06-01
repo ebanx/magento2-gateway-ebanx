@@ -11,13 +11,15 @@ class Saved extends \Magento\Framework\App\Action\Action
 		\Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
 		\DigitalHub\Ebanx\Helper\Data $ebanxHelper,
-        \Magento\Customer\Model\Session $session
+        \Magento\Customer\Model\Session $session,
+        \DigitalHub\Ebanx\Model\CreditCard\TokenFactory $tokenFactory
     )
 	{
         parent::__construct($context);
 		$this->resultJsonFactory = $resultJsonFactory;
 		$this->ebanxHelper = $ebanxHelper;
 		$this->_customerSession = $session;
+		$this->_tokenFactory = $tokenFactory;
 	}
 
 	public function execute()
@@ -27,8 +29,8 @@ class Saved extends \Magento\Framework\App\Action\Action
         $items = [];
 
         if($this->_customerSession->getCustomerId()){
-			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-			$collection = $objectManager->create('DigitalHub\Ebanx\Model\CreditCard\Token')->getCollection();
+			$tokenModel = $this->_tokenFactory->create();
+			$collection = $tokenModel->getCollection();
 			$collection->addFieldToFilter('customer_id', $this->_customerSession->getCustomerId());
 			$collection->addFieldToFilter('payment_method', $this->getRequest()->getParam('method'));
 			foreach($collection as $item){

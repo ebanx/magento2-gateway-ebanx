@@ -70,7 +70,7 @@ define([
             var self = this;
 
             $.when(sessionCheck()).done(function(result){
-                if(result.loggedin){
+                if(result.loggedin && result.has_saved_cards){
                     $('.product-add-form').after('<button class="action primary" id="btn-oneclickpayment">1-Click Buy</button>');
 
                     if (!self.oneClickPaymentModalWindow()) {

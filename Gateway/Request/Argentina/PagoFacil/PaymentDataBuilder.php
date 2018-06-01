@@ -45,11 +45,6 @@ class PaymentDataBuilder implements BuilderInterface
         $order = $paymentDataObject->getOrder();
         $storeId = $order->getStoreId();
 
-        // $this->_logger->info('Request::build order', [$order->getOrderIncrementId()]);
-        // $this->_logger->info('Request::build payment', $payment->getData());
-
-        $additionalData = $payment->getAdditionalInformation();
-
         $this->_logger->info('PaymentDataBuilder :: build');
 
         $request = [

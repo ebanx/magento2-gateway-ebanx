@@ -12,8 +12,9 @@ class ShippingMethods extends \Magento\Framework\App\Action\Action
 		\DigitalHub\Ebanx\Helper\Data $ebanxHelper,
 		\Magento\Quote\Api\CartRepositoryInterface $cartRepositoryInterface,
 		\Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
-
-		\Magento\Quote\Api\PaymentMethodManagementInterface $paymentMethodManagement
+		\Magento\Quote\Api\PaymentMethodManagementInterface $paymentMethodManagement,
+		\Magento\Framework\Pricing\Helper\Data $priceHelper,
+		\Magento\Customer\Model\Address $addressModel
     )
 	{
         parent::__construct($context);
@@ -23,6 +24,8 @@ class ShippingMethods extends \Magento\Framework\App\Action\Action
 		$this->priceCurrency = $priceCurrency;
 
 		$this->paymentMethodManagement = $paymentMethodManagement;
+		$this->priceHelper = $priceHelper;
+		$this->addressModel = $addressModel;
 	}
 
 	public function execute()
@@ -33,10 +36,7 @@ class ShippingMethods extends \Magento\Framework\App\Action\Action
 
 		$quote = $this->cartRepositoryInterface->get($cart_id); // load empty cart quote
 
-		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
-
-		$address = $objectManager->create('Magento\Customer\Model\Address')->load($address_id);
+		$address = $this->addressModel->load($address_id);
 		$addressData = $address->getData();
 
 		//Set Address to quote
@@ -51,20 +51,11 @@ class ShippingMethods extends \Magento\Framework\App\Action\Action
 		$rates = [];
 		foreach($ratesCollection as $_rate){
             $rates[] = [
-				'label' => $_rate->getMethodTitle() . ' - ' . $priceHelper->currency(number_format($_rate->getPrice(),2),true,false),
+				'label' => $_rate->getMethodTitle() . ' - ' . $this->priceHelper->currency(number_format($_rate->getPrice(),2),true,false),
 				'value' => $_rate->getCode()
 			];
 		}
-
-		$quote->setShippintMethod($rates[0]['value']);
 		$quote->save();
-		$paymentMethods = [];
-        foreach ($this->paymentMethodManagement->getList($quote->getId()) as $paymentMethod) {
-            $paymentMethods[] = [
-                'code' => $paymentMethod->getCode(),
-                'title' => $paymentMethod->getTitle()
-            ];
-        }
 
         return $result->setData([
             'success' => true,
@@ -72,9 +63,7 @@ class ShippingMethods extends \Magento\Framework\App\Action\Action
 			'cart_id' => $cart_id,
 			'address_id' => $address_id,
 			'subtotal' => $quote->getBaseSubtotal(),
-			'total' => $quote->getBaseGrandTotal(),
-			'payment_methods' => $paymentMethods,
-			'address' => $addressData
+			'total' => $quote->getBaseGrandTotal()
         ]);
 	}
 }

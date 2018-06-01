@@ -71,7 +71,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxBrazilCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxBrazilCreditCardAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -103,7 +103,7 @@
             </virtualType>
 
             <!-- Capture Command -->
-            <virtualType name="DigitalHubEbanxBrazilCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCaptureCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardCaptureRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -139,7 +139,7 @@
             </virtualType>
 
             <!-- Refund Command -->
-            <virtualType name="DigitalHubEbanxBrazilCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxBrazilCreditCardRefundCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardRefundRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -168,7 +168,7 @@
             </virtualType>
 
             <!-- Cancel Command -->
-            <virtualType name="DigitalHubEbanxBrazilCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxBrazilCreditCardCancelCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilCreditCardCancelRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -262,13 +262,13 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxBrazilBoletoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxBrazilBoletoAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilBoletoAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
                     <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\Boleto\TransactionAuthorization</argument>
-                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\Boleto\AuthorizationValidator</argument>
                     <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilBoletoAuthorizationResponseHandler</argument>
+                    <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\Boleto\AuthorizationValidator</argument>
                 </arguments>
             </virtualType>
 
@@ -359,7 +359,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxBrazilEbanxAccountAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxBrazilEbanxAccountAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilEbanxAccountAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -456,7 +456,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxBrazilTefAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxBrazilTefAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilTefAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -563,7 +563,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxArgentinaCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -595,7 +595,7 @@
             </virtualType>
 
             <!-- Capture Command -->
-            <virtualType name="DigitalHubEbanxArgentinaCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCaptureCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCaptureRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -631,7 +631,7 @@
             </virtualType>
 
             <!-- Refund Command -->
-            <virtualType name="DigitalHubEbanxArgentinaCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardRefundCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardRefundRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -660,7 +660,7 @@
             </virtualType>
 
             <!-- Cancel Command -->
-            <virtualType name="DigitalHubEbanxArgentinaCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxArgentinaCreditCardCancelCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCreditCardCancelRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -754,7 +754,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxArgentinaRapipagoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxArgentinaRapipagoAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaRapipagoAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -851,7 +851,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxArgentinaPagoFacilAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxArgentinaPagoFacilAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaPagoFacilAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -948,7 +948,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxArgentinaCuponDePagosAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxArgentinaCuponDePagosAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1049,7 +1049,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxChileServipagAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxChileServipagAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileServipagAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1146,7 +1146,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxChileSencillitoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxChileSencillitoAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileSencillitoAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1243,7 +1243,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxChileWebpayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxChileWebpayAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileWebpayAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1340,7 +1340,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxChileMulticajaAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxChileMulticajaAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxChileMulticajaAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1441,7 +1441,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxColombiaEftAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxColombiaEftAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaEftAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1538,7 +1538,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxColombiaBalotoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxColombiaBalotoAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaBalotoAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1641,7 +1641,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxColombiaCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxColombiaCreditCardAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1673,7 +1673,7 @@
             </virtualType>
 
             <!-- Capture Command -->
-            <virtualType name="DigitalHubEbanxColombiaCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCaptureCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardCaptureRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1709,7 +1709,7 @@
             </virtualType>
 
             <!-- Refund Command -->
-            <virtualType name="DigitalHubEbanxColombiaCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxColombiaCreditCardRefundCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardRefundRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1738,7 +1738,7 @@
             </virtualType>
 
             <!-- Cancel Command -->
-            <virtualType name="DigitalHubEbanxColombiaCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxColombiaCreditCardCancelCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxColombiaCreditCardCancelRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1836,7 +1836,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxEcuadorSafetyPayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxEcuadorSafetyPayAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxEcuadorSafetyPayAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -1937,7 +1937,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxPeruPagoEfectivoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxPeruPagoEfectivoAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxPeruPagoEfectivoAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -2034,7 +2034,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxPeruSafetyPayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxPeruSafetyPayAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxPeruSafetyPayAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -2141,7 +2141,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxMexicoCreditCardAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxMexicoCreditCardAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -2173,7 +2173,7 @@
             </virtualType>
 
             <!-- Capture Command -->
-            <virtualType name="DigitalHubEbanxMexicoCreditCardCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCaptureCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardCaptureRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -2209,7 +2209,7 @@
             </virtualType>
 
             <!-- Refund Command -->
-            <virtualType name="DigitalHubEbanxMexicoCreditCardRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxMexicoCreditCardRefundCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardRefundRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -2238,7 +2238,7 @@
             </virtualType>
 
             <!-- Cancel Command -->
-            <virtualType name="DigitalHubEbanxMexicoCreditCardCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxMexicoCreditCardCancelCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoCreditCardCancelRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -2332,7 +2332,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxMexicoOxxoAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxMexicoOxxoAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoOxxoAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
@@ -2429,7 +2429,7 @@
             </virtualType>
 
             <!-- Authorize Command -->
-            <virtualType name="DigitalHubEbanxMexicoSpeiAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+            <virtualType name="DigitalHubEbanxMexicoSpeiAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
                 <arguments>
                     <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxMexicoSpeiAuthorizationRequest</argument>
                     <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>

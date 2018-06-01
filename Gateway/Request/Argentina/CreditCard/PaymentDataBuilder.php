@@ -27,12 +27,14 @@ class PaymentDataBuilder implements BuilderInterface
         \DigitalHub\Ebanx\Helper\Data $ebanxHelper,
         \Magento\Framework\Model\Context $context,
         \DigitalHub\Ebanx\Logger\Logger $logger,
-        \Magento\Checkout\Model\Session $session
+        \Magento\Checkout\Model\Session $session,
+        \DigitalHub\Ebanx\Model\CreditCard\Token $tokenModel
     )
     {
         $this->_ebanxHelper = $ebanxHelper;
         $this->_logger = $logger;
         $this->_session = $session;
+        $this->tokenModel = $tokenModel;
         $this->appState = $context->getAppState();
 
         $this->_logger->info('PaymentDataBuilder :: __construct');
@@ -61,13 +63,7 @@ class PaymentDataBuilder implements BuilderInterface
 
         if(isset($additionalData[DataAssignObserver::USE_SAVED_CC]) && $additionalData[DataAssignObserver::USE_SAVED_CC] && $this->_session->getQuote()->getCustomerId()){
 
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-            $tokenCollection = $objectManager->create('DigitalHub\Ebanx\Model\CreditCard\Token')->getCollection();
-            $tokenCollection->addFieldToFilter('id', $additionalData[DataAssignObserver::USE_SAVED_CC]);
-            $tokenCollection->addFieldToFilter('customer_id', (int)$this->_session->getQuote()->getCustomerId());
-            $tokenCollection->load();
-
-            $tokenObject = $tokenCollection->getSize() ? $tokenCollection->getFirstItem() : null;
+            $tokenObject = $this->tokenModel->getTokenByIdAndCustomer($additionalData[DataAssignObserver::USE_SAVED_CC], (int)$this->_session->getQuote()->getCustomerId());
 
             if(!$tokenObject){
                 throw new \Exception('The requested saved credit card not exists');
@@ -87,6 +83,7 @@ class PaymentDataBuilder implements BuilderInterface
 
         $request = [
             'type' => 'creditcard',
+            'card' => $card,
             'instalments' => $additionalData[DataAssignObserver::INSTALLMENTS],
             'amountTotal' => $additionalData[DataAssignObserver::INSTALLMENTS] > 1 ? $this->_ebanxHelper->calculateTotalWithInterest($order->getGrandTotalAmount(), $additionalData[DataAssignObserver::INSTALLMENTS]) : $order->getGrandTotalAmount(),
         ];

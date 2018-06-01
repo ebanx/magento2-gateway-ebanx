@@ -45,14 +45,11 @@ class TransactionAuthorization implements ClientInterface
             'sandboxIntegrationKey' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_integration_key'),
             'isSandbox' => (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox'),
             'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
-            // 'notificationUrl' => '',
-            // 'redirectUrl' => $this->_storeManager->getStore()->getBaseUrl(),
-            // 'userValues' => ['from_magento2'],
         ]);
 
         $creditCardConfig = new \Ebanx\Benjamin\Models\Configs\CreditCardConfig([
             'maxInstalments' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/cc', 'max_installments'),
-            'minInstalmentAmount' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/cc', 'min_installment_value')
+            'minInstalmentAmount' => $this->_ebanxHelper->getMinInstallmentValue('AR')
         ]);
 
         $this->_ebanxClient = EBANX($config, $creditCardConfig);

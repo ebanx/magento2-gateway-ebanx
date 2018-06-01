@@ -8,7 +8,6 @@ class PaymentDataBuilder implements BuilderInterface
 {
     private $_ebanxHelper;
     private $_logger;
-    private $_session;
 
     /**
      * @var \Magento\Framework\App\State
@@ -21,18 +20,15 @@ class PaymentDataBuilder implements BuilderInterface
      * @param \DigitalHub\Ebanx\Helper\Data $ebanxHelper
      * @param \Magento\Framework\Model\Context $context
      * @param \DigitalHub\Ebanx\Logger\Logger $logger
-     * @param \Magento\Checkout\Model\Session $session
      */
     public function __construct(
         \DigitalHub\Ebanx\Helper\Data $ebanxHelper,
         \Magento\Framework\Model\Context $context,
-        \DigitalHub\Ebanx\Logger\Logger $logger,
-        \Magento\Checkout\Model\Session $session
+        \DigitalHub\Ebanx\Logger\Logger $logger
     )
     {
         $this->_ebanxHelper = $ebanxHelper;
         $this->_logger = $logger;
-        $this->_session = $session;
         $this->appState = $context->getAppState();
 
         $this->_logger->info('PaymentDataBuilder :: __construct');

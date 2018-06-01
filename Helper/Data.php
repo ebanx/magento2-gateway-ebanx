@@ -126,8 +126,25 @@ class Data extends AbstractHelper
 
     public function calculateTotalWithInterest($total, $installments_number)
     {
-        $interest_rate = $this->getInterestRateFor($installments_number);
-        $finalTotal = (floatval($interest_rate / 100) * floatval($total) + floatval($total));
-        return $finalTotal;
+        $interest_rate = (float)$this->getInterestRateFor($installments_number);
+        if($interest_rate){
+            $total = (floatval($interest_rate / 100) * floatval($total) + floatval($total));
+        }
+        return $total;
+    }
+
+    public function getMinInstallmentValue($country)
+    {
+        $configValue = (float)$this->getConfigData('digitalhub_ebanx_global/cc', 'min_installment_value');
+
+        if($country == 'BR' && $configValue < 5){
+            return 5;
+        }
+
+        if($country == 'MX' && $configValue < 100){
+            return 100;
+        }
+
+        return $configValue;
     }
 }

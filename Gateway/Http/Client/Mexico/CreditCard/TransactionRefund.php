@@ -49,7 +49,7 @@ class TransactionRefund implements ClientInterface
 
         $creditCardConfig = new \Ebanx\Benjamin\Models\Configs\CreditCardConfig([
             'maxInstalments' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/cc', 'max_installments'),
-            'minInstalmentAmount' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/cc', 'min_installment_value')
+            'minInstalmentAmount' => $this->_ebanxHelper->getMinInstallmentValue('MX')
         ]);
 
         $this->_ebanxClient = EBANX($config, $creditCardConfig);

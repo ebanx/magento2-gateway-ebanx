@@ -15,12 +15,15 @@ class CountryValidator extends \Magento\Payment\Gateway\Validator\AbstractValida
     /**
      * @param ResultInterfaceFactory $resultFactory
      * @param \DigitalHub\Ebanx\Helper\Data $ebanxHelper
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      */
     public function __construct(
         ResultInterfaceFactory $resultFactory,
-        \DigitalHub\Ebanx\Helper\Data $ebanxHelper
+        \DigitalHub\Ebanx\Helper\Data $ebanxHelper,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->_ebanxHelper = $ebanxHelper;
+        $this->storeManager = $storeManager;
         parent::__construct($resultFactory);
     }
 
@@ -37,7 +40,8 @@ class CountryValidator extends \Magento\Payment\Gateway\Validator\AbstractValida
 
         $country = $validationSubject['country'];
 
-        if($country == 'EC'){
+        $available_currencies = ['USD'];
+        if($country == 'EC' && in_array($this->storeManager->getStore()->getBaseCurrencyCode(), $available_currencies)){
             $isValid = true;
         }
 

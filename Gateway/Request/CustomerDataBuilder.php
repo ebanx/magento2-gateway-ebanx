@@ -47,7 +47,6 @@ class CustomerDataBuilder implements BuilderInterface
         $order = $paymentDataObject->getOrder();
         $payment = $paymentDataObject->getPayment();
         $billingAddress = $order->getBillingAddress();
-        $customer = $this->_session->getQuote()->getCustomer();
         $countryId = $billingAddress->getCountryId();
         $additionalData = $payment->getAdditionalInformation();
 
@@ -56,7 +55,7 @@ class CustomerDataBuilder implements BuilderInterface
             $documentNumberField = $this->_ebanxHelper->getCustomerDocumentNumberField($this->_session->getQuote());
             $documentNumber = $this->_ebanxHelper->getCustomerDocumentNumber($this->_session->getQuote(), $documentNumberField);
 
-            if(!$documentNumber){
+            if(!$documentNumber && isset($additionalData[DataAssignObserver::DOCUMENT_NUMBER])){
                 $documentNumber = $additionalData[DataAssignObserver::DOCUMENT_NUMBER];
             }
         }

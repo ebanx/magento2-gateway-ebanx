@@ -49,32 +49,16 @@ class AddressDataBuilder implements BuilderInterface
 
         $additionalData = $payment->getAdditionalInformation();
 
-        // TODO: Add Address Fields Mapping
         $street = $this->_ebanxHelper->getAddressData('street', $billingAddress);
         $streetNumber = $this->_ebanxHelper->getAddressData('street_number', $billingAddress);
         $streetComplement = $this->_ebanxHelper->getAddressData('complement', $billingAddress);
-
-        // TODO: The Magento default billing form don't display region field for Argentina, Chile, Colombia and Mexico
-        $region = $billingAddress->getRegionCode();
-        if(!$region && $billingAddress->getCountryId() == 'AR'){
-            $region = "--";
-        }
-        if(!$region && $billingAddress->getCountryId() == 'CL'){
-            $region = "--";
-        }
-        if(!$region && $billingAddress->getCountryId() == 'CO'){
-            $region = "--";
-        }
-        if(!$region && $billingAddress->getCountryId() == 'MX'){
-            $region = "--";
-        }
 
         $address = new \Ebanx\Benjamin\Models\Address([
             'address' => $street ? $street : 'N/A',
             'streetNumber' => $streetNumber ? $streetNumber : 'N/A',
             'city' => $billingAddress->getCity(),
             'country' => \Ebanx\Benjamin\Models\Country::fromIso($billingAddress->getCountryId()),
-            'state' => $region,
+            'state' => $billingAddress->getRegionCode() ? $billingAddress->getRegionCode() : 'N/A',
             'streetComplement' => $streetComplement ? $streetComplement : '',
             'zipcode' => $billingAddress->getPostcode(),
         ]);

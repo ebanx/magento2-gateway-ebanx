@@ -58,7 +58,7 @@ class PaymentDataBuilder implements BuilderInterface
         $this->_logger->info('PaymentDataBuilder :: build');
 
         $days = (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/cash', 'cash_expiration_days');
-        $dueDate = new \DateTime(date('Y-m-d H:i:s', strtotime('now +' . $days . 'days')));
+        $dueDate = new \DateTime(date('Y-m-d', strtotime('now +' . $days . 'days')) . ' 00:00:00');
 
         $request = [
             'type' => 'sencillito',

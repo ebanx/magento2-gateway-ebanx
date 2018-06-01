@@ -42,7 +42,6 @@ class OrderDataBuilder implements BuilderInterface
 
         $order = $paymentDataObject->getOrder();
         $payment = $paymentDataObject->getPayment();
-        $billingAddress = $order->getBillingAddress();
 
         $additionalData = $payment->getAdditionalInformation();
 

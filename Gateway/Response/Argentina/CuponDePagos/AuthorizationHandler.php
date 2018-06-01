@@ -30,7 +30,10 @@ class AuthorizationHandler implements HandlerInterface
 
         $this->_logger->info('AuthorizationHandler :: handle');
 
-        $payment->setAdditionalInformation('transaction_data', (array)$response['payment_result']);
+        $payment_result_data = (array)$response['payment_result'];
+
+        $payment->setTransactionId($payment_result_data['payment']['hash']);
+        $payment->setAdditionalInformation('transaction_data', $payment_result_data);
 
         // set transaction not to processing by default wait for notification
         $payment->setIsTransactionPending(true);

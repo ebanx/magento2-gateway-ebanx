@@ -41,6 +41,7 @@ define(
                 this._super()
                     .observe([
                         'documentNumber',
+                        'documentType',
                         'totalLocalCurrency',
                         'showDocumentFields'
                     ]);
@@ -51,7 +52,8 @@ define(
                 return {
                     method: this.getCode(),
                     additional_data: {
-                        'document_number': this.documentNumber()
+                        'document_number': this.documentNumber(),
+                        'document_type': this.documentType(),
                     }
                 };
             },

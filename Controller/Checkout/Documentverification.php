@@ -25,7 +25,6 @@ class Documentverification extends \Magento\Framework\App\Action\Action
 	public function execute()
 	{
 		$result = $this->resultJsonFactory->create();
-        $customer = $this->_session->getQuote()->getCustomer();
 
         $documentNumber = false;
         $documentNumberField = $this->_ebanxHelper->getCustomerDocumentNumberField($this->_session->getQuote());

@@ -61,7 +61,7 @@ class InitQuote extends \Magento\Framework\App\Action\Action
         $customer= $this->customerRepository->getById($this->session->getCustomerId());
         $quote->assignCustomer($customer);
 
-        $postData = json_decode(file_get_contents("php://input"));
+        $postData = json_decode($this->getRequest()->getContent());
 
         //add items in quote
         $product = $this->_product->load((int)$postData->product_id);
@@ -69,7 +69,7 @@ class InitQuote extends \Magento\Framework\App\Action\Action
 			'qty' => (int)$postData->product_qty
 		];
 
-		if($postData->super_attribute){
+		if(isset($postData->super_attribute) && $postData->super_attribute){
 			$super_attribute = [];
 			foreach($postData->super_attribute as $item){
 				$super_attribute[$item->attr_id] = $item->option_id;

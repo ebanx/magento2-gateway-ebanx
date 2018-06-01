@@ -32,6 +32,8 @@ class Installments extends \Magento\Framework\App\Action\Action
 			$maxInstallments = 1;
 		}
 
+		$installments = [];
+
 		foreach(range(1,$maxInstallments) as $number){
 			$total_with_interest = $this->ebanxHelper->calculateTotalWithInterest($total, $number);
 			$installment_total = $total_with_interest / $number;

@@ -8,30 +8,22 @@ class AuthorizationValidator extends AbstractValidator
 {
     protected $_ebanxHelper;
     protected $_logger;
-    protected $_eventManager;
-    protected $_session;
 
     /**
     * AuthorizationValidator constructor.
     *
     * @param \Magento\Payment\Gateway\Validator\ResultInterfaceFactory $resultFactory
     * @param \DigitalHub\Ebanx\Helper\Data $_ebanxHelper
-    * @param \DigitalHub\Ebanx\Logger\Logger $logger
-    * @param \Magento\Framework\Event\Manager $eventManager
-    * @param \Magento\Checkout\Model\Session $session
+    * @param \DigitalHub\Ebanx\Logger\Logger
     */
     public function __construct(
         \Magento\Payment\Gateway\Validator\ResultInterfaceFactory $resultFactory,
         \DigitalHub\Ebanx\Helper\Data $_ebanxHelper,
-        \DigitalHub\Ebanx\Logger\Logger $logger,
-        \Magento\Framework\Event\Manager $eventManager,
-        \Magento\Checkout\Model\Session $session
+        \DigitalHub\Ebanx\Logger\Logger $logger
     )
     {
         $this->_ebanxHelper = $_ebanxHelper;
         $this->_logger = $logger;
-        $this->_eventManager = $eventManager;
-        $this->_session = $session;
 
         $this->_logger->info('AuthorizationValidator :: __construct');
 

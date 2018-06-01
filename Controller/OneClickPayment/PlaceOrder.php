@@ -32,23 +32,17 @@ class PlaceOrder extends \Magento\Framework\App\Action\Action
 	public function execute()
 	{
 		$result = $this->resultJsonFactory->create();
-		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$postData = json_decode(file_get_contents("php://input"));
+		$postData = json_decode($this->getRequest()->getContent());
 		$cart_id = $postData->cart_id;
 		$shipping_address_id = $postData->shipping_address_id;
-
-		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
-
-		$address = $objectManager->create('Magento\Customer\Model\Address')->load($shipping_address_id);
-		$addressData = $address->getData();
-
 		$quote = $this->cartRepositoryInterface->get($cart_id);
 
 		try {
-			$billingAddress = $this->addressRepository->getById($address->getId());
+			// Use same address for shipping and billing (origing is shipping)
+			$billingAddress = $this->addressRepository->getById($shipping_address_id);
+			$shippingAddress = $this->addressRepository->getById($shipping_address_id);
 			$quote->getBillingAddress()->importCustomerAddressData($billingAddress);
-	        $quote->getShippingAddress()->addData($address->getData());
+	        $quote->getShippingAddress()->importCustomerAddressData($shippingAddress);
 			$quote->collectTotals();
 			$quote->save();
 

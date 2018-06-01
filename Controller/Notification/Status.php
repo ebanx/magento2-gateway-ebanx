@@ -40,7 +40,6 @@ class Status extends \Magento\Framework\App\Action\Action
             }
 
             $result->setData([
-                'hash_codes' => $hash_codes,
                 'success' => true
             ]);
         } catch (\Exception $e){

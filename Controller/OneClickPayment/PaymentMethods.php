@@ -24,8 +24,7 @@ class PaymentMethods extends \Magento\Framework\App\Action\Action
 	public function execute()
 	{
 		$result = $this->resultJsonFactory->create();
-		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$postData = json_decode(file_get_contents("php://input"));
+		$postData = json_decode($this->getRequest()->getContent());
 		$cart_id = $postData->cart_id;
 
 		$quote = $this->cartRepositoryInterface->get($cart_id); // load empty cart quote
@@ -35,7 +34,10 @@ class PaymentMethods extends \Magento\Framework\App\Action\Action
 		$quote->save();
 
 		$allowed_methods = [
-			\DigitalHub\Ebanx\Model\Ui\Brazil\CreditCard\ConfigProvider::CODE
+			\DigitalHub\Ebanx\Model\Ui\Brazil\CreditCard\ConfigProvider::CODE,
+			\DigitalHub\Ebanx\Model\Ui\Argentina\CreditCard\ConfigProvider::CODE,
+			\DigitalHub\Ebanx\Model\Ui\Mexico\CreditCard\ConfigProvider::CODE,
+			\DigitalHub\Ebanx\Model\Ui\Colombia\CreditCard\ConfigProvider::CODE
 		];
 
 		$paymentMethods = [];

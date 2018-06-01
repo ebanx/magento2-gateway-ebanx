@@ -8,7 +8,6 @@ class PaymentDataBuilder implements BuilderInterface
 {
     private $_ebanxHelper;
     private $_logger;
-    private $_session;
 
     /**
      * @var \Magento\Framework\App\State
@@ -26,13 +25,11 @@ class PaymentDataBuilder implements BuilderInterface
     public function __construct(
         \DigitalHub\Ebanx\Helper\Data $ebanxHelper,
         \Magento\Framework\Model\Context $context,
-        \DigitalHub\Ebanx\Logger\Logger $logger,
-        \Magento\Checkout\Model\Session $session
+        \DigitalHub\Ebanx\Logger\Logger $logger
     )
     {
         $this->_ebanxHelper = $ebanxHelper;
         $this->_logger = $logger;
-        $this->_session = $session;
         $this->appState = $context->getAppState();
 
         $this->_logger->info('PaymentDataBuilder :: __construct');
@@ -58,7 +55,7 @@ class PaymentDataBuilder implements BuilderInterface
         $this->_logger->info('PaymentDataBuilder :: build');
 
         $days = (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/cash', 'cash_expiration_days');
-        $dueDate = new \DateTime(date('Y-m-d H:i:s', strtotime('now +' . $days . 'days')));
+        $dueDate = new \DateTime(date('Y-m-d', strtotime('now +' . $days . 'days')) . ' 00:00:00');
 
         $request = [
             'type' => 'safetypay' . $additionalData[DataAssignObserver::SAFETYPAY_TYPE],

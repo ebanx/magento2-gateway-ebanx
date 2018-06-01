@@ -12,16 +12,16 @@ class Redirect extends Action
 
     public function __construct(
         Context $context,
-        \Magento\Checkout\Model\Session $checkoutSession
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Framework\Controller\ResultFactory $resultFactory
     ) {
         parent::__construct($context);
         $this->checkoutSession = $checkoutSession;
+        $this->resultFactory = $resultFactory;
     }
 
     public function execute()
     {
-        $order = $this->checkoutSession->getLastRealOrder();
-
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $resultRedirect->setUrl($this->checkoutSession->getEbanxRedirectUrl());
