@@ -26,6 +26,7 @@ class ExchangeTest extends \PHPUnit\Framework\TestCase
         $amountTotalConvertedWithIof = $amountTotalConverted + ($amountTotalConverted * 0.0038);
 
         $context = $this->getMockBuilder(\Magento\Framework\App\Action\Context::class)
+            ->setMethods(['getRequest'])
             ->disableOriginalConstructor()
             ->getMock();
         $resultJsonFactory = $this->getMockBuilder(\Magento\Framework\Controller\Result\JsonFactory::class)
@@ -50,6 +51,12 @@ class ExchangeTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['getCurrency','toCurrency','getDefaultCurrency'])
             ->disableOriginalConstructor()
             ->getMock();
+
+        $context->expects($this->once())
+            ->method('getRequest')
+            ->willReturn(new \Magento\Framework\DataObject([
+                'param' => 1
+            ]));
 
         $currency->expects($this->any())
             ->method('getCurrency')
@@ -273,6 +280,7 @@ class ExchangeTest extends \PHPUnit\Framework\TestCase
         $amountTotalConvertedWithIof = $amountTotalConverted + ($amountTotalConverted * 0.0038);
 
         $context = $this->getMockBuilder(\Magento\Framework\App\Action\Context::class)
+            ->setMethods(['getRequest'])
             ->disableOriginalConstructor()
             ->getMock();
         $resultJsonFactory = $this->getMockBuilder(\Magento\Framework\Controller\Result\JsonFactory::class)
@@ -302,6 +310,12 @@ class ExchangeTest extends \PHPUnit\Framework\TestCase
             ->method('getCurrency')
             ->with('BRL')
             ->willReturn($currency);
+
+        $context->expects($this->once())
+            ->method('getRequest')
+            ->willReturn(new \Magento\Framework\DataObject([
+                'param' => 1
+            ]));
 
         $currency->expects($this->any())
             ->method('getDefaultCurrency')
