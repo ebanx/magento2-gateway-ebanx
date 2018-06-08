@@ -183,7 +183,14 @@ class InstallmentsTest extends \PHPUnit\Framework\TestCase
                 ],
                 'expected' => [
                     'success' => false,
-                    'installments' => []
+                    'installments' => [
+                        [
+                            'number' => 1,
+                            'installment_value' => 0,
+                            'total_with_interest' => 0,
+                            'interest' => 0
+                        ]
+                    ]
                 ]
             ],
             [
@@ -199,6 +206,24 @@ class InstallmentsTest extends \PHPUnit\Framework\TestCase
                             'number' => 1,
                             'installment_value' => 100,
                             'total_with_interest' => 100,
+                            'interest' => 0
+                        ]
+                    ]
+                ]
+            ],
+            [
+                'requested' => [
+                    'max_installments' => 5,
+                    'min_installment_value' => 50,
+                    'total' => 35
+                ],
+                'expected' => [
+                    'success' => true,
+                    'installments' => [
+                        [
+                            'number' => 1,
+                            'installment_value' => 35,
+                            'total_with_interest' => 35,
                             'interest' => 0
                         ]
                     ]

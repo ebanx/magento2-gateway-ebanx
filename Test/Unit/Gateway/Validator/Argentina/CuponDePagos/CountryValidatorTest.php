@@ -89,13 +89,7 @@ class CountryValidatorTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['getStore'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-
-        $storeManager->expects($this->once())
-            ->method('getStore')
-            ->willReturn(new \Magento\Framework\DataObject([
-                'base_currency_code' => 'USD'
-            ]));
-
+        
         $validationSubject = [
             'country' => 'PE',
             'storeId' => 1

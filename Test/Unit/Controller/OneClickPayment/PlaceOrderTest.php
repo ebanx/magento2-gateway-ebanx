@@ -15,6 +15,7 @@ class PlaceOrderTest extends \PHPUnit\Framework\TestCase
             'cart_id' => $quoteId,
             'shipping_address_id' => $shippingAddressId,
             'payment_method' => $paymentMethod,
+            'documentNumber' => null,
             'token_id' => $tokenId,
         ]);
 
@@ -216,6 +217,7 @@ class PlaceOrderTest extends \PHPUnit\Framework\TestCase
             'cart_id' => $quoteId,
             'shipping_address_id' => $shippingAddressId,
             'payment_method' => $paymentMethod,
+            'documentNumber' => null,
             'token_id' => $tokenId,
         ]);
 
