@@ -1,12 +1,9 @@
 define(
     [
         'mage/storage',
-        'mage/url',
-        'Magento_Checkout/js/model/quote'
+        'mage/url'
     ],
-    function (storage, url, quote) {
-        'use strict';
-
+    function (storage, url) {
         return function () {
             return storage.post(url.build('digitalhub_ebanx/checkout/documentverification'), false)
         };

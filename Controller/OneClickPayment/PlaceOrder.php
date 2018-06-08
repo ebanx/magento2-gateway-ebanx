@@ -49,7 +49,7 @@ class PlaceOrder extends \Magento\Framework\App\Action\Action
 			$quote->getPayment()->importData([
 				'method' => $postData->payment_method,
 				'additional_data' => [
-					'document_number' => '',
+					'document_number' => $postData->documentNumber,
 					'use_saved_cc' => $postData->token_id,
 					'installments' => 1
 				]
