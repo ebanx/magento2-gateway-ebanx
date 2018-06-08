@@ -122,6 +122,11 @@ define(
                         })
                     })
 
+                    self.creditCardInstallments.subscribe(function(value){
+                        self.totalLocalCurrency(null);
+                        self.calculateTotalLocalCurrency(value);
+                    })
+
                     self.availableInstallments(installmentsOptions)
 
                 }).always(function () {
@@ -155,14 +160,14 @@ define(
                     // after all
                 });
 
-                $.when(totalLocalCurrency()).done(function (result) {
-                    if(self.getGlobalConfig().show_iof && result.total_with_iof_formatted){
-                        var text = $t('Total amount in local currency with IOF (0.38%):');
-                        self.totalLocalCurrency(text + ' ' + result.total_with_iof_formatted);
-                    } else {
-                        var text = $t('Total amount in local currency:');
-                        self.totalLocalCurrency(text + ' ' + result.total_formatted);
-                    }
+                self.calculateTotalLocalCurrency();
+            },
+
+            calculateTotalLocalCurrency: function(installments){
+                var self = this;
+                $.when(totalLocalCurrency(installments)).done(function (result) {
+                    var text = $t('Total amount in local currency:');
+                    self.totalLocalCurrency(text + ' ' + result.total_formatted);
                 });
             },
 
