@@ -30,9 +30,14 @@ class Exchange extends \Magento\Framework\App\Action\Action
 
 	public function execute()
 	{
+		$installments = (int)$this->getRequest()->getParam('installments');
 		$result = $this->resultJsonFactory->create();
         $base_total = $this->_session->getQuote()->getBaseGrandTotal();
         $country = $this->_session->getQuote()->getBillingAddress()->getCountryId();
+
+		if($installments > 1){
+			$base_total = $this->_ebanxHelper->calculateTotalWithInterest($base_total, $installments);
+		}
 
         $integrationKey = $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'live_integration_key');
         $sandboxIntegrationKey = $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_integration_key');

@@ -58,7 +58,20 @@
                 </div>
             <!-- /ko -->
 
-            <!-- ko if: useSavedCard() -->
+            <!-- ko if: showDocumentField() -->
+                <div class="field required">
+                    <label class="label">
+                        <span><!-- ko i18n: 'Document number'--><!-- /ko --> <em>*</em></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="oneclickpayment[document_number]"
+                            data-validate="{'required-entry': true}"
+                            data-bind="value: documentNumber, valueUpdate: 'afterkeydown'">
+                    </div>
+                </div>
+            <!-- /ko -->
+
+            <!-- ko if: useSavedCard() && ((showDocumentField() && documentNumber()) || !showDocumentField()) -->
             <div class="field">
                 <button class="action primary" data-bind="click: placeOrder">
                     <!-- ko i18n: 'Place Order'--><!-- /ko -->

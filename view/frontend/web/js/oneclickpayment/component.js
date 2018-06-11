@@ -11,7 +11,8 @@ define([
     'DigitalHub_Ebanx/js/action/saved-cards',
     'Magento_Ui/js/modal/modal',
     'mage/translate',
-    'Magento_Ui/js/modal/alert'
+    'Magento_Ui/js/modal/alert',
+    'DigitalHub_Ebanx/js/action/document-number-verification'
 ], function(
     _,
     Component,
@@ -26,7 +27,7 @@ define([
     modal,
     $t,
     alert,
-    customer
+    documentNumberVerification
 ) {
     'use strict';
     return Component.extend({
@@ -40,6 +41,8 @@ define([
             billingAddressId: null,
             shippingMethod: null,
             paymentMethod: null,
+            documentNumber: null,
+            showDocumentField: null,
             orderIncrementId: null,
             successPage: false,
             useSavedCard: null
@@ -55,6 +58,8 @@ define([
                     'shippingAddressId',
                     'billingAddressId',
                     'shippingMethod',
+                    'documentNumber',
+                    'showDocumentField',
                     'paymentMethod',
                     'orderIncrementId',
                     'successPage',
@@ -141,6 +146,11 @@ define([
                 self.shippingAddressList(list)
             });
 
+            // document number verification
+            $.when(documentNumberVerification()).done(function(result){
+                self.showDocumentField(!result.has_document_number)
+            });
+
             // populate shipping method List when shipping address changes
             this.shippingAddressId.subscribe(function(shipping_address_id){
                 self.shippingMethod(null)
@@ -203,6 +213,7 @@ define([
                 shipping_address_id: this.shippingAddressId(),
                 shipping_method: this.shippingMethod(),
                 payment_method: this.paymentMethod(),
+                documentNumber: this.documentNumber(),
                 token_id: this.useSavedCard()
             }
 

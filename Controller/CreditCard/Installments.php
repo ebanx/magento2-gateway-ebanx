@@ -37,7 +37,7 @@ class Installments extends \Magento\Framework\App\Action\Action
 		foreach(range(1,$maxInstallments) as $number){
 			$total_with_interest = $this->ebanxHelper->calculateTotalWithInterest($total, $number);
 			$installment_total = $total_with_interest / $number;
-			if($installment_total < $minInstallmentValue) continue;
+			if($installment_total < $minInstallmentValue && $number > 1) continue;
 
 			$installments[] = [
 				'number' => $number,

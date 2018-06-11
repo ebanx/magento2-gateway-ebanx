@@ -8,7 +8,8 @@ define(
         'use strict';
 
         return function () {
-            return storage.get(url.build('digitalhub_ebanx/checkout/exchange'), false)
+            var installments = arguments[0] && parseInt(arguments[0]) || 1;
+            return storage.get(url.build('digitalhub_ebanx/checkout/exchange?installments=' + installments), false)
         };
     }
 );
