@@ -1,5 +1,5 @@
 {
-    "name": "digitalhub/ebanx",
+    "name": "ebanx/magento2-gateway",
     "description": "Oficial EBANX Magento2 Payment Gateway",
     "type": "magento2-module",
     "version": "1.0.0",
