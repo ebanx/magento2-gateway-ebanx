@@ -76,7 +76,7 @@ php bin/magento setup:static-content:deploy
 To develop using our `docker-compose` structure just run:
 
 ```bash
-$ chmod +x $(pwd)/.scripts/install.sh && $(pwd)/.scripts/install.sh
+$(pwd)/.scripts/install.sh
 ```
 
 ## License
