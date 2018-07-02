@@ -71,6 +71,14 @@ php bin/magento setup:di:compile
 php bin/magento setup:static-content:deploy
 ```
 
+## Contributing
+
+To develop using our `docker-compose` structure just run:
+
+```bash
+$(pwd)/.scripts/install.sh
+```
+
 ## License
 
 Copyright (c) 2018, EBANX Tecnologia da Informação Ltda. All rights reserved.
