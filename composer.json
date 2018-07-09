@@ -1,5 +1,5 @@
 {
-    "name": "ebanx/magento2-gateway",
+    "name": "ebanx/magento2-gateway-ebanx",
     "description": "Oficial EBANX Magento2 Payment Gateway",
     "type": "magento2-module",
     "license": "Apache-2.0",
