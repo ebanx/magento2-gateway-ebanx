@@ -9,14 +9,12 @@ class Remove extends \Magento\Framework\App\Action\Action
 	public function __construct(
 		\Magento\Framework\App\Action\Context $context,
         \Magento\Customer\Model\Session $session,
-        \Magento\Framework\Message\ManagerInterface $messageManager,
-        \Magento\Framework\Controller\ResultFactory $result,
         \DigitalHub\Ebanx\Model\CreditCard\TokenFactory $tokenFactory
     )
 	{
-        $this->_result = $result;
+        $this->_result = $context->getResultFactory();
         $this->_customerSession = $session;
-        $this->_messageManager = $messageManager;
+        $this->_messageManager = $context->getMessageManager();
         $this->_tokenFactory = $tokenFactory;
 		return parent::__construct($context);
 	}
