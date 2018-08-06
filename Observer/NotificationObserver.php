@@ -45,15 +45,24 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
             // Invoice if status is CO (Confirmed)
             if($paymentResult && $paymentResult['payment'] && $paymentResult['payment']['status'] == 'CO'){
                 // Payment Confirmed
-                if($order->canInvoice()) {
+                if($order->canInvoice() || $order->getState() == 'payment_review') {
                     $invoice = $this->_invoiceService->prepareInvoice($order);
                     $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_OFFLINE);
                     $invoice->register();
                     $invoice->save();
+
                     $transactionSave = $this->_transaction
                         ->addObject($invoice)
                         ->addObject($invoice->getOrder());
                     $transactionSave->save();
+
+                    if($order->getState() == 'payment_review'){
+                        // Set order state to processing first
+                        $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING, true);
+                        $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+                        $order->save();
+                    }
+
                     $order->addStatusHistoryComment(__('Invoice #'.$invoice->getIncrementId().' created automatically'))
                         ->setIsCustomerNotified(false)
                         ->save();
