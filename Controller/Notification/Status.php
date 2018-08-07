@@ -24,19 +24,25 @@ class Status extends \Magento\Framework\App\Action\Action
 	{
 		$result = $this->resultJsonFactory->create();
 
-        $postData = $this->getRequest()->getPost();
+        $requestData = $this->getRequest()->getParams();
 
         try {
-            $operation = $postData['operation'];
-            $notification_type = $postData['notification_type'];
-            $hash_codes = explode(',',$postData['hash_codes']);
+            if (empty($requestData)) {
+                throw new \Exception('No params found.');
+            }
 
-            if($operation == 'payment_status_change' && $notification_type == 'update' && count($hash_codes)){
-                foreach($hash_codes as $hash){
-                    $transaction_data = ['hash' => $hash];
-                    $data = new \Magento\Framework\DataObject($transaction_data);
-                    $this->_eventManager->dispatch('digitalhub_ebanx_notification_status_change', ['transaction_data' => $data]);
-                }
+            $operation = $requestData['operation'];
+            $notification_type = $requestData['notification_type'];
+            $hash_codes = explode(',', $requestData['hash_codes']);
+
+            if($operation !== 'payment_status_change' || $notification_type !== 'update' || !count($hash_codes)){
+                throw new \Exception('Invalid params.');
+            }
+
+            foreach($hash_codes as $hash){
+                $transaction_data = ['hash' => $hash];
+                $data = new \Magento\Framework\DataObject($transaction_data);
+                $this->_eventManager->dispatch('digitalhub_ebanx_notification_status_change', ['transaction_data' => $data]);
             }
 
             $result->setData([
