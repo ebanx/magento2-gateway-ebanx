@@ -7,7 +7,7 @@ use DigitalHub\Ebanx\Gateway\Http\Client\Chile\Multicaja\TransactionAuthorizatio
 
 class TransactionAuthorizationTest extends \PHPUnit\Framework\TestCase
 {
-    public const SANDBOX_INTEGRATION_KEY = '09347509347509347504975037';
+    const SANDBOX_INTEGRATION_KEY = '09347509347509347504975037';
     public $fakeEbanxFacade;
 
     public function testPlaceRequestSuccess()
