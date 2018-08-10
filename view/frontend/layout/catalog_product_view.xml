@@ -2,7 +2,7 @@
 <page  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="product.info.main">
-            <block class="DigitalHub\Ebanx\Block\Product\View\OneClickPayment" name="ebanx_oneclickpayment" template="DigitalHub_Ebanx::product/view/oneclickpayment.phtml" cacheable="false"></block>
+            <block class="DigitalHub\Ebanx\Block\Product\View\OneClickPayment" name="ebanx_oneclickpayment" template="DigitalHub_Ebanx::product/view/oneclickpayment.phtml"></block>
         </referenceContainer>
     </body>
 </page>
