@@ -7,7 +7,7 @@ use DigitalHub\Ebanx\Gateway\Http\Client\Brazil\CreditCard\TransactionRefund;
 
 class TransactionRefundTest extends \PHPUnit\Framework\TestCase
 {
-    public const SANDBOX_INTEGRATION_KEY = '09347509347509347504975037';
+    const SANDBOX_INTEGRATION_KEY = '09347509347509347504975037';
     public $fakeEbanxFacade;
 
     public function testPlaceRequestSuccess()
