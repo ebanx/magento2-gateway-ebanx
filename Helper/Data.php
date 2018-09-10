@@ -12,6 +12,8 @@ class Data extends AbstractHelper
 
     public function getPersonType($document, $country)
     {
+        $document = str_replace(array('.', '-', '/'), '', $document);
+
         if ($country !== 'BR' || strlen($document) < 14) {
             return \Ebanx\Benjamin\Models\Person::TYPE_PERSONAL;
         }
