@@ -74,7 +74,7 @@ class ConfigProvider implements ConfigProviderInterface
         $isDebugEnabled = $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'debug', $this->storeId);
         $public_integration_key = $isSandbox ?
             $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_public_integration_key', $this->storeId) :
-            $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'public_integration_key', $this->storeId);
+            $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'live_public_integration_key', $this->storeId);
 
         return [
             'payment' => [

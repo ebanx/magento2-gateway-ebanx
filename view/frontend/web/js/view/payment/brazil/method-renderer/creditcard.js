@@ -312,8 +312,12 @@ define(
                                     // _this.messageContainer.addSuccessMessage({message: 'Token generation success!'})
                                     _this.placeOrder();
                                 } else {
-                                    _this.creditCardToken = null
-                                    _this.messageContainer.addErrorMessage({message: $t('Token generation error. Please contact support.')});
+                                    _this.creditCardToken = null;
+                                    var errorMessage = 'Token generation error. Please contact support.';
+                                    if (ebanxResponse.error && ebanxResponse.error.err && ebanxResponse.error.err.status && ebanxResponse.error.err.status === 'ERROR') {
+                                        errorMessage = ebanxResponse.error.err.status_message;
+                                    }
+                                    _this.messageContainer.addErrorMessage({message: $t(errorMessage)});
                                 }
                                 fullScreenLoader.stopLoader();
                             })
