@@ -71,6 +71,11 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
 
             // Cancel if status is CA (Cancelled)
             if($paymentResult && $paymentResult['payment'] && $paymentResult['payment']['status'] == 'CA'){
+	            $order->setState(\Magento\Sales\Model\Order::STATE_HOLDED, true);
+	            $order->setStatus(\Magento\Sales\Model\Order::STATE_HOLDED);
+	            $order->setActionFlag(\Magento\Sales\Model\Order::ACTION_FLAG_UNHOLD, false);
+	            $order->save();
+
                 // Payment Canceled
                 if($order->canCancel()) {
                     $order->cancel()->save();
