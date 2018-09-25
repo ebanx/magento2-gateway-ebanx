@@ -62,7 +62,7 @@ class OrderDataBuilder implements BuilderInterface
             'items' => $orderItems,
             'userValues' => array(
                1 => 'from_magento2',
-               3 => '1.0.3',
+               3 => '1.0.4',
            )
         ];
 
