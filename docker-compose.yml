@@ -1,7 +1,7 @@
 version: '3.0'
 services:
   web:
-    image: alexcheng/magento2:2.2.4-developer
+    image: alexcheng/magento2
     ports:
       - 80:80
     links:
@@ -9,7 +9,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./:/var/www/html/app/code/DigitalHub/Ebanx
+      - ./:/var/www/html/vendor/ebanx/magento2-gateway-ebanx
+      - ./vendor/ebanx/benjamin:/var/www/html/vendor/ebanx/benjamin
 
   db:
     image: mysql:5.6.23

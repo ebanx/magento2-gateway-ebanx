@@ -19,7 +19,7 @@ echo "Importing sample data... This will probably take a long time..."
 docker exec -it ${PWD##*/}_web_1 install-sampledata
 
 echo "Running composer install... This also seems to take a long time..."
-docker exec -it ${PWD##*/}_web_1 composer require ebanx/benjamin
+docker exec -it ${PWD##*/}_web_1 composer require ebanx/magento2-gateway-ebanx
 docker exec -it ${PWD##*/}_web_1 composer update
 
 echo "Everything is fine... Magento is live in ${MAGENTO_URL}"
