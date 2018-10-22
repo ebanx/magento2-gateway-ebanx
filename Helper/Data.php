@@ -2,9 +2,19 @@
 namespace DigitalHub\Ebanx\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\Module\ModuleListInterface;
 
 class Data extends AbstractHelper
 {
+    private $_moduleList;
+
+    public function __construct(Context $context, ModuleListInterface $moduleList)
+    {
+        parent::__construct($context);
+        $this->_moduleList = $moduleList;
+    }
+
     public function getConfigData($area, $field, $storeId = null)
     {
         return $this->scopeConfig->getValue('payment/' . $area . '/' . $field, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId);
@@ -148,5 +158,9 @@ class Data extends AbstractHelper
         }
 
         return $configValue;
+    }
+
+    public function getModuleVersion() {
+        return $this->_moduleList->getOne($this->_getModuleName())['setup_version'];
     }
 }

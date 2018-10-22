@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Request;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use DigitalHub\Ebanx\Observer\Brazil\CreditCard\DataAssignObserver;
 
 /**
  * Class OrderDataBuilder
@@ -62,7 +61,7 @@ class OrderDataBuilder implements BuilderInterface
             'items' => $orderItems,
             'userValues' => array(
                1 => 'from_magento2',
-               3 => '1.0.4',
+               3 => $this->_ebanxHelper->getModuleVersion(),
            )
         ];
 
