@@ -28,6 +28,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_brazil_creditcard>
             <digitalhub_ebanx_brazil_boleto>
                 <active>0</active>
@@ -46,6 +47,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_brazil_boleto>
             <digitalhub_ebanx_brazil_ebanxaccount>
                 <active>0</active>
@@ -64,6 +66,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_brazil_ebanxaccount>
             <digitalhub_ebanx_brazil_tef>
                 <active>0</active>
@@ -82,6 +85,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_brazil_tef>
 
             <!-- Argentina -->
@@ -102,6 +106,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_argentina_creditcard>
             <digitalhub_ebanx_argentina_rapipago>
                 <active>0</active>
@@ -120,6 +125,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_argentina_rapipago>
             <digitalhub_ebanx_argentina_pagofacil>
                 <active>0</active>
@@ -138,6 +144,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_argentina_pagofacil>
             <digitalhub_ebanx_argentina_cupondepagos>
                 <active>0</active>
@@ -156,6 +163,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_argentina_cupondepagos>
 
             <!-- Chile -->
@@ -176,6 +184,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_chile_servipag>
             <digitalhub_ebanx_chile_sencillito>
                 <active>0</active>
@@ -194,6 +203,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_chile_sencillito>
             <digitalhub_ebanx_chile_webpay>
                 <active>0</active>
@@ -212,6 +222,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_chile_webpay>
             <digitalhub_ebanx_chile_multicaja>
                 <active>0</active>
@@ -230,6 +241,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_chile_multicaja>
 
             <!-- Colombia -->
@@ -250,6 +262,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_colombia_eft>
             <digitalhub_ebanx_colombia_baloto>
                 <active>0</active>
@@ -268,6 +281,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_colombia_baloto>
             <digitalhub_ebanx_colombia_creditcard>
                 <active>0</active>
@@ -286,6 +300,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_colombia_creditcard>
 
             <!-- Ecuador -->
@@ -306,6 +321,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_ecuador_safetypay>
 
             <!-- Peru -->
@@ -326,6 +342,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_peru_pagoefectivo>
             <digitalhub_ebanx_peru_safetypay>
                 <active>0</active>
@@ -344,6 +361,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_peru_safetypay>
 
             <!-- Mexico -->
@@ -364,6 +382,7 @@
                 <!-- <can_use_internal>1</can_use_internal> -->
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_mexico_creditcard>
             <digitalhub_ebanx_mexico_oxxo>
                 <active>0</active>
@@ -382,6 +401,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_mexico_oxxo>
             <digitalhub_ebanx_mexico_spei>
                 <active>0</active>
@@ -400,6 +420,7 @@
                 <can_use_internal>1</can_use_internal>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
+                <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_mexico_spei>
         </payment>
     </default>
