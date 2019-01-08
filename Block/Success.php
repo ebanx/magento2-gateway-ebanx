@@ -49,7 +49,7 @@ class Success extends \Magento\Framework\View\Element\Template
      */
     public function getAdditionalInfoHtml()
     {
-        return $this->_layout->renderElement('order.success.additional.info');
+        return $this->_layout->renderElement('order.ebanx.success.additional.info');
     }
 
     /**
