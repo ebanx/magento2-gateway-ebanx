@@ -93,7 +93,7 @@ class Success extends \Magento\Framework\View\Element\Template
                 'can_view_order'  => $this->canViewOrder($order),
                 'order_id'  => $order->getIncrementId(),
                 'order_date' => $orderDataConverted,
-                'order_total' => $order->getGrandTotal(),
+                'order_total' => $order->getBaseGrandTotal(),
                 'order_payment_method' => $order->getPayment()->getMethodInstance()->getCode(),
                 'order_payment_method_title' => $order->getPayment()->getMethodInstance()->getTitle(),
                 'order_customer_firstname' => $order->getCustomerFirstname(),
