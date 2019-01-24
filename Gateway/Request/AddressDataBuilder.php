@@ -54,7 +54,7 @@ class AddressDataBuilder implements BuilderInterface
         $streetComplement = $this->_ebanxHelper->getAddressData('complement', $billingAddress);
 
         $address = new \Ebanx\Benjamin\Models\Address([
-            'address' => $street ? $street : 'N/A',
+            'address' => $street ? $street : $this->_ebanxHelper->getFullAddressData($billingAddress),
             'streetNumber' => $streetNumber ? $streetNumber : 'N/A',
             'city' => $billingAddress->getCity(),
             'country' => \Ebanx\Benjamin\Models\Country::fromIso($billingAddress->getCountryId()),

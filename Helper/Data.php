@@ -120,6 +120,10 @@ class Data extends AbstractHelper
         return null;
     }
 
+    public function getFullAddressData($addressObject) {
+        return $addressObject->getData()['street'];
+    }
+
     public function getInterestRateFor($number)
     {
         $interest_rates_enabled = json_decode($this->getConfigData('digitalhub_ebanx_global/cc', 'enable_interest_rate'));
