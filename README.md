@@ -59,7 +59,7 @@ Main features included are:
 Download module with composer:
 
 ```
-composer require digitalhub/ebanx
+composer require ebanx/magento2-gateway-ebanx
 ```
 
 Enable module on Magento 2:
