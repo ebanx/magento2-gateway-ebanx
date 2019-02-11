@@ -1,6 +1,7 @@
 <?php
 namespace DigitalHub\Ebanx\Gateway\Http\Client\Chile\Servipag;
 
+use DigitalHub\Ebanx\Gateway\Http\Util\HttpUtil;
 use Magento\Payment\Gateway\Http\ClientInterface;
 
 /**
@@ -47,7 +48,7 @@ class TransactionAuthorization implements ClientInterface
             'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
         ]);
 
-        $this->_ebanxClient = EBANX($config);
+        $this->_ebanxClient = HttpUtil::setupEbanxClient($config, null);
 
         $this->_logger->info('Client Authorization :: __construct');
     }

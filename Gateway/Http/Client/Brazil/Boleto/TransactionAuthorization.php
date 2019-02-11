@@ -1,6 +1,7 @@
 <?php
 namespace DigitalHub\Ebanx\Gateway\Http\Client\Brazil\Boleto;
 
+use DigitalHub\Ebanx\Gateway\Http\Util\HttpUtil;
 use Magento\Payment\Gateway\Http\ClientInterface;
 
 /**
@@ -50,7 +51,7 @@ class TransactionAuthorization implements ClientInterface
             // 'userValues' => ['from_magento2'],
         ]);
 
-        $this->_ebanxClient = EBANX($config);
+        $this->_ebanxClient = HttpUtil::setupEbanxClient($config, null);
 
         $this->_logger->info('Client Authorization :: __construct');
     }

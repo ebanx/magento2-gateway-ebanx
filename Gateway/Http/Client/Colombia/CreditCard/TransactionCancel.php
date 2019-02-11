@@ -1,6 +1,7 @@
 <?php
 namespace DigitalHub\Ebanx\Gateway\Http\Client\Colombia\CreditCard;
 
+use DigitalHub\Ebanx\Gateway\Http\Util\HttpUtil;
 use Magento\Payment\Gateway\Http\ClientInterface;
 
 /**
@@ -52,7 +53,7 @@ class TransactionCancel implements ClientInterface
             'minInstalmentAmount' => $this->_ebanxHelper->getMinInstallmentValue('CO')
         ]);
 
-        $this->_ebanxClient = EBANX($config, $creditCardConfig);
+        $this->_ebanxClient = HttpUtil::setupEbanxClient($config, $creditCardConfig);
 
         $this->_logger->info('Client Cancel :: __construct');
     }
