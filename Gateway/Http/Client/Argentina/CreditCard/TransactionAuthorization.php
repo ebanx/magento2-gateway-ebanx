@@ -1,6 +1,7 @@
 <?php
 namespace DigitalHub\Ebanx\Gateway\Http\Client\Argentina\CreditCard;
 
+use DigitalHub\Ebanx\Gateway\Http\Util\HttpUtil;
 use Magento\Payment\Gateway\Http\ClientInterface;
 
 /**
@@ -52,7 +53,7 @@ class TransactionAuthorization implements ClientInterface
             'minInstalmentAmount' => $this->_ebanxHelper->getMinInstallmentValue('AR')
         ]);
 
-        $this->_ebanxClient = EBANX($config, $creditCardConfig);
+        $this->_ebanxClient = HttpUtil::setupEbanxClient($config, $creditCardConfig);
 
         $this->_logger->info('Client Authorization :: __construct');
     }
