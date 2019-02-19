@@ -9,7 +9,8 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
         \DigitalHub\Ebanx\Logger\Logger $logger,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Sales\Model\Service\InvoiceService $invoiceService,
-        \Magento\Framework\DB\Transaction $transaction
+        \Magento\Framework\DB\Transaction $transaction,
+        \Magento\Sales\Model\RefundOrder $refundOrder
     )
     {
         $this->_ebanxHelper = $ebanxHelper;
@@ -17,11 +18,15 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
         $this->_storeManager = $storeManager;
         $this->_invoiceService = $invoiceService;
         $this->_transaction = $transaction;
+        $this->_refundOrder = $refundOrder;
     }
 
-	public function execute(\Magento\Framework\Event\Observer $observer)
-	{
-		$transactionData = $observer->getData('transaction_data');
+    const REFUND = 'refund';
+
+    public function execute(\Magento\Framework\Event\Observer $observer)
+    {
+        $transactionData = $observer->getData('transaction_data');
+        $notification_type = $observer->getData('notification_data');
         $hash = $transactionData->getHash();
 
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -32,6 +37,10 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
             $transaction = $transactionSearch->getFirstItem();
 
             $order = $objectManager->create('\Magento\Sales\Model\Order')->load($transaction->getOrderId());
+
+            if (self::isRefund($notification_type)) {
+                return $this->executeRefundOrder($order);
+            }
 
             // Get Payment Details
             $ebanxConfig = new \Ebanx\Benjamin\Models\Configs\Config([
@@ -71,10 +80,10 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
 
             // Cancel if status is CA (Cancelled)
             if($paymentResult && $paymentResult['payment'] && $paymentResult['payment']['status'] == 'CA'){
-	            $order->setState(\Magento\Sales\Model\Order::STATE_HOLDED, true);
-	            $order->setStatus(\Magento\Sales\Model\Order::STATE_HOLDED);
-	            $order->setActionFlag(\Magento\Sales\Model\Order::ACTION_FLAG_UNHOLD, false);
-	            $order->save();
+                $order->setState(\Magento\Sales\Model\Order::STATE_HOLDED, true);
+                $order->setStatus(\Magento\Sales\Model\Order::STATE_HOLDED);
+                $order->setActionFlag(\Magento\Sales\Model\Order::ACTION_FLAG_UNHOLD, false);
+                $order->save();
 
                 // Payment Canceled
                 if($order->canCancel()) {
@@ -89,6 +98,17 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
             throw new \Exception('Transaction not found with hash: ' . $hash);
         }
 
-		return $this;
-	}
+        return $this;
+    }
+
+    private static function isRefund($notification_type)
+    {
+        return $notification_type === \Ebanx\Benjamin\Util\Http::REFUND;
+    }
+
+    private function executeRefundOrder($order)
+    {
+        $this->_refundOrder->execute($order->getId());
+        return $this;
+    }
 }
