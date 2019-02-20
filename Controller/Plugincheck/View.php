@@ -5,19 +5,29 @@ namespace DigitalHub\Ebanx\Controller\Plugincheck;
 use DigitalHub\Ebanx\Helper\Data;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Controller\Result\JsonFactory;
 
 class View extends Action
 {
+	public function __construct(
+		\Magento\Framework\App\Action\Context $context,
+		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+	) {
+		parent::__construct($context);
+		$this->resultJsonFactory = $resultJsonFactory;
+	}
+
 	public function execute() {
 		$object_manager = ObjectManager::getInstance();
-		echo json_encode([
+		$jsonResult = $this->resultJsonFactory->create();
+		$jsonResult->setData(json_encode([
 			'Magento' => self::getMagentoVersion($object_manager),
 			'php'     => phpversion(),
 			'mysql'   => self::getDBVersion($object_manager),
 			'plugins' => self::getModulesList($object_manager),
 			'configs' => self::getConfigs($object_manager),
-			]
-		);
+		]));
+		return $jsonResult;
 	}
 
 	private static function getMagentoVersion(ObjectManager $object_manager) {
