@@ -21,7 +21,8 @@ class View extends Action
 		$object_manager = ObjectManager::getInstance();
 		$jsonResult = $this->resultJsonFactory->create();
 		$jsonResult->setData(json_encode([
-			'Magento' => self::getMagentoVersion($object_manager),
+			'Magento2' => self::getMagentoVersion($object_manager),
+			'ebanx-gateway' => self::getEbanxVersion($object_manager),
 			'php'     => phpversion(),
 			'mysql'   => self::getDBVersion($object_manager),
 			'plugins' => self::getModulesList($object_manager),
@@ -91,5 +92,12 @@ class View extends Action
 		$module_list = $object_manager->get('Magento\Framework\Module\ModuleListInterface');
 		$context = $object_manager->get('Magento\Framework\App\Helper\Context');
 		return new Data($context, $module_list);
+	}
+
+	private static function getEbanxVersion(ObjectManager $object_manager)
+	{
+		$module_list = $object_manager->get('Magento\Framework\Module\ModuleListInterface');
+		$module_info = $module_list->getOne('DigitalHub_Ebanx');
+		return $module_info['setup_version'];
 	}
 }
