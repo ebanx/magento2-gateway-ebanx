@@ -20,14 +20,14 @@ class View extends Action
 	public function execute() {
 		$object_manager = ObjectManager::getInstance();
 		$jsonResult = $this->resultJsonFactory->create();
-		$jsonResult->setData(json_encode([
+		$jsonResult->setData([
 			'Magento2' => self::getMagentoVersion($object_manager),
 			'ebanx-gateway' => self::getEbanxVersion($object_manager),
 			'php'     => phpversion(),
 			'mysql'   => self::getDBVersion($object_manager),
 			'plugins' => self::getModulesList($object_manager),
 			'configs' => self::getConfigs($object_manager),
-		]));
+		]);
 		return $jsonResult;
 	}
 
