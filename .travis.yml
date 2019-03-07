@@ -1,0 +1,27 @@
+dist: trusty
+sudo: required
+
+language: php
+
+services:
+  - docker
+
+php:
+  - 5.4
+
+cache:
+  apt: true
+  directories:
+    - $TRAVIS_BUILD_DIR/vendor
+    - $TRAVIS_BUILD_DIR/tests/node_modules
+    - $HOME/.composer/cache
+    - ~/.npm
+    - ~/.cache
+
+before_install:
+  - nvm install stable
+  - nvm use stable
+
+script:
+  - bash ./Test/test.sh
+
