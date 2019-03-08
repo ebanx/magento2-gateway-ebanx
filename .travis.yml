@@ -1,0 +1,20 @@
+dist: trusty
+sudo: required
+
+language: php
+
+services:
+  - docker
+
+php: 5.6
+
+
+before_script:
+  - sudo service mysql stop
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3
+
+jobs:
+  include:
+    - script: bash ./Test/test.sh
