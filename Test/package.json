@@ -1,0 +1,14 @@
+{
+  "name": "ebanx-magento-tests",
+  "version": "1.0.0",
+  "description": "E2e test to EBANX Magento Plugin.",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
+  "author": "Ruanito Santos",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^3.1.5"
+  }
+}
