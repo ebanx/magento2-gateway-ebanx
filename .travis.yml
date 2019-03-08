@@ -15,6 +15,10 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
 
+before_install:
+  - nvm install stable
+  - nvm use stable
+
 jobs:
   include:
     - script: bash ./Test/test.sh
