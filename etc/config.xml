@@ -108,63 +108,6 @@
                 <sort_order>1</sort_order>
                 <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_argentina_creditcard>
-            <digitalhub_ebanx_argentina_rapipago>
-                <active>0</active>
-                <model>DigitalHubEbanxArgentinaRapipagoFacade</model>
-                <order_status>pending</order_status>
-                <payment_action>authorize</payment_action>
-                <title>Rapipago</title>
-                <can_authorize>1</can_authorize>
-                <can_capture>0</can_capture>
-                <can_capture_partial>0</can_capture_partial>
-                <can_cancel>0</can_cancel>
-                <can_refund>0</can_refund>
-                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
-                <can_void>0</can_void>
-                <can_use_checkout>1</can_use_checkout>
-                <can_use_internal>1</can_use_internal>
-                <is_gateway>1</is_gateway>
-                <sort_order>1</sort_order>
-                <group>digitalhub_ebanx</group>
-            </digitalhub_ebanx_argentina_rapipago>
-            <digitalhub_ebanx_argentina_pagofacil>
-                <active>0</active>
-                <model>DigitalHubEbanxArgentinaPagoFacilFacade</model>
-                <order_status>pending</order_status>
-                <payment_action>authorize</payment_action>
-                <title>PagoFacil</title>
-                <can_authorize>1</can_authorize>
-                <can_capture>0</can_capture>
-                <can_capture_partial>0</can_capture_partial>
-                <can_cancel>0</can_cancel>
-                <can_refund>0</can_refund>
-                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
-                <can_void>0</can_void>
-                <can_use_checkout>1</can_use_checkout>
-                <can_use_internal>1</can_use_internal>
-                <is_gateway>1</is_gateway>
-                <sort_order>1</sort_order>
-                <group>digitalhub_ebanx</group>
-            </digitalhub_ebanx_argentina_pagofacil>
-            <digitalhub_ebanx_argentina_cupondepagos>
-                <active>0</active>
-                <model>DigitalHubEbanxArgentinaCuponDePagosFacade</model>
-                <order_status>pending</order_status>
-                <payment_action>authorize</payment_action>
-                <title>Cupon de Pagos</title>
-                <can_authorize>1</can_authorize>
-                <can_capture>0</can_capture>
-                <can_capture_partial>0</can_capture_partial>
-                <can_cancel>0</can_cancel>
-                <can_refund>0</can_refund>
-                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
-                <can_void>0</can_void>
-                <can_use_checkout>1</can_use_checkout>
-                <can_use_internal>1</can_use_internal>
-                <is_gateway>1</is_gateway>
-                <sort_order>1</sort_order>
-                <group>digitalhub_ebanx</group>
-            </digitalhub_ebanx_argentina_cupondepagos>
 
             <!-- Chile -->
             <digitalhub_ebanx_chile_servipag>

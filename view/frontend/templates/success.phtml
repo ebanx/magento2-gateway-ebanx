@@ -40,24 +40,6 @@
         ->setTemplate('DigitalHub_Ebanx::success/brazil/boleto.phtml')->toHtml() ?>
     <?php endif; ?>
 
-    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_argentina_rapipago'): ?>
-        <?php echo $this->getLayout()
-        ->createBlock('DigitalHub\Ebanx\Block\Success')
-        ->setTemplate('DigitalHub_Ebanx::success/argentina/rapipago.phtml')->toHtml() ?>
-    <?php endif; ?>
-
-    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_argentina_pagofacil'): ?>
-        <?php echo $this->getLayout()
-        ->createBlock('DigitalHub\Ebanx\Block\Success')
-        ->setTemplate('DigitalHub_Ebanx::success/argentina/pagofacil.phtml')->toHtml() ?>
-    <?php endif; ?>
-
-    <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_argentina_cupondepagos'): ?>
-        <?php echo $this->getLayout()
-        ->createBlock('DigitalHub\Ebanx\Block\Success')
-        ->setTemplate('DigitalHub_Ebanx::success/argentina/cupondepagos.phtml')->toHtml() ?>
-    <?php endif; ?>
-
     <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_colombia_baloto'): ?>
         <?php echo $this->getLayout()
         ->createBlock('DigitalHub\Ebanx\Block\Success')

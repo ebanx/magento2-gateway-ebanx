@@ -53,24 +53,10 @@ class ActiveValueHandlerTest extends \PHPUnit\Framework\TestCase
             [
                 'expectedConfig' => [
                     'storeId' => 1,
-                    'config_enabled_payments' => 'rapipago,creditcard,pagofacil,cupondepagos'
+                    'config_enabled_payments' => 'creditcard'
                 ],
                 'expectedResult' => true
             ],
-            [
-                'expectedConfig' => [
-                    'storeId' => 2,
-                    'config_enabled_payments' => 'cupondepagos,creditcard'
-                ],
-                'expectedResult' => true
-            ],
-            [
-                'expectedConfig' => [
-                    'storeId' => 1,
-                    'config_enabled_payments' => 'pagofacil'
-                ],
-                'expectedResult' => false
-            ]
         ];
     }
 }
