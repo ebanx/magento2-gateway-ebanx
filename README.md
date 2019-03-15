@@ -27,9 +27,6 @@ Main features included are:
     - EBANX Account
 - Argentina
     - Credit Card
-    - Cupon de Pagos
-    - PagoFacil
-    - Rapipago
 - Chile
     - Multicaja
     - Sencillito

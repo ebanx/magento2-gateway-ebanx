@@ -48,15 +48,6 @@
                                                                         <item name="digitalhub_ebanx_argentina_creditcard" xsi:type="array">
                                                                             <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
                                                                         </item>
-                                                                        <item name="digitalhub_ebanx_argentina_rapipago" xsi:type="array">
-                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
-                                                                        </item>
-                                                                        <item name="digitalhub_ebanx_argentina_pagofacil" xsi:type="array">
-                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
-                                                                        </item>
-                                                                        <item name="digitalhub_ebanx_argentina_cupondepagos" xsi:type="array">
-                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
-                                                                        </item>
                                                                     </item>
                                                                 </item>
                                                                 <item name="digitalhub_ebanx_chile_methods" xsi:type="array">
