@@ -7,6 +7,8 @@ class Exchange extends \Magento\Framework\App\Action\Action
 	protected $ebanxHelper;
 	protected $priceCurrency;
 
+	const EXCHANGE_ACTION = 'ws/exchange';
+
 	public function __construct(
 		\Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
@@ -43,7 +45,7 @@ class Exchange extends \Magento\Framework\App\Action\Action
         $sandboxIntegrationKey = $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_integration_key');
         $isSandbox = (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox');
 
-        $url = $isSandbox ? 'https://sandbox.ebanx.com/ws/exchange' : 'https://api.ebanx.com/ws/exchange';
+        $url = $isSandbox ? \Ebanx\Benjamin\Services\Http\Client::SANDBOX_URL . self::EXCHANGE_ACTION : \Ebanx\Benjamin\Services\Http\Client::LIVE_URL . self::EXCHANGE_ACTION;
         $integration_key = $isSandbox ? $sandboxIntegrationKey : $integrationKey;
 
         $base_currency = $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
