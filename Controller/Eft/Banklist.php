@@ -7,6 +7,8 @@ class Banklist extends \Magento\Framework\App\Action\Action
 	protected $ebanxHelper;
 	protected $priceCurrency;
 
+	const BANKLIST_ACTION = 'ws/getBankList';
+
 	public function __construct(
 		\Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
@@ -27,8 +29,8 @@ class Banklist extends \Magento\Framework\App\Action\Action
         $integrationKey = $this->ebanxHelper->getConfigData('digitalhub_ebanx_global', 'live_integration_key');
         $sandboxIntegrationKey = $this->ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_integration_key');
         $isSandbox = (int)$this->ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox');
+        $url = $isSandbox ? \Ebanx\Benjamin\Services\Http\Client::SANDBOX_URL . self::BANKLIST_ACTION : \Ebanx\Benjamin\Services\Http\Client::LIVE_URL . self::BANKLIST_ACTION;
 
-        $url = $isSandbox ? 'https://sandbox.ebanx.com/ws/getBankList' : 'https://api.ebanx.com/ws/getBankList';
         $integration_key = $isSandbox ? $sandboxIntegrationKey : $integrationKey;
 
         $items = [
