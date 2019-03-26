@@ -80,8 +80,8 @@ class Exchange extends \Magento\Framework\App\Action\Action
 
             $this->curl->post($url, [
                 'integration_key' => $integration_key,
-                'currency_code' => $base_currency,
-                'currency_base_code' => $to_currency
+                'currency_code' => $to_currency,
+                'currency_base_code' => $base_currency
             ]);
 
             $response = json_decode($this->curl->getBody());
