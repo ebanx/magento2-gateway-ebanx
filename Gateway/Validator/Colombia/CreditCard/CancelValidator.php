@@ -36,8 +36,6 @@ class CancelValidator extends AbstractValidator
     public function validate(array $validationSubject)
     {
         $response = \Magento\Payment\Gateway\Helper\SubjectReader::readResponse($validationSubject);
-        $paymentDataObjectInterface = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($validationSubject);
-        $payment = $paymentDataObjectInterface->getPayment();
 
         $this->_logger->info('CancelValidator :: handle');
 

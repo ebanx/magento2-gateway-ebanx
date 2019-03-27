@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Request;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use DigitalHub\Ebanx\Observer\Brazil\CreditCard\DataAssignObserver;
 
 /**
  * Class AddressDataBuilder
@@ -40,14 +39,8 @@ class AddressDataBuilder implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
-        /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
-        $paymentDataObject = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($buildSubject);
-
-        $order = $paymentDataObject->getOrder();
-        $payment = $paymentDataObject->getPayment();
         $billingAddress = $this->_session->getQuote()->getBillingAddress();
 
-        $additionalData = $payment->getAdditionalInformation();
 
         $street = $this->_ebanxHelper->getAddressData('street', $billingAddress);
         $streetNumber = $this->_ebanxHelper->getAddressData('street_number', $billingAddress);

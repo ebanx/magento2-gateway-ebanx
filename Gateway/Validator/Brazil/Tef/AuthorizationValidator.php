@@ -41,9 +41,6 @@ class AuthorizationValidator extends AbstractValidator
     public function validate(array $validationSubject)
     {
         $response = \Magento\Payment\Gateway\Helper\SubjectReader::readResponse($validationSubject);
-        $paymentDataObjectInterface = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($validationSubject);
-        $payment = $paymentDataObjectInterface->getPayment();
-        $additionalData = $payment->getAdditionalInformation();
 
         $this->_logger->info('AuthorizationValidator :: handle');
 

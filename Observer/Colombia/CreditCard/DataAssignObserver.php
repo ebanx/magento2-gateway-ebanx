@@ -19,8 +19,6 @@ class DataAssignObserver extends AbstractDataAssignObserver
     const SAVE_CC = 'save_cc';
     const USE_SAVED_CC = 'use_saved_cc';
 
-    private $_logger;
-
     /**
      * @var array
      */

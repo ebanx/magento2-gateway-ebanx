@@ -68,8 +68,6 @@ class ConfigProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        // $this->gatewayConfig->setMethodCode(self::CODE);
-        $isActive = (bool)$this->gatewayConfig->getValue('general/active', $this->storeId);
         $isSandbox = $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox', $this->storeId);
         $isDebugEnabled = $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'debug', $this->storeId);
         $public_integration_key = $isSandbox ?

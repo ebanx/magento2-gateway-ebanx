@@ -74,8 +74,6 @@ class TransactionAuthorization implements ClientInterface
         try {
             $ebanxPayment = new \Ebanx\Benjamin\Models\Payment($request);
             $payment_result = $this->_ebanxClient->create($ebanxPayment);
-            //
-            // $response['success'] = true;
             $response['payment_result'] = $payment_result;
 
             $this->_logger->info('EBANX Result Authorization :: placeRequest', [$payment_result]);
