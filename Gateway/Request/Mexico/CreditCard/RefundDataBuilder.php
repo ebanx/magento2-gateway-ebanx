@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Request\Mexico\CreditCard;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-// use DigitalHub\Ebanx\Observer\Mexico\CreditCard\DataAssignObserver;
 
 /**
  * Class RefundDataBuilder

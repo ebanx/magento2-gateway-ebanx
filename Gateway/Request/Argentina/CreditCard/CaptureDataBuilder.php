@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Request\Argentina\CreditCard;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-// use DigitalHub\Ebanx\Observer\Argentina\CreditCard\DataAssignObserver;
 
 /**
  * Class CaptureDataBuilder

@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Request\Colombia\CreditCard;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-// use DigitalHub\Ebanx\Observer\Colombia\CreditCard\DataAssignObserver;
 
 /**
  * Class CancelDataBuilder

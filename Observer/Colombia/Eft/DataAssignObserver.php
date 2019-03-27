@@ -13,8 +13,6 @@ class DataAssignObserver extends AbstractDataAssignObserver
     const DOCUMENT_NUMBER = 'document_number';
     const EFT_CODE = 'eft_code';
 
-    private $_logger;
-
     /**
      * @var array
      */

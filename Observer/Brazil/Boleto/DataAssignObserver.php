@@ -12,8 +12,6 @@ class DataAssignObserver extends AbstractDataAssignObserver
 {
     const DOCUMENT_NUMBER = 'document_number';
 
-    private $_logger;
-
     /**
      * @var array
      */

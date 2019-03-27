@@ -36,7 +36,6 @@ class CountryValidator extends \Magento\Payment\Gateway\Validator\AbstractValida
     public function validate(array $validationSubject)
     {
         $isValid = false;
-        $storeId = $validationSubject['storeId'];
 
         $country = $validationSubject['country'];
 

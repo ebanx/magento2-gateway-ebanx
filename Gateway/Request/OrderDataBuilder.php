@@ -40,9 +40,6 @@ class OrderDataBuilder implements BuilderInterface
         $paymentDataObject = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($buildSubject);
 
         $order = $paymentDataObject->getOrder();
-        $payment = $paymentDataObject->getPayment();
-
-        $additionalData = $payment->getAdditionalInformation();
 
         $orderItems = [];
         foreach($order->getItems() as $item){
@@ -55,7 +52,6 @@ class OrderDataBuilder implements BuilderInterface
         }
 
         $request = [
-            // 'amountTotal' => $order->getGrandTotalAmount(),
             'orderNumber' => $order->getOrderIncrementId(),
             'merchantPaymentCode' => $order->getOrderIncrementId() . '_' . time(),
             'items' => $orderItems,

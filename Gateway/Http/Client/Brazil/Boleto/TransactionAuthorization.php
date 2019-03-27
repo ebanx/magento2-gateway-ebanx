@@ -46,9 +46,6 @@ class TransactionAuthorization implements ClientInterface
             'sandboxIntegrationKey' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_integration_key'),
             'isSandbox' => (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox'),
             'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
-            // 'notificationUrl' => '',
-            // 'redirectUrl' => $this->_storeManager->getStore()->getBaseUrl(),
-            // 'userValues' => ['from_magento2'],
         ]);
 
         $this->_ebanxClient = HttpUtil::setupEbanxClient($config, null);
@@ -72,8 +69,6 @@ class TransactionAuthorization implements ClientInterface
         try {
             $ebanxPayment = new \Ebanx\Benjamin\Models\Payment($request);
             $payment_result = $this->_ebanxClient->create($ebanxPayment);
-
-            // $response['success'] = true;
             $response['payment_result'] = $payment_result;
 
             $this->_logger->info('EBANX Result Authorization :: placeRequest', [$payment_result]);

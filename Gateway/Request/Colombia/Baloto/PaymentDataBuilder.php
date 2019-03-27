@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Request\Colombia\Baloto;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use DigitalHub\Ebanx\Observer\Colombia\Baloto\DataAssignObserver;
 
 class PaymentDataBuilder implements BuilderInterface
 {
@@ -42,14 +41,7 @@ class PaymentDataBuilder implements BuilderInterface
     {
         /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
         $paymentDataObject = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($buildSubject);
-        $payment = $paymentDataObject->getPayment();
         $order = $paymentDataObject->getOrder();
-        $storeId = $order->getStoreId();
-
-        // $this->_logger->info('Request::build order', [$order->getOrderIncrementId()]);
-        // $this->_logger->info('Request::build payment', $payment->getData());
-
-        $additionalData = $payment->getAdditionalInformation();
 
         $this->_logger->info('PaymentDataBuilder :: build');
 

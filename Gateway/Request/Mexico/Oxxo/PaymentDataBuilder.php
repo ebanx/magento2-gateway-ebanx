@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Request\Mexico\Oxxo;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use DigitalHub\Ebanx\Observer\Mexico\Oxxo\DataAssignObserver;
 
 class PaymentDataBuilder implements BuilderInterface
 {
@@ -43,9 +42,7 @@ class PaymentDataBuilder implements BuilderInterface
     {
         /** @var \Magento\Payment\Gateway\Data\PaymentDataObject $paymentDataObject */
         $paymentDataObject = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($buildSubject);
-        $payment = $paymentDataObject->getPayment();
         $order = $paymentDataObject->getOrder();
-        $storeId = $order->getStoreId();
 
         $this->_logger->info('PaymentDataBuilder :: build');
 
