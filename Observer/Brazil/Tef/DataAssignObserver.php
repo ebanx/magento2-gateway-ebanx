@@ -13,8 +13,6 @@ class DataAssignObserver extends AbstractDataAssignObserver
     const DOCUMENT_NUMBER = 'document_number';
     const BANK_TYPE = 'bank_type';
 
-    private $_logger;
-
     /**
      * @var array
      */

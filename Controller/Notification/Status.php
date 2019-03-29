@@ -21,19 +21,6 @@ class Status extends \Magento\Framework\App\Action\Action
         $this->_eventManager = $eventManager;
     }
 
-    /**
-     * @param $operation
-     * @param $notification_type
-     * @param $hash_codes
-     * @return bool
-     */
-    private static function isInvalidNotification($operation, $notification_type, $hash_codes)
-    {
-        return $operation !== 'payment_status_change'
-            || ($notification_type !== 'update' && $notification_type !== 'refund')
-            || !count($hash_codes);
-    }
-
     public function execute()
     {
         $result = $this->resultJsonFactory->create();

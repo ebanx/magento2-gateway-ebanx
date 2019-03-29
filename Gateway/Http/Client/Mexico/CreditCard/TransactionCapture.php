@@ -73,7 +73,6 @@ class TransactionCapture implements ClientInterface
 
         try {
             $ebanxPaymentHash = $request['payment_hash'];
-            $amount = $request['amount']; // TODO: partial capture
 
             $capture_result = $this->_ebanxClient->creditCard()->captureByHash($ebanxPaymentHash);
             $response['capture_result'] = $capture_result;

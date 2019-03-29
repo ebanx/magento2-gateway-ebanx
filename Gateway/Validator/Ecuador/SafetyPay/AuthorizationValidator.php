@@ -2,7 +2,6 @@
 namespace DigitalHub\Ebanx\Gateway\Validator\Ecuador\SafetyPay;
 
 use Magento\Payment\Gateway\Validator\AbstractValidator;
-use DigitalHub\Ebanx\Observer\Ecuador\SafetyPay\DataAssignObserver;
 
 class AuthorizationValidator extends AbstractValidator
 {
@@ -41,9 +40,6 @@ class AuthorizationValidator extends AbstractValidator
     public function validate(array $validationSubject)
     {
         $response = \Magento\Payment\Gateway\Helper\SubjectReader::readResponse($validationSubject);
-        $paymentDataObjectInterface = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($validationSubject);
-        $payment = $paymentDataObjectInterface->getPayment();
-        $additionalData = $payment->getAdditionalInformation();
 
         $this->_logger->info('AuthorizationValidator :: handle');
 

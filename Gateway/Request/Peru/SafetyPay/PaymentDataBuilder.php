@@ -44,10 +44,6 @@ class PaymentDataBuilder implements BuilderInterface
         $paymentDataObject = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($buildSubject);
         $payment = $paymentDataObject->getPayment();
         $order = $paymentDataObject->getOrder();
-        $storeId = $order->getStoreId();
-
-        // $this->_logger->info('Request::build order', [$order->getOrderIncrementId()]);
-        // $this->_logger->info('Request::build payment', $payment->getData());
 
         $additionalData = $payment->getAdditionalInformation();
 

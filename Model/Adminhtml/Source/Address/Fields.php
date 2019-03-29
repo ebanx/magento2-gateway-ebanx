@@ -9,7 +9,6 @@ class Fields implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $customerRepository = $objectManager->get('Magento\Customer\Api\CustomerRepositoryInterface');
 
         $model = $objectManager->create('Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection');
         $model->setEntityTypeFilter(2);
