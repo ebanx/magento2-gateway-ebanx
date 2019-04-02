@@ -15,7 +15,8 @@ define(
         'Magento_Payment/js/model/credit-card-validation/credit-card-number-validator',
         'mage/translate',
         'jquery',
-        'DigitalHub_Ebanx/js/action/total-local-currency'
+        'DigitalHub_Ebanx/js/action/total-local-currency',
+        'jquery_mask'
     ],
     function (
         _,
@@ -33,7 +34,8 @@ define(
         cardNumberValidator,
         $t,
         $,
-        totalLocalCurrency
+        totalLocalCurrency,
+        jquery_mask
     ) {
         'use strict';
 
@@ -259,8 +261,19 @@ define(
                     {label: '', value: ''},
                     {label: 'CUIT', value: 'cuit'},
                     {label: 'CUIL', value: 'cuil'},
-                    {label: 'CDI', value: 'cdi'}
+                    {label: 'CDI', value: 'cdi'},
+                    {label: 'DNI', value: 'dni'},
                 ]
+            },
+
+            getMask: function(){
+                var options =  {
+                    onKeyPress: function(arg_document, e, field, options) {
+                        var masks = ['999999999', '99-99999999-9'];
+                        var mask = (arg_document.length > 8) ? masks[1] : masks[0];
+                        $('.masked-document').mask(mask, options);
+                    }};
+                $('.masked-document').mask('999999999', options);
             },
 
             showDocumentTypeField: function(){
@@ -303,6 +316,17 @@ define(
                 return !has_errors;
             },
 
+            validateDocument: function(){
+                let document_selector = document.getElementById('digitalhub_ebanx_argentina_creditcard_use_saved_cc');
+                let selected_document = document_selector.options[document_selector.selectedIndex].value;
+                let document_text = document.getElementById('digitalhub_ebanx_argentina_creditcard_document_number').value;
+                if(selected_document === 'dni') {
+                    return(document_text.length === 7 || document_text.length === 8);
+                } else {
+                    return(document_text.length === 13);
+                }
+            },
+
             beforePlaceOrder: function(){
                 // validate and tokenize card before to send
                 var _this = this;
@@ -311,20 +335,24 @@ define(
                 if(this.validate()){
                     if(this.useSavedCc() == 'new' || !this.showSavedCardsField()){
                         if(this.validateCreditCardData()){
-                            fullScreenLoader.startLoader();
-                            this._createToken(function(ebanxResponse){
-                                if (ebanxResponse.data.token) {
-                                    _this.creditCardToken(ebanxResponse.data.token);
-                                    _this.paymentTypeCode(ebanxResponse.data.payment_type_code);
-                                    _this.maskedCreditCardNumber(ebanxResponse.data.masked_card_number);
-                                    // _this.messageContainer.addSuccessMessage({message: 'Token generation success!'})
-                                    _this.placeOrder();
-                                } else {
-                                    _this.creditCardToken = null
-                                    _this.messageContainer.addErrorMessage({message: $t('Token generation error. Please contact support.')});
-                                }
-                                fullScreenLoader.stopLoader();
-                            })
+                            if(this.validateDocument()) {
+                                fullScreenLoader.startLoader();
+                                this._createToken(function (ebanxResponse) {
+                                    if (ebanxResponse.data.token) {
+                                        _this.creditCardToken(ebanxResponse.data.token);
+                                        _this.paymentTypeCode(ebanxResponse.data.payment_type_code);
+                                        _this.maskedCreditCardNumber(ebanxResponse.data.masked_card_number);
+                                        // _this.messageContainer.addSuccessMessage({message: 'Token generation success!'})
+                                        _this.placeOrder();
+                                    } else {
+                                        _this.creditCardToken = null
+                                        _this.messageContainer.addErrorMessage({message: $t('Token generation error. Please contact support.')});
+                                    }
+                                    fullScreenLoader.stopLoader();
+                                })
+                            } else {
+                                this.messageContainer.addErrorMessage({message: $t('Invalid Document Length')});
+                            }
                         } else {
                             this.messageContainer.addErrorMessage({message: $t('Invalid Credit Card Data')});
                         }
