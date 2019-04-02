@@ -26,14 +26,15 @@
             <span><!-- ko i18n: 'Document Number'--><!-- /ko --></span>
         </label>
         <div class="control">
-            <input type="text" name="payment[document_number]" class="input-text _required" value=""
+            <input type="text" name="payment[document_number]" class="input-text _required masked-document" value=""
                 data-validate="{'required-entry':true}"
                 data-bind="attr: {
                     autocomplete: off,
                     id: getCode() + '_document_number',
                     title: $t('Document Number'),
                     placeholder: $t('Enter your document number'),
-                    'data-container': getCode() + '-document-number'
+                    'data-container': getCode() + '-document-number',
+                    mask: getMask()
                 },
                 enable: isActive($parents),
                 value: documentNumber,
@@ -41,3 +42,4 @@
         </div>
     </div>
 </div>
+
