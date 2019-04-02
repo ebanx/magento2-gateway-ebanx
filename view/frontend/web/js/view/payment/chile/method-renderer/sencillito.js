@@ -12,7 +12,9 @@ define(
         'mage/translate',
         'mage/url',
         'jquery',
-        'DigitalHub_Ebanx/js/action/total-local-currency'
+        'DigitalHub_Ebanx/js/action/total-local-currency',
+        'DigitalHub_Ebanx/js/view/payment/chile/document-mask',
+
     ],
     function (
         _,
@@ -27,7 +29,8 @@ define(
         $t,
         url,
         $,
-        totalLocalCurrency
+        totalLocalCurrency,
+        documentMask
     ) {
         'use strict';
 
@@ -114,7 +117,11 @@ define(
             afterPlaceOrder: function() {
                 redirectOnSuccessAction.redirectUrl = url.build('digitalhub_ebanx/payment/redirect');
                 this.redirectAfterPlaceOrder = true;
-            }
+            },
+
+            getMask: function () {
+                documentMask();
+            },
         });
     }
 );
