@@ -126,6 +126,10 @@ define(
             afterPlaceOrder: function() {
                 redirectOnSuccessAction.redirectUrl = url.build('digitalhub_ebanx/payment/redirect');
                 this.redirectAfterPlaceOrder = true;
+            },
+
+            beforePlaceOrder: function() {
+                this.placeOrder();
             }
         });
     }
