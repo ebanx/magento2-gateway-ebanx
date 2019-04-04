@@ -121,6 +121,10 @@ define(
             getMask: function () {
                 documentMask();
             },
+
+            beforePlaceOrder: function() {
+                this.placeOrder();
+            },
         });
     }
 );

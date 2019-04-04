@@ -6,9 +6,10 @@ define(
         'DigitalHub_Ebanx/js/action/document-number-verification',
         'jquery',
         'mage/translate',
-        'DigitalHub_Ebanx/js/action/total-local-currency'
+        'DigitalHub_Ebanx/js/action/total-local-currency',
+        'DigitalHub_Ebanx/js/view/payment/colombia/document-mask',
     ],
-    function (Component, quote, priceUtils, documentNumberVerification, $, $t, totalLocalCurrency) {
+    function (Component, quote, priceUtils, documentNumberVerification, $, $t, totalLocalCurrency, documentMask) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -86,6 +87,10 @@ define(
 
             beforePlaceOrder: function(){
                 this.placeOrder();
+            },
+
+            getMask: function() {
+                documentMask();
             }
         });
     }

@@ -21,8 +21,6 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
         $this->_refundOrder = $refundOrder;
     }
 
-    const REFUND = 'refund';
-
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $transactionData = $observer->getData('transaction_data');
@@ -38,7 +36,7 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
 
             $order = $objectManager->create('\Magento\Sales\Model\Order')->load($transaction->getOrderId());
 
-            if (self::isRefund($notification_type)) {
+            if (self::isRefund($notification_type) || self::isChargeback($notification_type)) {
                 return $this->executeRefundOrder($order);
             }
 
@@ -104,6 +102,11 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
     private static function isRefund($notification_type)
     {
         return $notification_type === \Ebanx\Benjamin\Util\Http::REFUND;
+    }
+
+    private static function isChargeback($notification_type)
+    {
+        return $notification_type === \Ebanx\Benjamin\Util\Http::CHARGEBACK;
     }
 
     private function executeRefundOrder($order)

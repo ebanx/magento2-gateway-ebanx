@@ -15,7 +15,8 @@ define(
         'Magento_Payment/js/model/credit-card-validation/credit-card-number-validator',
         'mage/translate',
         'jquery',
-        'DigitalHub_Ebanx/js/action/total-local-currency'
+        'DigitalHub_Ebanx/js/action/total-local-currency',
+        'DigitalHub_Ebanx/js/view/payment/colombia/document-mask',
     ],
     function (
         _,
@@ -33,7 +34,8 @@ define(
         cardNumberValidator,
         $t,
         $,
-        totalLocalCurrency
+        totalLocalCurrency,
+        documentMask,
     ) {
         'use strict';
 
@@ -319,6 +321,10 @@ define(
                         _this.placeOrder();
                     }
                 }
+            },
+
+            getMask: function() {
+                documentMask();
             }
         });
     }
