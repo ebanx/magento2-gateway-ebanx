@@ -130,7 +130,11 @@ define(
 
             beforePlaceOrder: function() {
                 this.placeOrder();
-            }
+            },
+
+            getMask: function() {
+                return true;
+            },
         });
     }
 );
