@@ -328,7 +328,11 @@ define(
                         _this.placeOrder();
                     }
                 }
-            }
+            },
+
+            getMask: function() {
+                return true;
+            },
         });
     }
 );
