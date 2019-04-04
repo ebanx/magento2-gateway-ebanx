@@ -8,8 +8,9 @@ define(
         'mage/translate',
         'DigitalHub_Ebanx/js/action/total-local-currency',
         'DigitalHub_Ebanx/js/view/payment/colombia/document-mask',
+        'DigitalHub_Ebanx/js/view/payment/colombia/document-validator',
     ],
-    function (Component, quote, priceUtils, documentNumberVerification, $, $t, totalLocalCurrency, documentMask) {
+    function (Component, quote, priceUtils, documentNumberVerification, $, $t, totalLocalCurrency, documentMask, validDocument) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -86,7 +87,11 @@ define(
             },
 
             beforePlaceOrder: function(){
-                this.placeOrder();
+                if(validDocument(document.querySelector('#digitalhub_ebanx_colombia_baloto_document_number').value)){
+                    this.placeOrder();
+                } else {
+                    this.messageContainer.addErrorMessage({message: $t('Invalid Document Length')});
+                }
             },
 
             getMask: function() {
