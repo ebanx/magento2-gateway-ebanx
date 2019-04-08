@@ -15,7 +15,9 @@ define(
         'Magento_Payment/js/model/credit-card-validation/credit-card-number-validator',
         'mage/translate',
         'jquery',
-        'DigitalHub_Ebanx/js/action/total-local-currency'
+        'DigitalHub_Ebanx/js/action/total-local-currency',
+        'DigitalHub_Ebanx/js/view/payment/credit-card-mask',
+        'DigitalHub_Ebanx/js/view/payment/security-code-mask',
     ],
     function (
         _,
@@ -33,7 +35,9 @@ define(
         cardNumberValidator,
         $t,
         $,
-        totalLocalCurrency
+        totalLocalCurrency,
+        cardNumberMask,
+        securityCodeMask,
     ) {
         'use strict';
 
@@ -332,6 +336,14 @@ define(
 
             getMask: function() {
                 return true;
+            },
+
+            getCreditCardMask: function(){
+                cardNumberMask('#payment_form_digitalhub_ebanx_brazil_creditcard > div.field.number.required > div > input');
+            },
+
+            getSecurityCodeMask: function(){
+                securityCodeMask('#payment_form_digitalhub_ebanx_brazil_creditcard > div.field.cvv.required > div > input');
             },
         });
     }
