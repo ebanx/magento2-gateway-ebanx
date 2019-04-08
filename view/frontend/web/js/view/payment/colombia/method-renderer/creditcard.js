@@ -17,6 +17,8 @@ define(
         'jquery',
         'DigitalHub_Ebanx/js/action/total-local-currency',
         'DigitalHub_Ebanx/js/view/payment/colombia/document-mask',
+        'DigitalHub_Ebanx/js/view/payment/credit-card-mask',
+        'DigitalHub_Ebanx/js/view/payment/security-code-mask',
     ],
     function (
         _,
@@ -36,6 +38,8 @@ define(
         $,
         totalLocalCurrency,
         documentMask,
+        cardNumberMask,
+        securityCodeMask,
     ) {
         'use strict';
 
@@ -325,7 +329,15 @@ define(
 
             getMask: function() {
                 documentMask();
-            }
+            },
+
+            getCreditCardMask: function(){
+                cardNumberMask('#digitalhub_ebanx_colombia_creditcard_cc_number');
+            },
+
+            getSecurityCodeMask: function(){
+                securityCodeMask('#digitalhub_ebanx_colombia_creditcard_cc_cid');
+            },
         });
     }
 );
