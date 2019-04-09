@@ -70,7 +70,7 @@
                 <span><!-- ko i18n: 'Credit Card Number'--><!-- /ko --></span>
             </label>
             <div class="control">
-                <input type="number" name="payment[cc_number]" class="input-text"
+                <input type="text" name="payment[cc_number]" class="input-text"
                        data-bind="attr: {
                                         autocomplete: off,
                                         id: getCode() + '_cc_number',
@@ -79,6 +79,7 @@
                                         'data-validate': JSON.stringify({
                                             'required-number': true
                                         }),
+                                        mask: getCreditCardMask(),
                                   }
                                   enable: isActive($parents),
                                   value: creditCardNumber,
@@ -139,7 +140,8 @@
                                         'data-container': getCode() + '-cc-cvv',
                                         'data-validate': JSON.stringify({
                                             'required-number': true
-                                        })
+                                        }),
+                                        mask: getSecurityCodeMask(),
                                     },
                                     enable: isActive($parents),
                                     value: creditCardVerificationNumber" />

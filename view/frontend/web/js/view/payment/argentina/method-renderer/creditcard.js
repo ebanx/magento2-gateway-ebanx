@@ -367,12 +367,10 @@ define(
             },
 
             getCreditCardMask: function(){
-                console.log("cc-mask");
                 cardNumberMask('#digitalhub_ebanx_argentina_creditcard_cc_number');
             },
 
             getSecurityCodeMask: function(){
-                console.log("cvv-mask");
                 securityCodeMask('#digitalhub_ebanx_argentina_creditcard_cc_cid');
             },
         });
