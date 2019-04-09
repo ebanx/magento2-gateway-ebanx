@@ -347,11 +347,11 @@ define(
             },
 
             getCreditCardMask: function(){
-                cardNumberMask('#payment_form_digitalhub_ebanx_mexico_creditcard > div.field.number.required > div > input');
+                cardNumberMask('#payment_form_digitalhub_ebanx_mexico_creditcard > .number input');
             },
 
             getSecurityCodeMask: function(){
-                securityCodeMask('#payment_form_digitalhub_ebanx_mexico_creditcard > div.field.cvv.required > div > input');
+                securityCodeMask('#payment_form_digitalhub_ebanx_mexico_creditcard > .cvv input');
             },
         });
     }

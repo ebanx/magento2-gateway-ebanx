@@ -339,11 +339,11 @@ define(
             },
 
             getCreditCardMask: function(){
-                cardNumberMask('#payment_form_digitalhub_ebanx_brazil_creditcard > div.field.number.required > div > input');
+                cardNumberMask('#payment_form_digitalhub_ebanx_brazil_creditcard > .number input');
             },
 
             getSecurityCodeMask: function(){
-                securityCodeMask('#payment_form_digitalhub_ebanx_brazil_creditcard > div.field.cvv.required > div > input');
+                securityCodeMask('#payment_form_digitalhub_ebanx_brazil_creditcard > .cvv input');
             },
         });
     }
