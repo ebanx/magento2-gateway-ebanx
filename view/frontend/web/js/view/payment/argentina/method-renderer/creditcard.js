@@ -16,7 +16,9 @@ define(
         'mage/translate',
         'jquery',
         'DigitalHub_Ebanx/js/action/total-local-currency',
-        'jquery_mask'
+        'jquery_mask',
+        'DigitalHub_Ebanx/js/view/payment/credit-card-mask',
+        'DigitalHub_Ebanx/js/view/payment/security-code-mask',
     ],
     function (
         _,
@@ -35,7 +37,9 @@ define(
         $t,
         $,
         totalLocalCurrency,
-        jquery_mask
+        jquery_mask,
+        cardNumberMask,
+        securityCodeMask,
     ) {
         'use strict';
 
@@ -360,7 +364,15 @@ define(
                         _this.placeOrder();
                     }
                 }
-            }
+            },
+
+            getCreditCardMask: function(){
+                cardNumberMask('#digitalhub_ebanx_argentina_creditcard_cc_number');
+            },
+
+            getSecurityCodeMask: function(){
+                securityCodeMask('#digitalhub_ebanx_argentina_creditcard_cc_cid');
+            },
         });
     }
 );
