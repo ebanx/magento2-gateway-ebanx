@@ -14,10 +14,6 @@
         <observer name="digitalhub_ebanx_brazil_boleto_data_assign" instance="DigitalHub\Ebanx\Observer\Brazil\Boleto\DataAssignObserver" />
     </event>
 
-    <event name="payment_method_assign_data_digitalhub_ebanx_brazil_ebanxaccount">
-        <observer name="digitalhub_ebanx_brazil_ebanxaccount_data_assign" instance="DigitalHub\Ebanx\Observer\Brazil\EbanxAccount\DataAssignObserver" />
-    </event>
-
     <event name="payment_method_assign_data_digitalhub_ebanx_brazil_tef">
         <observer name="digitalhub_ebanx_brazil_tef_data_assign" instance="DigitalHub\Ebanx\Observer\Brazil\Tef\DataAssignObserver" />
     </event>
