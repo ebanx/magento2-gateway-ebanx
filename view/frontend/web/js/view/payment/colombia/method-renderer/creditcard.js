@@ -19,6 +19,7 @@ define(
         'DigitalHub_Ebanx/js/view/payment/colombia/document-mask',
         'DigitalHub_Ebanx/js/view/payment/credit-card-mask',
         'DigitalHub_Ebanx/js/view/payment/security-code-mask',
+        'DigitalHub_Ebanx/js/view/payment/colombia/document-validator',
     ],
     function (
         _,
@@ -40,6 +41,7 @@ define(
         documentMask,
         cardNumberMask,
         securityCodeMask,
+        validDocument,
     ) {
         'use strict';
 
@@ -304,20 +306,24 @@ define(
                 if(this.validate()){
                     if(this.useSavedCc() == 'new' || !this.showSavedCardsField()){
                         if(this.validateCreditCardData()){
-                            fullScreenLoader.startLoader();
-                            this._createToken(function(ebanxResponse){
-                                if (ebanxResponse.data.token) {
-                                    _this.creditCardToken(ebanxResponse.data.token);
-                                    _this.paymentTypeCode(ebanxResponse.data.payment_type_code);
-                                    _this.maskedCreditCardNumber(ebanxResponse.data.masked_card_number);
-                                    // _this.messageContainer.addSuccessMessage({message: 'Token generation success!'})
-                                    _this.placeOrder();
-                                } else {
-                                    _this.creditCardToken = null
-                                    _this.messageContainer.addErrorMessage({message: $t('Token generation error. Please contact support.')});
-                                }
-                                fullScreenLoader.stopLoader();
-                            })
+                            if(validDocument(document.querySelector('#digitalhub_ebanx_colombia_creditcard_document_number').value)){
+                                fullScreenLoader.startLoader();
+                                this._createToken(function(ebanxResponse){
+                                    if (ebanxResponse.data.token) {
+                                        _this.creditCardToken(ebanxResponse.data.token);
+                                        _this.paymentTypeCode(ebanxResponse.data.payment_type_code);
+                                        _this.maskedCreditCardNumber(ebanxResponse.data.masked_card_number);
+                                        // _this.messageContainer.addSuccessMessage({message: 'Token generation success!'})
+                                        _this.placeOrder();
+                                    } else {
+                                        _this.creditCardToken = null
+                                        _this.messageContainer.addErrorMessage({message: $t('Token generation error. Please contact support.')});
+                                    }
+                                    fullScreenLoader.stopLoader();
+                                })
+                            } else {
+                                this.messageContainer.addErrorMessage({message: $t('Invalid Document Length')});
+                            }
                         } else {
                             this.messageContainer.addErrorMessage({message: $t('Invalid Credit Card Data')});
                         }
