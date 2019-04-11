@@ -15,6 +15,7 @@ define(
         'jquery',
         'DigitalHub_Ebanx/js/action/total-local-currency',
         'DigitalHub_Ebanx/js/view/payment/colombia/document-mask',
+        'DigitalHub_Ebanx/js/view/payment/colombia/document-validator',
     ],
     function (
         _,
@@ -32,6 +33,7 @@ define(
         $,
         totalLocalCurrency,
         documentMask,
+        validDocument,
     ) {
         'use strict';
 
@@ -132,10 +134,14 @@ define(
 
             getMask: function() {
                 documentMask();
-            }, 
-          
-            beforePlaceOrder: function() {
-                this.placeOrder();
+            },
+
+            beforePlaceOrder: function(){
+                if(validDocument(document.querySelector('#digitalhub_ebanx_colombia_eft_document_number').value)){
+                    this.placeOrder();
+                } else {
+                    this.messageContainer.addErrorMessage({message: $t('Invalid Document Length')});
+                }
             },
         });
     }
