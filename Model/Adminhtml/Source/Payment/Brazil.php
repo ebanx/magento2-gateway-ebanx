@@ -21,10 +21,6 @@ class Brazil implements \Magento\Framework\Option\ArrayInterface
                 'value' => 'tef',
                 'label' => __('TEF - Online Banking')
             ],
-            [
-                'value' => 'ebanxaccount',
-                'label' => __('EBANX Account')
-            ],
         ];
     }
 }

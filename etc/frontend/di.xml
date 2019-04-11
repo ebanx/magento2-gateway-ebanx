@@ -30,14 +30,6 @@
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
-                <item name="digitalhub_ebanx_brazil_ebanxaccount_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\EbanxAccount\ConfigProvider</item>
-            </argument>
-        </arguments>
-    </type>
-
-    <type name="Magento\Checkout\Model\CompositeConfigProvider">
-        <arguments>
-            <argument name="configProviders" xsi:type="array">
                 <item name="digitalhub_ebanx_brazil_tef_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\Tef\ConfigProvider</item>
             </argument>
         </arguments>

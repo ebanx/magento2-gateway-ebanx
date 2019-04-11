@@ -31,9 +31,6 @@
                                                                         <item name="digitalhub_ebanx_brazil_creditcard" xsi:type="array">
                                                                             <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
                                                                         </item>
-                                                                        <item name="digitalhub_ebanx_brazil_ebanxaccount" xsi:type="array">
-                                                                            <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
-                                                                        </item>
                                                                         <item name="digitalhub_ebanx_brazil_boleto" xsi:type="array">
                                                                             <!-- <item name="isBillingAddressRequired" xsi:type="boolean">true</item> -->
                                                                         </item>

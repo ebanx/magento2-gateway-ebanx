@@ -18,10 +18,6 @@ define(
                 type: 'digitalhub_ebanx_brazil_tef',
                 component: 'DigitalHub_Ebanx/js/view/payment/brazil/method-renderer/tef'
             },
-            {
-                type: 'digitalhub_ebanx_brazil_ebanxaccount',
-                component: 'DigitalHub_Ebanx/js/view/payment/brazil/method-renderer/ebanxaccount'
-            }
         );
         return Component.extend({});
     }

@@ -24,7 +24,6 @@ Main features included are:
     - Credit Card
     - Boleto Bancário
     - TEF
-    - EBANX Account
 - Argentina
     - Credit Card
 - Chile

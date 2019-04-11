@@ -49,25 +49,6 @@
                 <sort_order>1</sort_order>
                 <group>digitalhub_ebanx</group>
             </digitalhub_ebanx_brazil_boleto>
-            <digitalhub_ebanx_brazil_ebanxaccount>
-                <active>0</active>
-                <model>DigitalHubEbanxBrazilEbanxAccountFacade</model>
-                <order_status>pending</order_status>
-                <payment_action>authorize</payment_action>
-                <title>EBANX Account</title>
-                <can_authorize>1</can_authorize>
-                <can_cancel>0</can_cancel>
-                <can_capture>0</can_capture>
-                <can_capture_partial>0</can_capture_partial>
-                <can_refund>0</can_refund>
-                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
-                <can_void>0</can_void>
-                <can_use_checkout>1</can_use_checkout>
-                <!-- <can_use_internal>1</can_use_internal> -->
-                <is_gateway>1</is_gateway>
-                <sort_order>1</sort_order>
-                <group>digitalhub_ebanx</group>
-            </digitalhub_ebanx_brazil_ebanxaccount>
             <digitalhub_ebanx_brazil_tef>
                 <active>0</active>
                 <model>DigitalHubEbanxBrazilTefFacade</model>
