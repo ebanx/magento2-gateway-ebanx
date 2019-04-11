@@ -14,6 +14,7 @@ define(
         'jquery',
         'DigitalHub_Ebanx/js/action/total-local-currency',
         'DigitalHub_Ebanx/js/view/payment/chile/document-mask',
+        'DigitalHub_Ebanx/js/view/payment/chile/document-validator',
     ],
     function (
         _,
@@ -30,6 +31,7 @@ define(
         $,
         totalLocalCurrency,
         documentMask,
+        validDocument,
     ) {
         'use strict';
 
@@ -124,7 +126,13 @@ define(
                                 
             beforePlaceOrder: function() {
                 this.placeOrder();
+                if(validDocument(document.querySelector('#payment_form_digitalhub_ebanx_chile_multicaja > div > div > div > input').value)){
+                    this.placeOrder();
+                } else {
+                    this.messageContainer.addErrorMessage({message: $t('Invalid Document Length')});
+                }
             },
+
         });
     }
 );
