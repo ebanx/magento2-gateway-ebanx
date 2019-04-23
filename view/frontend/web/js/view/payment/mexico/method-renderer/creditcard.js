@@ -277,7 +277,7 @@ define(
 
             _createToken: function(callback){
                 EBANX.card.createToken({
-                  card_number: this.creditCardNumber(),
+                  card_number: this.creditCardNumber().replace(/\s/g,''),
                   card_name: this.creditCardHolderName(),
                   card_due_date: this.creditCardExpMonth() + '/' + this.creditCardExpYear(),
                   card_cvv: this.creditCardVerificationNumber()
