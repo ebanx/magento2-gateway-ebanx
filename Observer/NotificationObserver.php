@@ -31,6 +31,15 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
         $transactionSearch = $objectManager->create('\Magento\Sales\Api\Data\TransactionSearchResultInterface');
         $transactionSearch->addFieldToFilter('txn_id', $hash);
 
+         // Get Payment Details
+        $ebanxConfig = new \Ebanx\Benjamin\Models\Configs\Config([
+            'integrationKey' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'live_integration_key'),
+            'sandboxIntegrationKey' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_integration_key'),
+            'isSandbox' => (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox'),
+            'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
+        ]);
+        $paymentResult = EBANX($ebanxConfig)->paymentInfo()->findByHash($hash);
+
         if(count($transactionSearch->getItems())){
             $transaction = $transactionSearch->getFirstItem();
 
@@ -39,15 +48,6 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
             if (self::isRefund($notification_type) || self::isChargeback($notification_type)) {
                 return $this->executeRefundOrder($order);
             }
-
-            // Get Payment Details
-            $ebanxConfig = new \Ebanx\Benjamin\Models\Configs\Config([
-                'integrationKey' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'live_integration_key'),
-                'sandboxIntegrationKey' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox_integration_key'),
-                'isSandbox' => (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'sandbox'),
-                'baseCurrency' => $this->_storeManager->getStore()->getBaseCurrencyCode(),
-            ]);
-            $paymentResult = EBANX($ebanxConfig)->paymentInfo()->findByHash($hash);
 
             // Invoice if status is CO (Confirmed)
             if($paymentResult && $paymentResult['payment'] && $paymentResult['payment']['status'] == 'CO'){
@@ -93,9 +93,10 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
             }
 
         } else {
-            throw new \Exception('Transaction not found with hash: ' . $hash);
+            if ($paymentResult['payment']['status'] != 'CA'){
+                throw new \Exception('Transaction not found with hash: ' . $hash);
+            }
         }
-
         return $this;
     }
 
