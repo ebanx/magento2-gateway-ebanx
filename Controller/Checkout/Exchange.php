@@ -48,30 +48,30 @@ class Exchange extends \Magento\Framework\App\Action\Action
         $url = $isSandbox ? \Ebanx\Benjamin\Services\Http\Client::SANDBOX_URL . self::EXCHANGE_ACTION : \Ebanx\Benjamin\Services\Http\Client::LIVE_URL . self::EXCHANGE_ACTION;
         $integration_key = $isSandbox ? $sandboxIntegrationKey : $integrationKey;
 
-        $base_currency = $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
-        $to_currency = 'USD';
+        $merchant_currency = $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
+        $customer_currency = 'USD';
 
         switch($country){
             case 'BR':
-                $to_currency = 'BRL';
+                $customer_currency = 'BRL';
                 break;
             case 'AR':
-                $to_currency = 'ARS';
+                $customer_currency = 'ARS';
                 break;
             case 'CL':
-                $to_currency = 'CLP';
+                $customer_currency = 'CLP';
                 break;
             case 'CO':
-                $to_currency = 'COP';
+                $customer_currency = 'COP';
                 break;
             case 'MX':
-                $to_currency = 'MXN';
+                $customer_currency = 'MXN';
                 break;
             case 'PE':
-                $to_currency = 'PEN';
+                $customer_currency = 'PEN';
                 break;
             case 'EC':
-                $to_currency = 'USD';
+                $customer_currency = 'USD';
                 break;
         }
 
@@ -82,22 +82,22 @@ class Exchange extends \Magento\Framework\App\Action\Action
 
             $this->curl->post($url, [
                 'integration_key' => $integration_key,
-                'currency_code' => $to_currency,
-                'currency_base_code' => $base_currency
+                'currency_code' => $merchant_currency,
+                'currency_base_code' => $customer_currency,
             ]);
 
             $response = json_decode($this->curl->getBody());
 
             $total = $base_total * (float)$response->currency_rate->rate;
             $total_with_iof = $total + ($total * 0.0038);
-            $total_formatted = $this->_currency->getCurrency($to_currency)->toCurrency($total);
-            $total_formatted_iof = $this->_currency->getCurrency($to_currency)->toCurrency($total_with_iof);
+            $total_formatted = $this->_currency->getCurrency($customer_currency)->toCurrency($total);
+            $total_formatted_iof = $this->_currency->getCurrency($customer_currency)->toCurrency($total_with_iof);
 
             $result->setData([
                 'success' => true,
                 'total_formatted' => $total_formatted,
-                'total_with_iof_formatted' => $to_currency == 'BRL' ? $total_formatted_iof : null,
-                'currency' => $to_currency
+                'total_with_iof_formatted' => $customer_currency == 'BRL' ? $total_formatted_iof : null,
+                'currency' => $customer_currency
             ]);
         } catch (\Exception $e) {
             $result->setData([
