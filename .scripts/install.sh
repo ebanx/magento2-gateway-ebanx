@@ -21,5 +21,8 @@ docker exec -it magento2-gateway-ebanx_web_1 install-sampledata
 echo "Running composer install... This also seems to take a long time..."
 docker exec -it magento2-gateway-ebanx_web_1 composer require ebanx/benjamin
 docker exec -it magento2-gateway-ebanx_web_1 composer update
+docker exec -it magento2-gateway-ebanx_web_1 php bin/magento deploy:mode:set production
+docker exec -it magento2-gateway-ebanx_web_1 php bin/magento c:c
+docker exec -it magento2-gateway-ebanx_web_1 php bin/magento c:f
 
 echo "Everything is fine... Magento is live in ${MAGENTO_URL}"
