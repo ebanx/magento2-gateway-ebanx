@@ -37,11 +37,11 @@ class Status extends \Magento\Framework\App\Action\Action
             $hash_codes = explode(',', $requestData['hash_codes']);
             $notification = new \Ebanx\Benjamin\Models\Notification($operation, $notification_type, $hash_codes);
 
-            if(!\Ebanx\Benjamin\Util\Http::isValidNotification($notification)){
+            if (!\Ebanx\Benjamin\Util\Http::isValidNotification($notification)) {
                 throw new \Exception('Invalid params.');
             }
 
-            foreach($hash_codes as $hash){
+            foreach ($hash_codes as $hash) {
                 $transaction_data = ['hash' => $hash];
                 $data = new \Magento\Framework\DataObject($transaction_data);
                 $this->_eventManager->dispatch('digitalhub_ebanx_notification_status_change', [
@@ -50,6 +50,10 @@ class Status extends \Magento\Framework\App\Action\Action
                 ]);
             }
 
+            $result->setData([
+                'success' => true
+            ]);
+        } catch (\Magento\Sales\Exception\DocumentValidationException $e) {
             $result->setData([
                 'success' => true
             ]);
