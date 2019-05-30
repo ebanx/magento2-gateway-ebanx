@@ -133,6 +133,10 @@ define(
                         self.calculateTotalLocalCurrency(value);
                     })
 
+                    $(document).on('DOMSubtreeModified', "tr.grand.totals > td > strong > span", function () {
+                        self.calculateTotalLocalCurrency(self.creditCardInstallments());
+                    });
+
                     self.availableInstallments(installmentsOptions)
 
                 }).always(function () {
