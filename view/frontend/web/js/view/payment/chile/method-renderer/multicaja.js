@@ -67,15 +67,10 @@ define(
                     self.showDocumentFields(!result.has_document_number)
                 });
 
-                $.when(totalLocalCurrency()).done(function (result) {
-                    if(self.getGlobalConfig().show_iof && result.total_with_iof_formatted){
-                        var text = $t('Total amount in local currency with IOF (0.38%):');
-                        self.totalLocalCurrency(text + ' ' + result.total_with_iof_formatted);
-                    } else {
-                        var text = $t('Total amount in local currency:');
-                        self.totalLocalCurrency(text + ' ' + result.total_formatted);
-                    }
+                $(document).on('DOMSubtreeModified', "tr.grand.totals > td > strong > span", function () {
+                    self.setLocalTotal(self);
                 });
+                self.setLocalTotal(self);
             },
 
             getFormTemplate: function(){
@@ -123,7 +118,7 @@ define(
             getMask: function () {
                 documentMask();
             },
-                                
+
             beforePlaceOrder: function() {
                 this.placeOrder();
                 if(validDocument(document.querySelector('#payment_form_digitalhub_ebanx_chile_multicaja > div > div > div > input').value)){
@@ -133,6 +128,12 @@ define(
                 }
             },
 
+            setLocalTotal: function () {
+                $.when(totalLocalCurrency()).done(function (result) {
+                    var text = $t('Total amount in local currency:');
+                    self.totalLocalCurrency(text + ' ' + result.total_formatted);
+                });
+            },
         });
     }
 );
