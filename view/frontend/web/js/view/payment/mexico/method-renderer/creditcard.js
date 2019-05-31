@@ -105,11 +105,6 @@ define(
                 // this method not uses document number
                 self.showDocumentFields(false)
 
-                // // document number verification promise
-                // $.when(documentNumberVerification()).done(function (result) {
-                //     self.showDocumentFields(!result.has_document_number)
-                // });
-
                 // installments promise
                 $.when(installments()).done(function (result) {
 
@@ -145,6 +140,10 @@ define(
                         self.totalLocalCurrency(null);
                         self.calculateTotalLocalCurrency(value);
                     })
+
+                    $(document).on('DOMSubtreeModified', "tr.grand.totals > td > strong > span", function () {
+                        self.calculateTotalLocalCurrency(self.creditCardInstallments());
+                    });
 
                     self.availableInstallments(installmentsOptions)
 
