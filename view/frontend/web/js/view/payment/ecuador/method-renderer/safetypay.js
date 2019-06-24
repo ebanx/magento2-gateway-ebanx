@@ -120,7 +120,14 @@ define(
             },
 
             beforePlaceOrder: function() {
-                this.placeOrder();
+                if(this.validateForm()) {
+                    this.placeOrder();
+                }
+            },
+
+            validateForm: function() {
+                var $form = $('#' + this.getCode() + '-form');
+                return $form.validation() && $form.validation('isValid');
             },
 
             getMask: function() {
