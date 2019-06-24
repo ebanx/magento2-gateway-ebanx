@@ -72,7 +72,9 @@ define(
             },
 
             beforePlaceOrder: function(){
-                this.placeOrder();
+                if(this.validateForm()) {
+                    this.placeOrder();
+                }
             },
 
             getMask: function() {
@@ -89,7 +91,12 @@ define(
                         self.totalLocalCurrency(text + ' ' + result.total_formatted);
                     }
                 });
-            }
+            },
+            
+            validateForm: function() {
+                var $form = $('#' + this.getCode() + '-form');
+                return $form.validation() && $form.validation('isValid');
+            },
         });
     }
 );

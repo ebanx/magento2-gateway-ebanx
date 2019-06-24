@@ -137,7 +137,18 @@ define(
                         self.totalLocalCurrency(text + ' ' + result.total_formatted);
                     }
                 });
-            }
+            },
+
+            beforePlaceOrder: function(){
+                if(this.validateForm()) {
+                    this.placeOrder();
+                }
+            },
+
+            validateForm: function() {
+                var $form = $('#' + this.getCode() + '-form');
+                return $form.validation() && $form.validation('isValid');
+            },
         });
     }
 );
