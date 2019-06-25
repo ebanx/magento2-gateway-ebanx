@@ -1,6 +1,5 @@
 <?php
-$additionalInformation = $this->getInfo()->getAdditionalInformation();
-$paymentData = $additionalInformation['transaction_data']['payment'];
+$paymentData = $this->getInfo()->getAdditionalInformation();
 ?>
 <h2>Credit Card</h2>
 <table class="table data-table">
@@ -15,7 +14,7 @@ $paymentData = $additionalInformation['transaction_data']['payment'];
         </tr>
         <tr>
             <td>Installments</td>
-            <td><?php echo $paymentData['instalments'] ?>x</td>
+            <td><?php echo $paymentData['installments'] ?>x</td>
         </tr>
     </tbody>
 </table>
