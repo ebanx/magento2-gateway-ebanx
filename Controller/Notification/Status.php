@@ -19,6 +19,14 @@ class Status extends \Magento\Framework\App\Action\Action
         $this->resultJsonFactory = $resultJsonFactory;
         $this->ebanxHelper = $ebanxHelper;
         $this->_eventManager = $eventManager;
+
+        if (interface_exists('\Magento\Framework\App\CsrfAwareActionInterface')) {
+            $request = $this->getRequest();
+            if ($request instanceof HttpRequest && $request->isPost() && empty($request->getParam('form_key'))) {
+                $formKey = $this->_objectManager->get(\Magento\Framework\Data\Form\FormKey::class);
+                $request->setParam('form_key', $formKey->getFormKey());
+            }
+        }
     }
 
     public function execute()
