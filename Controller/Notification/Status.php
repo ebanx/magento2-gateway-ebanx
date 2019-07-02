@@ -1,6 +1,7 @@
 <?php
 
 namespace DigitalHub\Ebanx\Controller\Notification;
+use Magento\Framework\App\RequestInterface;
 
 class Status extends \Magento\Framework\App\Action\Action
 {
@@ -22,7 +23,7 @@ class Status extends \Magento\Framework\App\Action\Action
 
         if (interface_exists('\Magento\Framework\App\CsrfAwareActionInterface')) {
             $request = $this->getRequest();
-            if ($request instanceof HttpRequest && $request->isPost() && empty($request->getParam('form_key'))) {
+            if ($request instanceof RequestInterface && $request->isPost() && empty($request->getParam('form_key'))) {
                 $formKey = $this->_objectManager->get(\Magento\Framework\Data\Form\FormKey::class);
                 $request->setParam('form_key', $formKey->getFormKey());
             }
