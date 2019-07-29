@@ -12,7 +12,9 @@ define(
         'mage/translate',
         'mage/url',
         'jquery',
-        'DigitalHub_Ebanx/js/action/total-local-currency'
+        'DigitalHub_Ebanx/js/action/total-local-currency',
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-mask',
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-validator',
     ],
     function (
         _,
@@ -27,7 +29,9 @@ define(
         $t,
         url,
         $,
-        totalLocalCurrency
+        totalLocalCurrency,
+        documentMask,
+        validDocument,
     ) {
         'use strict';
 
@@ -124,7 +128,7 @@ define(
             },
 
             getMask: function() {
-                return true;
+                documentMask();
             },
 
             setLocalTotal: function (self) {
@@ -141,7 +145,11 @@ define(
 
             beforePlaceOrder: function(){
                 if(this.validateForm()) {
-                    this.placeOrder();
+                    if(validDocument(document.querySelector('#digitalhub_ebanx_brazil_tef_document_number').value)){
+                        this.placeOrder();
+                    } else {
+                        this.messageContainer.addErrorMessage({message: $t('Invalid Document')});
+                    }
                 }
             },
 

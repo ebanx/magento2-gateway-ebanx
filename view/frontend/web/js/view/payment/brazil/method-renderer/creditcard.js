@@ -18,6 +18,8 @@ define(
         'DigitalHub_Ebanx/js/action/total-local-currency',
         'DigitalHub_Ebanx/js/view/payment/credit-card-mask',
         'DigitalHub_Ebanx/js/view/payment/security-code-mask',
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-mask',    
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-validator',    
     ],
     function (
         _,
@@ -38,6 +40,8 @@ define(
         totalLocalCurrency,
         cardNumberMask,
         securityCodeMask,
+        documentMask,
+        validDocument
     ) {
         'use strict';
 
@@ -309,37 +313,41 @@ define(
 
                 // validate default form
                 if(this.validate()){
-                    if(this.useSavedCc() == 'new' || !this.showSavedCardsField()){
-                        if(this.validateCreditCardData()){
-                            fullScreenLoader.startLoader();
-                            this._createToken(function(ebanxResponse){
-                                if (ebanxResponse.data.token) {
-                                    _this.creditCardToken(ebanxResponse.data.token);
-                                    _this.paymentTypeCode(ebanxResponse.data.payment_type_code);
-                                    _this.maskedCreditCardNumber(ebanxResponse.data.masked_card_number);
-                                    // _this.messageContainer.addSuccessMessage({message: 'Token generation success!'})
-                                    _this.placeOrder();
-                                } else {
-                                    _this.creditCardToken = null;
-                                    var errorMessage = 'Token generation error. Please contact support.';
-                                    if (ebanxResponse.error && ebanxResponse.error.err && ebanxResponse.error.err.status && ebanxResponse.error.err.status === 'ERROR') {
-                                        errorMessage = ebanxResponse.error.err.status_message;
+                    if(validDocument(document.querySelector('#digitalhub_ebanx_brazil_creditcard_document_number').value)){
+                        if(this.useSavedCc() == 'new' || !this.showSavedCardsField()){
+                            if(this.validateCreditCardData()){
+                                fullScreenLoader.startLoader();
+                                this._createToken(function(ebanxResponse){
+                                    if (ebanxResponse.data.token) {
+                                        _this.creditCardToken(ebanxResponse.data.token);
+                                        _this.paymentTypeCode(ebanxResponse.data.payment_type_code);
+                                        _this.maskedCreditCardNumber(ebanxResponse.data.masked_card_number);
+                                        // _this.messageContainer.addSuccessMessage({message: 'Token generation success!'})
+                                        _this.placeOrder();
+                                    } else {
+                                        _this.creditCardToken = null;
+                                        var errorMessage = 'Token generation error. Please contact support.';
+                                        if (ebanxResponse.error && ebanxResponse.error.err && ebanxResponse.error.err.status && ebanxResponse.error.err.status === 'ERROR') {
+                                            errorMessage = ebanxResponse.error.err.status_message;
+                                        }
+                                        _this.messageContainer.addErrorMessage({message: $t(errorMessage)});
                                     }
-                                    _this.messageContainer.addErrorMessage({message: $t(errorMessage)});
-                                }
-                                fullScreenLoader.stopLoader();
-                            })
+                                    fullScreenLoader.stopLoader();
+                                })
+                            } else {
+                                this.messageContainer.addErrorMessage({message: $t('Invalid Credit Card Data')});
+                            }
                         } else {
-                            this.messageContainer.addErrorMessage({message: $t('Invalid Credit Card Data')});
+                            _this.placeOrder();
                         }
                     } else {
-                        _this.placeOrder();
+                        this.messageContainer.addErrorMessage({message: $t('Invalid Document')});
                     }
                 }
             },
 
             getMask: function() {
-                return true;
+                documentMask();
             },
 
             getCreditCardMask: function(){

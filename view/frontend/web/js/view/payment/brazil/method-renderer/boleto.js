@@ -6,9 +6,11 @@ define(
         'DigitalHub_Ebanx/js/action/document-number-verification',
         'jquery',
         'mage/translate',
-        'DigitalHub_Ebanx/js/action/total-local-currency'
+        'DigitalHub_Ebanx/js/action/total-local-currency',
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-mask',
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-validator',
     ],
-    function (Component, quote, priceUtils, documentNumberVerification, $, $t, totalLocalCurrency) {
+    function (Component, quote, priceUtils, documentNumberVerification, $, $t, totalLocalCurrency, documentMask, validDocument) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -73,12 +75,16 @@ define(
 
             beforePlaceOrder: function(){
                 if(this.validateForm()) {
-                    this.placeOrder();
+                    if(validDocument(document.querySelector('#digitalhub_ebanx_brazil_boleto_document_number').value)){
+                        this.placeOrder();
+                    } else {
+                        this.messageContainer.addErrorMessage({message: $t('Invalid Document')});
+                    }
                 }
             },
 
-            getMask: function() {
-                return true;
+            getMask: function(){
+                documentMask();
             },
 
             setLocalTotal: function (self) {
