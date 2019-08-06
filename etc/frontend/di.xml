@@ -45,6 +45,30 @@
         </arguments>
     </type>
 
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_argentina_rapipago_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\Rapipago\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_argentina_pagofacil_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\PagoFacil\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_argentina_cupondepagos_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Argentina\CuponDePagos\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
 
     <!-- Chile -->
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
