@@ -6,7 +6,7 @@ define(
     function ($, jquery_mask) {
         'use strict';
         return function () {
-            $('.masked-document').mask('9999999999');
+            $('.masked-document').mask('999999999999999');
         };
     }
 );
