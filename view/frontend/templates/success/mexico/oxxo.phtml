@@ -10,7 +10,7 @@ $dueDate = new \DateTime($transactionData['payment']['due_date']);
             echo __(
                 sprintf(
                     '%s, your OXXO has been generated and the due date is %s.',
-                    $this->getOrderCustomerFirstname(),
+                    ucwords(strtolower($transactionData['payment']['customer']['name'])),
                     $dueDate->format('d/m/Y')
                 )
             )
