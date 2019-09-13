@@ -9,14 +9,14 @@ $dueDate = new \DateTime($transactionData['payment']['due_date']);
         <?php
             echo __(
                 sprintf(
-                    '%s, your CIP has been generated and the due date is %s.',
+                    '%s, tu voucher CIP fué generado y la fecha vencimiento %s.',
                     ucwords(strtolower($transactionData['payment']['customer']['name'])),
                     $dueDate->format('d/m/Y')
                 )
             )
         ?>
         <br>
-        <?php echo __('We send a copy to email') ?> <?php echo $this->getOrderCustomerEmail() ?>.
+        <?php echo __('Enviamos una copia al correo electrónico:') ?> <?php echo $this->getOrderCustomerEmail() ?>.
     </p>
 
     <div class="voucher-data-box">
