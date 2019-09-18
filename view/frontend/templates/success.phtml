@@ -1,6 +1,25 @@
+<?php
+    $transactionData = $this->getTransactionData();
+    $creditcardPayment = strpos($this->getOrderPaymentMethod(), 'creditcard');
+    $paymentStatus = $transactionData['payment']['status'];
+    $paymentCountry = $transactionData['payment']['country'];
+?>
+
 <div class="digitalhub-ebanx-success-page">
     <div class="page-title">
-        <h2><?php echo __('Thank you! Your order has been received.') ?></h2>
+	    <?php if($paymentStatus === 'PE' && $creditcardPayment): ?>
+		    <?php if($paymentCountry == 'br'): ?>
+                <h2><?php echo __('Obrigado! Seu pedido foi recebido e seu pagamento está em processo de análise.') ?></h2>
+		    <?php else: ?>
+                <h2><?php echo __('Gracias! Su orden ha sido recibida y su pago está proceso de revisión.') ?></h2>
+		    <?php endif; ?>
+        <?php else:?>
+            <?php if($paymentCountry == 'br'): ?>
+                <h2><?php echo __('Obrigado! Seu pedido foi recebido e seu pagamento está confirmado') ?></h2>
+            <?php else: ?>
+                <h2><?php echo __('Gracias! Su orden ha sido recibida y su pago está confirmado.') ?></h2>
+    	    <?php endif; ?>
+        <?php endif; ?>
     </div>
 
     <?php if ($block->getOrderId()):?>

@@ -9,16 +9,16 @@ $dueDate = new \DateTime($transactionData['payment']['due_date']);
         <?php
             echo __(
                 sprintf(
-                    '%s, your boleto bancário has been generated and the due date is %s.',
-                    $this->getOrderCustomerFirstname(),
+                    '%s, seu boleto bancário foi gerado e a data de vencimento é %s.',
+                    ucwords(strtolower($transactionData['payment']['customer']['name'])),
                     $dueDate->format('d/m/Y')
                 )
             )
         ?>
         <br>
-        <?php echo __('We send a copy to email') ?> <?php echo $this->getOrderCustomerEmail() ?>.
+        <?php echo __('Enviamos uma cópia para o e-mail:') ?> <?php echo $this->getOrderCustomerEmail() ?>.
         <br>
-        <?php echo __('Pague o boleto no internet banking de seu banco utilizando o código de barras. Você também pode imprimir o boleto e pagar em casas lotéricas ou no caixa de seu banco.') ?>
+        <?php echo __('Pague o boleto aplicativo do seu banco utilizando o código de barras. Você também pode imprimir o boleto e pagar em casas lotéricas ou no caixa de qualquer banco.') ?>
     </p>
 
     <div class="boleto-data-box">
@@ -29,7 +29,7 @@ $dueDate = new \DateTime($transactionData['payment']['due_date']);
             <a href="<?php echo $transactionData['payment']['boleto_url'] ?>" target="_blank" class="button button-print"><?php echo __('Print Boleto Bancário') ?></a>
         </div>
         <p class="observation">
-            <?php echo __('Dica: pague seu boleto até as 21h de um dia útil e seu pagamento terá a chance de ser confirmado mais rapidamente :)') ?>
+            <?php echo __('Dica: pague seu boleto até as 21h de um dia útil para garantir que o pedido seja aprovado mais rápido :)') ?>
         </p>
     </div>
 </div>
