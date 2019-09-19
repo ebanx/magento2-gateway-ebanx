@@ -26,6 +26,9 @@ Main features included are:
     - TEF
 - Argentina
     - Credit Card
+    - Cupon de Pagos
+    - PagoFacil
+    - Rapipago
 - Chile
     - Multicaja
     - Sencillito
