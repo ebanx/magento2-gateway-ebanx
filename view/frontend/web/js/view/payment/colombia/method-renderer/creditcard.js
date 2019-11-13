@@ -135,6 +135,7 @@ define(
 
                     $(document).on('DOMSubtreeModified', "tr.grand.totals > td > strong > span", function () {
                         self.calculateTotalLocalCurrency(self.creditCardInstallments());
+                        self.updateInstallments();
                     });
 
                     self.availableInstallments(installmentsOptions)
@@ -178,6 +179,41 @@ define(
                 $.when(totalLocalCurrency(installments)).done(function (result) {
                     var text = $t('Total amount in local currency:');
                     self.totalLocalCurrency(text + ' ' + result.total_formatted);
+                });
+            },
+
+            retrieveAndSetInstallments: function() {
+                var self = this;
+                $.when(installments()).done(function (result) {
+                    var installmentsOptions = [];
+                    _.forEach(result.installments, function(item) {
+                        var label = item.number + $t('x of ') + priceUtils.formatPrice(item.installment_value, quote.getPriceFormat());
+                        if(item.interest){
+                            label+= $t(' (with interest)')
+                        }
+                        installmentsOptions.push({
+                            label: label,
+                            value: item.number,
+                            interest: item.interest
+                        })
+                    });
+
+                    self.availableInstallments(installmentsOptions);
+                })
+            },
+
+            updateInstallments: function() {
+                var self = this;
+                self.retrieveAndSetInstallments();
+
+                const selectElement = $('#digitalhub_ebanx_colombia_creditcard_cc_installments');
+                selectElement.empty();
+
+                _.forEach(self.availableInstallments, function(installmentOption) {
+                    const newOption = document.createElement("option");
+                    newOption.text = installmentOption.label;
+                    newOption.value = installmentOption.value;
+                    selectElement.append(newOption);
                 });
             },
 
