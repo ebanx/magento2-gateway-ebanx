@@ -317,8 +317,7 @@ define(
             },
 
             validateCreditCardData: function(){
-
-                var ccNumberResult = cardNumberValidator(this.creditCardNumber());
+                var ccNumberResult = cardNumberValidator(this.creditCardNumber().replace(/\s/g,''));
                 var ccVerificationNumber = this.creditCardVerificationNumber();
                 var ccHolderName = this.creditCardHolderName();
                 var ccExpMonth = this.creditCardExpMonth();
