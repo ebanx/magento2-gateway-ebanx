@@ -133,9 +133,16 @@ define(
                         self.calculateTotalLocalCurrency(value);
                     })
 
-                    $(document).on('DOMSubtreeModified', "tr.grand.totals > td > strong > span", function () {
-                        self.calculateTotalLocalCurrency(self.creditCardInstallments());
-                        self.updateInstallments();
+                    var totalElementPath = 'tr.grand.totals >  td > strong > span';
+                    self.lastTotalValue = $(totalElementPath).text();
+
+                    $(document).on('DOMSubtreeModified', totalElementPath, function() {
+                        var newTotalValue = $(totalElementPath).text();
+                        if (newTotalValue !== self.lastTotalValue) {
+                            self.lastTotalValue = newTotalValue;
+                            self.calculateTotalLocalCurrency(self.creditCardInstallments());
+                            self.updateInstallments();
+                        }
                     });
 
                     self.availableInstallments(installmentsOptions)
