@@ -1,5 +1,5 @@
 <?php
-namespace DigitalHub\Ebanx\Test\Unit\Gateway\Validator\Mexico\CreditCard;
+namespace DigitalHub\Ebanx\Test\Unit\Gateway\Validator\Brazil\CreditCard;
 
 use Magento\Payment\Gateway\Validator\ResultInterface;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
@@ -11,8 +11,8 @@ use Magento\Sales\Model\Order;
 
 use DigitalHub\Ebanx\Helper\Data;
 use DigitalHub\Ebanx\Logger\Logger;
-use DigitalHub\Ebanx\Gateway\Validator\Mexico\CreditCard\AuthorizationValidator;
-use DigitalHub\Ebanx\Observer\Mexico\CreditCard\DataAssignObserver;
+use DigitalHub\Ebanx\Gateway\Validator\Brazil\CreditCard\AuthorizationValidator;
+use DigitalHub\Ebanx\Observer\Brazil\CreditCard\DataAssignObserver;
 
 class AuthorizationValidatorTest extends \PHPUnit\Framework\TestCase
 {
@@ -98,7 +98,7 @@ class AuthorizationValidatorTest extends \PHPUnit\Framework\TestCase
 
         $eventManagerMock->expects($this->once())
             ->method('dispatch')
-            ->with('digitalhub_ebanx_assign_mexico_creditcard_token', ['token_data' => $eventTokenData]);
+            ->with('digitalhub_ebanx_assign_brazil_creditcard_token', ['token_data' => $eventTokenData]);
 
         $validationSubject = [
             'response' => [
@@ -691,7 +691,7 @@ class AuthorizationValidatorTest extends \PHPUnit\Framework\TestCase
             ->method('create')
             ->with([
                 'isValid' => false,
-                'failsDescription' => ['Tu compra no se pudo procesar'],
+                'failsDescription' => ['Sua compra não pôde ser processada'],
             ])
             ->willReturn($resultMock);
 

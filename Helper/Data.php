@@ -167,4 +167,18 @@ class Data extends AbstractHelper
     public function getModuleVersion() {
         return $this->_moduleList->getOne($this->_getModuleName())['setup_version'];
     }
+
+    public function filterErrorMessageForCountry($errorMessage, $country) {
+        $fallbackMessage = ($country === 'BR') ? 'Sua compra não pôde ser processada' : 'Tu compra no se pudo procesar';
+        $errorsToFilter = [
+            'High risk transaction',
+        ];
+
+        foreach($errorsToFilter as $errorToFilter) {
+            if (strpos($errorMessage, $errorToFilter) !== false)
+                return $fallbackMessage;
+        }
+
+        return $errorMessage;
+    }
 }
