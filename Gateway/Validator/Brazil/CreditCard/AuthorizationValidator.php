@@ -58,7 +58,9 @@ class AuthorizationValidator extends AbstractValidator
             $transactionResult = $response['payment_result'];
             if($transactionResult['status'] == 'SUCCESS'){
                 if($transactionResult['payment']['transaction_status']['code'] != 'OK'){
-                    throw new \Exception($transactionResult['payment']['transaction_status']['description']);
+                    $errorDescription = $transactionResult['payment']['transaction_status']['description'];
+                    $errorMessage = $this->_ebanxHelper->filterErrorMessageForCountry($errorDescription, 'BR');
+                    throw new \Exception($errorMessage);
                 }
 
                 // Save credit card token
