@@ -1,23 +1,40 @@
 version: '3.0'
 services:
   web:
-    image: alexcheng/magento2:2.2.4-developer
+    image: ebanx/magento2-gateway-ebanx
+    build:
+      .
     ports:
       - 80:80
     links:
       - db
+      - el
     env_file:
       - .env
     volumes:
-      - ./:/var/www/html/app/code/DigitalHub/Ebanx
+      - ./:/var/www/html/app/code/DigitalHub/Ebanx:z
 
   db:
-    image: mysql:5.6.23
+    image: mysql:8
     ports:
-      - ${MYSQL_EXTERNAL_PORT:-3306}:3306
-    volumes:
-      - ./.db-data:/var/lib/mysql/data
+      - ${MYSQL_PORT:-3306}:3306
     env_file:
       - .env
-volumes:
-  db-data:
+    volumes:
+      - ./.data/db:/var/lib/mysql:z
+
+  el:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+    ports:
+      - ${ELASTICSEARCH_PORT:-9200}:9200
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+    env_file:
+      - .env
+    volumes:
+      - ./.data/el:/var/lib/mysql:z
