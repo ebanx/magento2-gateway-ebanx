@@ -34,7 +34,7 @@ class AuthorizationHandler implements HandlerInterface
         $payment->setAdditionalInformation('transaction_data', $payment_result_data);
 
         // set transaction not to processing by default wait for notification
-        $payment->setIsTransactionPending(false);
+        $payment->setIsTransactionPending((isset($payment_result_data['manual_review']) && !$payment_result_data['manual_review']));
 
         // no not send order confirmation mail
         $payment->getOrder()->setCanSendNewEmailFlag(false);
