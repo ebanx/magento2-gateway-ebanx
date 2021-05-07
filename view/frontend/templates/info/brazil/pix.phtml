@@ -1,0 +1,13 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment']['pix'];
+?>
+<h4>PIX</h4>
+<table class="table data-table">
+    <tbody>
+        <tr>
+            <td id="pix-qrcode">QRCode</td>
+            <td><?php echo $paymentData['qr_code_value'] ?></td>
+        </tr>
+    </tbody>
+</table>
