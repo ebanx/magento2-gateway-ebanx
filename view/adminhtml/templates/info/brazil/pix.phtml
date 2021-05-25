@@ -1,0 +1,21 @@
+<?php
+$additionalInformation = $this->getInfo()->getAdditionalInformation();
+$paymentData = $additionalInformation['transaction_data']['payment']['pix'];
+?>
+<h2>EBANX - PIX</h2>
+<table class="admin__table-secondary order-information-table">
+    <tbody>
+        <tr>
+            <th id="pix-qrcode">QRCode</th>
+            <td><?php echo $paymentData['qr_code_value'] ?></td>
+        </tr>
+        <tr>
+            <th>Payment Hash</th>
+            <td><?php echo $paymentData['hash'] ?></td>
+        </tr>
+        <tr>
+            <th>Merchant Payment Code</th>
+            <td><?php echo $paymentData['merchant_payment_code'] ?></td>
+        </tr>
+    </tbody>
+</table>
