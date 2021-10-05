@@ -14,6 +14,7 @@ use Magento\Framework\Json\EncoderInterface;
 class ConfigProvider implements ConfigProviderInterface
 {
     const CODE = 'digitalhub_ebanx_global';
+    const BRAZILIAN_CURRENCY = 'BRL';
 
     /**
      * @var AssetRepository
@@ -41,6 +42,11 @@ class ConfigProvider implements ConfigProviderInterface
     private $encoder;
 
     /**
+     * @var bool
+     */
+    private $isInternational = false;
+
+    /**
      * ConfigProvider constructor.
      *
      * @param AssetRepository $assetRepository
@@ -61,6 +67,8 @@ class ConfigProvider implements ConfigProviderInterface
         $this->gatewayConfig = $gatewayConfig;
         $this->storeId = $storeManager->getStore()->getId();
         $this->encoder = $encoder;
+        $this->isInternational = $storeManager->getStore()->getCurrentCurrencyCode() !== self::BRAZILIAN_CURRENCY;
+
     }
 
     /**
@@ -83,6 +91,7 @@ class ConfigProvider implements ConfigProviderInterface
                     'debug' => (int)$isDebugEnabled,
                     'show_iof' => (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'show_iof', $this->storeId),
                     'show_local_total' => (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global', 'show_local_total', $this->storeId),
+                    'is_international' => $this->isInternational,
                     'can_save_cc' => (int)$this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/cc', 'save', $this->storeId),
                     'document_fields' => [
                         'brazil_cpf' => $this->_ebanxHelper->getConfigData('digitalhub_ebanx_global/customer_fields', 'document_field_brazil_cpf', $this->storeId),
