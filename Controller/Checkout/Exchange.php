@@ -104,6 +104,8 @@ class Exchange extends \Magento\Framework\App\Action\Action
                 'error' => true,
                 'message' => $e->getMessage()
             ]);
+
+            $this->_logger->info(sprintf('EBANX Exception `%s` :: `%s`', get_class($e), __METHOD__), [$e->getMessage()]);
         }
 
         return $result;

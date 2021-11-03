@@ -28,7 +28,7 @@ class RefundHandler implements HandlerInterface
         $payment = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($handlingSubject);
         $payment = $payment->getPayment();
 
-        $this->_logger->info('RefundHandler :: handle');
+        $this->_logger->info(__METHOD__, [$response['payment_result']??null]);
 
         $payment->setIsTransactionPending(false);
         $payment->setIsTransactionClosed(true);

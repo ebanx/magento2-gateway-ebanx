@@ -43,6 +43,11 @@ class CountryValidator extends \Magento\Payment\Gateway\Validator\AbstractValida
         if($country == 'CL' && in_array($this->storeManager->getStore()->getBaseCurrencyCode(), $available_currencies)){
             $isValid = true;
         }
+
+        if (!$isValid) {
+            $this->_logger->info('Country is not CL or the store base currency is not in the available currencies');
+        }
+
         return $this->createResult($isValid);
     }
 }

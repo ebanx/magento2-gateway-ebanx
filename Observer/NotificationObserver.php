@@ -40,6 +40,8 @@ class NotificationObserver implements \Magento\Framework\Event\ObserverInterface
         ]);
         $paymentResult = EBANX($ebanxConfig)->paymentInfo()->findByHash($hash);
 
+        $this->_logger->info(__METHOD__, [$paymentResult]);
+
         if(count($transactionSearch->getItems())){
             $transaction = $transactionSearch->getFirstItem();
 

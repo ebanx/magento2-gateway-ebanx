@@ -8,18 +8,21 @@ class Status extends \Magento\Framework\App\Action\Action
     protected $resultJsonFactory;
     protected $ebanxHelper;
     protected $priceCurrency;
+    protected $_logger;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \DigitalHub\Ebanx\Helper\Data $ebanxHelper,
-        \Magento\Framework\Event\Manager $eventManager
+        \Magento\Framework\Event\Manager $eventManager,
+        \DigitalHub\Ebanx\Logger\Logger $logger
     )
     {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->ebanxHelper = $ebanxHelper;
         $this->_eventManager = $eventManager;
+        $this->_logger = $logger;
 
         if (interface_exists('\Magento\Framework\App\CsrfAwareActionInterface')) {
             $request = $this->getRequest();
@@ -66,12 +69,16 @@ class Status extends \Magento\Framework\App\Action\Action
             $result->setData([
                 'success' => true
             ]);
+
+            $this->_logger->info(sprintf('EBANX Exception `%s` :: `%s`', get_class($e), __METHOD__), [$e->getMessage()]);
         } catch (\Exception $e){
             $result->setHttpResponseCode(\Magento\Framework\Webapi\Exception::HTTP_BAD_REQUEST);
             $result->setData([
                 'error' => true,
                 'message' => $e->getMessage()
             ]);
+
+            $this->_logger->info(sprintf('EBANX Exception `%s` :: `%s`', get_class($e), __METHOD__), [$e->getMessage()]);
         }
 
         return $result;

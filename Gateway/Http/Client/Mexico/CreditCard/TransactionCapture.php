@@ -81,6 +81,8 @@ class TransactionCapture implements ClientInterface
 
         } catch (\Exception $e){
             $response['error'] = $e->getMessage();
+
+            $this->_logger->info(sprintf('EBANX Exception `%s` :: `%s`', get_class($e), __METHOD__), [$e->getMessage()]);
         }
 
         return $response;

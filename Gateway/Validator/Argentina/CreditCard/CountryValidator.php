@@ -43,6 +43,10 @@ class CountryValidator extends \Magento\Payment\Gateway\Validator\AbstractValida
             $isValid = true;
         }
 
+        if (!$isValid) {
+            $this->_logger->info('Country is not AR or the store base currency is not in the available currencies');
+        }
+
         return $this->createResult($isValid);
     }
 }
