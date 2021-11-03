@@ -28,7 +28,7 @@ class AuthorizationHandler implements HandlerInterface
         $payment = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($handlingSubject);
         $payment = $payment->getPayment();
 
-        $this->_logger->info('AuthorizationHandler :: handle');
+        $this->_logger->info(__METHOD__, [$response['payment_result']??null]);
         // $this->_logger->info('AuthorizationHandler :: response', [$response['payment_result']]);
 
         $payment_result_data = (array)$response['payment_result'];

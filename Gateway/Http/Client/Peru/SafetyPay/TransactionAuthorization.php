@@ -75,7 +75,7 @@ class TransactionAuthorization implements ClientInterface
             $this->_logger->info('EBANX Result Authorization :: placeRequest', [$payment_result]);
 
         } catch (\Exception $e){
-            $this->_logger->info('EBANX ERROR :: placeRequest', [$e->getMessage()]);
+            $this->_logger->info(sprintf('EBANX Exception `%s` :: `%s`', get_class($e), __METHOD__), [$e->getMessage()]);
             $response['error'] = $e->getMessage();
         }
 

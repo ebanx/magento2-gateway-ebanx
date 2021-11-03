@@ -30,6 +30,8 @@ class AuthorizationHandler implements HandlerInterface
 
         $payment_result_data = (array)$response['payment_result'];
 
+        $this->_logger->info(__METHOD__, [$response['payment_result']??null]);
+
         $payment->setTransactionId($payment_result_data['payment']['hash']);
         $payment->setAdditionalInformation('transaction_data', $payment_result_data);
 

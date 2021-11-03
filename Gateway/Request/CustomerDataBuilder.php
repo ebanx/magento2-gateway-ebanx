@@ -52,6 +52,8 @@ class CustomerDataBuilder implements BuilderInterface
 
         $documentNumber = false;
         if(in_array($countryId, ['BR','CL','AR','CO'])){
+            $this->_logger->info(sprintf('Country id is `%s` and its not one of [BR, CL, AR, CO]', $countryId));
+
             $documentNumberField = $this->_ebanxHelper->getCustomerDocumentNumberField($this->_session->getQuote());
             $documentNumber = $this->_ebanxHelper->getCustomerDocumentNumber($this->_session->getQuote(), $documentNumberField);
 

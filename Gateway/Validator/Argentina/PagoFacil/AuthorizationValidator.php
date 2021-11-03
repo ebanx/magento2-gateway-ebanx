@@ -52,6 +52,8 @@ class AuthorizationValidator extends AbstractValidator
         } catch (\Exception $e){
             $isValid = false;
             $errorMessages[] = $e->getMessage();
+
+            $this->_logger->info(sprintf('EBANX Exception `%s` :: `%s`', get_class($e), __METHOD__), [$e->getMessage()]);
         }
 
         return $this->createResult($isValid, $errorMessages);

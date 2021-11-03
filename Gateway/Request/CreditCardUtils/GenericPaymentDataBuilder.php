@@ -50,6 +50,8 @@ class GenericPaymentDataBuilder implements BuilderInterface
 			$tokenObject = $this->tokenModel->getTokenByIdAndCustomer($additionalData[GenericDataAssignObserver::USE_SAVED_CC], (int)$this->_session->getQuote()->getCustomerId());
 
 			if(!$tokenObject){
+                $this->_logger->info(sprintf('`%s` :: The requested saved credit card not exists', __METHOD__));
+
 				throw new \Exception('The requested saved credit card not exists');
 			}
 
