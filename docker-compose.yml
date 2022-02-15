@@ -2,6 +2,7 @@ version: '3.0'
 services:
   web:
     image: ebanx/magento2-gateway-ebanx
+    build: .
     ports:
       - 80:80
     links:

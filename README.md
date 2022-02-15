@@ -50,8 +50,8 @@ Main features included are:
 
 ## Requirements
 
-- PHP >= 7.0
-- Magento >= 2.1
+- PHP >= 7.4
+- Magento >= 2.4
 
 ## Installation
 

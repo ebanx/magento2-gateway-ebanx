@@ -5,6 +5,8 @@ set -e
 /usr/local/bin/wait-for-it.sh -t 60 $MYSQL_HOST:$MYSQL_PORT -- echo 'MySQL is up!'
 /usr/local/bin/wait-for-it.sh -t 60 $ELASTICSEARCH_HOST:$ELASTICSEARCH_PORT -- echo 'ElasticSearch is up!'
 
+echo "{\"http-basic\": {\"repo.magento.com\": {\"username\": \"$MAGENTO_REPO_USER\", \"password\": \"$MAGENTO_REPO_PASSWORD\"}}}" > auth.json
+
 # install magento
 php -d memory_limit=-1 bin/magento setup:install \
     --base-url=$MAGENTO_URL \
