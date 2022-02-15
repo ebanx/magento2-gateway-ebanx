@@ -35,6 +35,14 @@
         </arguments>
     </type>
 
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_brazil_pix_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\Pix\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
     <!-- Argentina -->
 
     <type name="Magento\Checkout\Model\CompositeConfigProvider">

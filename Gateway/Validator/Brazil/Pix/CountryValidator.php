@@ -37,11 +37,13 @@ class CountryValidator extends \Magento\Payment\Gateway\Validator\AbstractValida
     {
         $isValid = false;
         $country = $validationSubject['country'];
-
         $available_currencies = ['BRL','USD', 'EUR'];
+
         if($country == 'BR' && in_array($this->storeManager->getStore()->getBaseCurrencyCode(), $available_currencies)){
             $isValid = true;
         }
+
+		file_put_contents('test_result', print_r($this->createResult($isValid), true));
 
         return $this->createResult($isValid);
     }

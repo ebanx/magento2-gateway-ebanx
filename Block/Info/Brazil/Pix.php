@@ -9,5 +9,5 @@ class Pix extends AbstractInfo
     /**
      * @var string
      */
-    protected $_template = 'DigitalHub_Ebanx::info/brazil/pix.phtml';
+	protected $_template = 'DigitalHub_Ebanx::info/brazil/pix.phtml';
 }

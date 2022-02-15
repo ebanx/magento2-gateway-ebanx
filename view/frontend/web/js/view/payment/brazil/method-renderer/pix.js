@@ -7,7 +7,8 @@ define(
         'jquery',
         'mage/translate',
         'DigitalHub_Ebanx/js/action/total-local-currency',
-        'DigitalHub_Ebanx/js/view/payment/brazil/qrcode',
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-mask',
+        'DigitalHub_Ebanx/js/view/payment/brazil/document-validator'
     ],
     function (Component, quote, priceUtils, documentNumberVerification, $, $t, totalLocalCurrency, documentMask, validDocument) {
         'use strict';
@@ -18,7 +19,7 @@ define(
                 totalLocalCurrency: ''
             },
 
-            initialize: function () {
+            initialize: function(){
                 var self = this;
                 this._super();
 
@@ -43,7 +44,7 @@ define(
                 return this;
             },
 
-            getData: function () {
+            getData: function() {
                 return {
                     method: this.getCode(),
                     additional_data: {
@@ -52,39 +53,43 @@ define(
                 };
             },
 
-            isActive: function () {
+            isActive: function(){
                 return true;
             },
 
-            getFormTemplate: function () {
+            getFormTemplate: function(){
                 return 'DigitalHub_Ebanx/payment/brazil/pix/form'
             },
 
-            getGlobalConfig: function () {
+            getGlobalConfig: function() {
                 return window.checkoutConfig.payment.digitalhub_ebanx_global
             },
 
-            getMethodConfig: function () {
+            getMethodConfig: function() {
                 return window.checkoutConfig.payment.digitalhub_ebanx_brazil_pix
             },
 
-            showDocumentTypeField: function () {
+            showDocumentTypeField: function(){
                 return false;
             },
 
-            beforePlaceOrder: function () {
-                if (this.validateForm()) {
-                    this.placeOrder();
+            beforePlaceOrder: function(){
+                if(this.validateForm()) {
+                    if(validDocument(document.querySelector('#digitalhub_ebanx_brazil_pix_document_number').value)){
+                        this.placeOrder();
+                    } else {
+                        this.messageContainer.addErrorMessage({message: $t('Invalid Document')});
+                    }
                 }
             },
 
-            getMask: function () {
+            getMask: function(){
                 documentMask();
             },
 
             setLocalTotal: function (self) {
                 $.when(totalLocalCurrency()).done(function (result) {
-                    if (self.getGlobalConfig().show_iof && result.total_with_iof_formatted) {
+                    if(self.getGlobalConfig().show_iof && result.total_with_iof_formatted){
                         var text = $t('Total amount in local currency with IOF (0.38%):');
                         self.totalLocalCurrency(text + ' ' + result.total_with_iof_formatted);
                     } else {
@@ -94,7 +99,7 @@ define(
                 });
             },
 
-            validateForm: function () {
+            validateForm: function() {
                 var $form = $('#' + this.getCode() + '-form');
                 return $form.validation() && $form.validation('isValid');
             },

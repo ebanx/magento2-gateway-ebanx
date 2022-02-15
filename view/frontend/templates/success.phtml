@@ -59,6 +59,12 @@
         ->setTemplate('DigitalHub_Ebanx::success/brazil/boleto.phtml')->toHtml() ?>
     <?php endif; ?>
 
+	<?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_brazil_pix'): ?>
+		<?php echo $this->getLayout()
+		                ->createBlock('DigitalHub\Ebanx\Block\Success')
+		                ->setTemplate('DigitalHub_Ebanx::success/brazil/pix.phtml')->toHtml() ?>
+	<?php endif; ?>
+
     <?php if($this->getOrderPaymentMethod() == 'digitalhub_ebanx_argentina_rapipago'): ?>
         <?php echo $this->getLayout()
         ->createBlock('DigitalHub\Ebanx\Block\Success')

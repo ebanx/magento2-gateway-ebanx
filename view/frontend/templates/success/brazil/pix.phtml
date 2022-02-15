@@ -1,0 +1,16 @@
+<?php
+$transactionData = $this->getTransactionData();
+?>
+
+<div style="margin: 10px auto; text-align: center;">
+    <h3>Pague com Pix</h3>
+    <h4>Use o app de seu banco ou carteira digital para escanear o código QR abaixo:</h4>
+
+    <div style="display: inline-block;" id="qrcode"></div>
+    <br>
+    <a target="_blank" style="margin: 10px auto; display: inline-block;" class="action primary" href="<?= $transactionData['payment']['redirect_url']; ?>">Pagar</a>
+
+    <script type="text/javascript">
+        new QRCode(document.getElementById("qrcode"), "<?= $transactionData['payment']['pix']['qr_code_value'];?>");
+    </script>
+</div>

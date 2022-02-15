@@ -453,6 +453,133 @@
 
         <!-- END TEF -->
 
+    <!-- PIX -->
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="digitalhub_ebanx_brazil_pix_config" xsi:type="object">DigitalHub\Ebanx\Model\Ui\Brazil\Pix\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Method Facade -->
+    <virtualType name="DigitalHubEbanxBrazilPixFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\DigitalHub\Ebanx\Model\Ui\Brazil\Pix\ConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">DigitalHub\Ebanx\Block\Info\Brazil\Pix</argument>
+            <argument name="valueHandlerPool" xsi:type="object">DigitalHubEbanxBrazilPixValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">DigitalHubEbanxBrazilPixValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">DigitalHubEbanxBrazilPixCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Command Pool -->
+    <virtualType name="DigitalHubEbanxBrazilPixCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">DigitalHubEbanxBrazilPixAuthorizeCommand</item>
+                <item name="cancel" xsi:type="string">DigitalHubEbanxBrazilPixCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="DigitalHubEbanxBrazilPixCancelCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilPixCancelRequest</argument>
+            <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\Pix\TransactionCancel</argument>
+            <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\Pix\CancelValidator</argument>
+            <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilPixCancelResponseHandler</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Cancel Request Builder Composite -->
+    <virtualType name="DigitalHubEbanxBrazilPixCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\Pix\CancelDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Cancel Response Handler Composite -->
+    <virtualType name="DigitalHubEbanxBrazilPixCancelResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="cancel" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\Pix\CancelHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Authorize Command -->
+    <virtualType name="DigitalHubEbanxBrazilPixAuthorizeCommand" type="DigitalHub\Ebanx\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">DigitalHubEbanxBrazilPixAuthorizationRequest</argument>
+            <argument name="transferFactory" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">DigitalHub\Ebanx\Gateway\Http\Client\Brazil\Pix\TransactionAuthorization</argument>
+            <argument name="handler" xsi:type="object">DigitalHubEbanxBrazilPixAuthorizationResponseHandler</argument>
+            <argument name="validator" xsi:type="object">DigitalHub\Ebanx\Gateway\Validator\Brazil\Pix\AuthorizationValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Authorize Request Builder Composite -->
+    <virtualType name="DigitalHubEbanxBrazilPixAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="order" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\OrderDataBuilder</item>
+                <item name="customer" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\CustomerDataBuilder</item>
+                <item name="address" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\AddressDataBuilder</item>
+                <item name="payment" xsi:type="string">DigitalHub\Ebanx\Gateway\Request\Brazil\Pix\PaymentDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Authorize Response Handler Composite -->
+    <virtualType name="DigitalHubEbanxBrazilPixAuthorizationResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="authorization" xsi:type="string">DigitalHub\Ebanx\Gateway\Response\Brazil\Pix\AuthorizationHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value Handlers -->
+    <virtualType name="DigitalHubEbanxBrazilPixValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">DigitalHubEbanxBrazilPixValueHandler</item>
+                <item name="active" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\Pix\ActiveValueHandler</item>
+                <item name="payment_action" xsi:type="string">DigitalHub\Ebanx\Gateway\Config\Brazil\Pix\PaymentActionValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="DigitalHubEbanxBrazilPixValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">DigitalHubEbanxBrazilPixConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Validators Pool -->
+    <virtualType name="DigitalHubEbanxBrazilPixValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">DigitalHub\Ebanx\Gateway\Validator\Brazil\Pix\CountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Config Interface -->
+    <virtualType name="DigitalHubEbanxBrazilPixConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">DigitalHub\Ebanx\Model\Ui\Brazil\Pix\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- END Pix -->
+    
+
     <!-- END Brazil -->
 
     <!-- Argentina -->
