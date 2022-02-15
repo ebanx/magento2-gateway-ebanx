@@ -118,6 +118,10 @@ define(
                 return window.checkoutConfig.payment.digitalhub_ebanx_brazil_creditcard
             },
 
+            showBacenAlert: function(){
+                return this.getGlobalConfig().show_bacen_alert;
+            },
+
             showDocumentTypeField: function(){
                 return false;
             },
