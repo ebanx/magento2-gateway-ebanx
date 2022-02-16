@@ -9,10 +9,12 @@ $paymentData = $additionalInformation['transaction_data']['payment']['pix'];
             <th id="pix-qrcode">QRCode</th>
             <td><?php echo $paymentData['qr_code_value'] ?></td>
         </tr>
+        <?php if (isset($paymentData['hash'])) { ?>
         <tr>
             <th>Payment Hash</th>
             <td><?php echo $paymentData['hash'] ?></td>
         </tr>
+        <?php } ?>
         <tr>
             <th>Merchant Payment Code</th>
             <td><?php echo $paymentData['merchant_payment_code'] ?></td>
